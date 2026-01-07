@@ -9,12 +9,16 @@ interface InquiryContextType {
   removeItem: (productId: string) => void;
   clearInquiry: () => void;
   totalItems: number;
+  isSidebarOpen: boolean;
+  openSidebar: () => void;
+  closeSidebar: () => void;
 }
 
 const InquiryContext = createContext<InquiryContextType | undefined>(undefined);
 
 export function InquiryProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<InquiryItem[]>([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Optional: Load from local storage
   useEffect(() => {
@@ -44,6 +48,7 @@ export function InquiryProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prev, { product, quantity }];
     });
+    setIsSidebarOpen(true); // Auto-open sidebar on add
   };
 
   const removeItem = (productId: string) => {
@@ -56,7 +61,16 @@ export function InquiryProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <InquiryContext.Provider
-      value={{ items, addItem, removeItem, clearInquiry, totalItems }}
+      value={{
+        items,
+        addItem,
+        removeItem,
+        clearInquiry,
+        totalItems,
+        isSidebarOpen,
+        openSidebar: () => setIsSidebarOpen(true),
+        closeSidebar: () => setIsSidebarOpen(false),
+      }}
     >
       {children}
     </InquiryContext.Provider>

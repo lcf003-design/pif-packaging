@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-// import Navbar from "@/components/layout/Navbar"; // Replaced by new system
 import TopUtilityBar from "@/components/layout/TopUtilityBar";
 import MainNavBar from "@/components/layout/MainNavBar";
 import Footer from "@/components/layout/Footer";
 import { InquiryProvider } from "@/context/InquiryContext";
+import { InquirySidebar } from "@/components/layout/InquirySidebar";
 
 export const metadata: Metadata = {
   title: {
@@ -34,6 +34,7 @@ export default function RootLayout({
             <MainNavBar />
           </div>
           <main className="flex-grow">{children}</main>
+          <InquirySidebar />
           <Footer />
         </InquiryProvider>
       </body>

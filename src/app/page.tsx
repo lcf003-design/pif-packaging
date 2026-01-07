@@ -4,6 +4,7 @@ import HeroSection from "@/components/home/HeroSection";
 import TrustBar from "@/components/home/TrustBar";
 import IndustryGrid from "@/components/home/IndustryGrid";
 import ServicesSection from "@/components/home/ServicesSection";
+import ValuePropBanner from "@/components/home/ValuePropBanner";
 
 export default function Home() {
   return (
@@ -16,6 +17,9 @@ export default function Home() {
 
       {/* Markets Grid */}
       <IndustryGrid />
+
+      {/* Value Prop Banner */}
+      <ValuePropBanner />
 
       {/* Services Section */}
       <ServicesSection />

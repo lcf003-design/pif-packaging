@@ -1,12 +1,27 @@
+"use client";
+
 import Link from "next/link";
 import { Product } from "@/types";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Plus } from "lucide-react";
+import { useInquiry } from "@/context/InquiryContext";
+import { useState } from "react";
 
 export default function ProductCard({ product }: { product: Product }) {
+  const { addItem } = useInquiry();
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleQuickAdd = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigation
+    e.stopPropagation();
+    addItem(product, 1);
+  };
+
   return (
     <Link
       href={`/products/${product.id}`}
-      className="group block bg-white border border-industrial-100 hover:border-industrial-300 transition-all duration-300 ease-in-out"
+      className="group block bg-white border border-industrial-100 hover:border-industrial-300 transition-all duration-300 ease-in-out relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <div className="relative aspect-[3/4] bg-industrial-50 overflow-hidden">
         <img
@@ -19,6 +34,17 @@ export default function ProductCard({ product }: { product: Product }) {
             Closure
           </span>
         )}
+
+        {/* Quick Add Button - Visible on Hover (Desktop) or Always (Mobile - TODO) */}
+        <button
+          onClick={handleQuickAdd}
+          className={`absolute bottom-2 right-2 bg-white/90 hover:bg-action text-industrial-800 hover:text-white p-2 rounded-full shadow-md transition-all duration-300 transform ${
+            isHovered ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+          }`}
+          title="Quick add to quote"
+        >
+          <Plus className="w-5 h-5" />
+        </button>
       </div>
       <div className="p-4 border-t border-industrial-100">
         <p className="text-xs text-industrial-500 uppercase tracking-wider mb-1 font-medium">
