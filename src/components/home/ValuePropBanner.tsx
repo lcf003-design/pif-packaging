@@ -1,5 +1,5 @@
 import React from "react";
-import { Archive } from "lucide-react"; // Using Archive as a generic "Bottle/Container" icon placeholder if needed, acting as the center icon
+// Using Archive as a generic "Bottle/Container" icon placeholder if needed, acting as the center icon
 
 const ValuePropBanner = () => {
   return (
@@ -32,20 +32,22 @@ const ValuePropBanner = () => {
           </div>
 
           {/* Right: Venn Diagram Graphic */}
-          <div className="relative flex justify-center items-center h-[400px] w-full select-none">
+          {/* Right: Venn Diagram Graphic */}
+          <div className="relative flex justify-center items-center h-[400px] w-full select-none transition-all duration-500 ease-out transform hover:scale-110 hover:drop-shadow-2xl cursor-pointer">
             {/* Circle 1: Manufacturing (Top) */}
-            <div className="absolute top-0 transform -translate-y-6">
-              <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-action mix-blend-multiply opacity-90 flex items-start justify-center pt-8 shadow-xl">
+            {/* Circle 1: Manufacturing (Top) */}
+            <div className="absolute top-0 transform translate-y-4">
+              <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-action mix-blend-multiply opacity-90 flex items-start justify-center pt-8">
                 <svg
                   viewBox="0 0 100 100"
                   className="w-[120%] h-[120%] absolute top-[-10%] left-[-10%] pointer-events-none overflow-visible"
                 >
                   <path
                     id="curve-top"
-                    d="M 10, 50 A 40,40 0 0,1 90,50"
+                    d="M 17, 50 A 33,33 0 0,1 83,50"
                     fill="transparent"
                   />
-                  <text className="fill-blue-900 opacity-40 font-bold text-[9px] md:text-xs tracking-widest uppercase">
+                  <text className="fill-blue-900 opacity-40 font-bold text-[9px] md:text-[11px] tracking-wider uppercase">
                     <textPath
                       href="#curve-top"
                       startOffset="50%"
@@ -59,18 +61,19 @@ const ValuePropBanner = () => {
             </div>
 
             {/* Circle 2: Distribution (Bottom Left) */}
+            {/* Circle 2: Distribution (Bottom Left) */}
             <div className="absolute bottom-0 left-1/2 transform -translate-x-[75%] translate-y-8">
-              <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-action mix-blend-multiply opacity-90 flex items-center justify-start pl-4 shadow-xl">
+              <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-action mix-blend-multiply opacity-90 flex items-center justify-start pl-4">
                 <svg
                   viewBox="0 0 100 100"
                   className="w-[120%] h-[120%] absolute top-[-10%] left-[-10%] pointer-events-none overflow-visible -rotate-120 origin-center"
                 >
                   <path
                     id="curve-left"
-                    d="M 10, 50 A 40,40 0 0,1 90,50"
+                    d="M 17, 50 A 33,33 0 0,1 83,50"
                     fill="transparent"
                   />
-                  <text className="fill-blue-900 opacity-40 font-bold text-[9px] md:text-xs tracking-widest uppercase">
+                  <text className="fill-blue-900 opacity-40 font-bold text-[9px] md:text-[11px] tracking-widest uppercase">
                     <textPath
                       href="#curve-left"
                       startOffset="50%"
@@ -84,18 +87,19 @@ const ValuePropBanner = () => {
             </div>
 
             {/* Circle 3: Services (Bottom Right) */}
+            {/* Circle 3: Services (Bottom Right) */}
             <div className="absolute bottom-0 right-1/2 transform translate-x-[75%] translate-y-8">
-              <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-action mix-blend-multiply opacity-90 flex items-center justify-end pr-4 shadow-xl">
+              <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-action mix-blend-multiply opacity-90 flex items-center justify-end pr-4">
                 <svg
                   viewBox="0 0 100 100"
                   className="w-[120%] h-[120%] absolute top-[-10%] left-[-10%] pointer-events-none overflow-visible rotate-120 origin-center"
                 >
                   <path
                     id="curve-right"
-                    d="M 10, 50 A 40,40 0 0,1 90,50"
+                    d="M 17, 50 A 33,33 0 0,1 83,50"
                     fill="transparent"
                   />
-                  <text className="fill-blue-900 opacity-40 font-bold text-[9px] md:text-xs tracking-widest uppercase">
+                  <text className="fill-blue-900 opacity-40 font-bold text-[9px] md:text-[11px] tracking-widest uppercase">
                     <textPath
                       href="#curve-right"
                       startOffset="50%"
@@ -106,14 +110,6 @@ const ValuePropBanner = () => {
                   </text>
                 </svg>
               </div>
-            </div>
-
-            {/* Center Icon */}
-            <div className="relative z-20 bg-white p-4 rounded-lg shadow-sm">
-              <Archive
-                className="w-12 h-12 text-industrial-400"
-                strokeWidth={1.5}
-              />
             </div>
           </div>
         </div>
