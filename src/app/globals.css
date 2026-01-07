@@ -1,26 +1,39 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-sans: var(--font-inter), sans-serif;
+
+  --color-industrial-50: #f9fafb;
+  --color-industrial-100: #f3f4f6;
+  --color-industrial-200: #e5e7eb;
+  --color-industrial-300: #d1d5db;
+  --color-industrial-400: #9ca3af;
+  --color-industrial-500: #6b7280;
+  --color-industrial-600: #4b5563;
+  --color-industrial-700: #374151;
+  --color-industrial-800: #1f2937;
+  --color-industrial-900: #111827;
+  --color-industrial-950: #030712;
+
+  --color-action: #f97316;
+  --color-action-hover: #ea580c;
+
+  /* Berlin Replica Palette */
+  --color-berlin-blue: #005f9e;
+  --color-berlin-dark-blue: #004d80;
+  --color-berlin-red: #d92128;
+  --color-berlin-red-hover: #b91c22;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background-color: var(--color-industrial-50);
+    color: var(--color-industrial-900);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility text-balance {
+  text-wrap: balance;
 }
