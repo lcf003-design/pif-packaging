@@ -17,6 +17,11 @@ import {
   FileText,
   Lightbulb,
   BookOpen,
+  PenTool,
+  Palette,
+  Truck,
+  User,
+  Briefcase,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import ShopNowMegaMenu from "./mega-menu/ShopNowMegaMenu";
@@ -105,7 +110,54 @@ const NAV_LINKS: NavItem[] = [
       },
     ],
   },
-  { label: "Services", href: "/services" },
+  {
+    label: "Services",
+    href: "/services",
+    subItems: [
+      {
+        label: "Design",
+        href: "/services/design",
+        description: "Award-winning structural & graphic design.",
+        icon: <PenTool className="w-5 h-5 text-action" />,
+      },
+      {
+        label: "Sourcing",
+        href: "/services/sourcing",
+        description: "Global supplier network & procurement.",
+        icon: <Globe className="w-5 h-5 text-action" />,
+      },
+      {
+        label: "Quality",
+        href: "/services/quality",
+        description: "ISO 9001 certified assurance.",
+        icon: <ShieldCheck className="w-5 h-5 text-action" />,
+      },
+      {
+        label: "Decorating & Labeling",
+        href: "/services/decorating",
+        description: "Custom branding & shelf presence.",
+        icon: <Palette className="w-5 h-5 text-action" />,
+      },
+      {
+        label: "Supply Chain",
+        href: "/services/supply-chain",
+        description: "Logistics, freight, and optimization.",
+        icon: <Truck className="w-5 h-5 text-action" />,
+      },
+      {
+        label: "Customer Portal",
+        href: "/portal",
+        description: "Track orders and manage inventory.",
+        icon: <User className="w-5 h-5 text-action" />,
+      },
+      {
+        label: "Management Consulting",
+        href: "/services/consulting",
+        description: "Strategic advice for growth.",
+        icon: <Briefcase className="w-5 h-5 text-action" />,
+      },
+    ],
+  },
   { label: "Markets Served", href: "/markets" },
   {
     label: "Sustainability",

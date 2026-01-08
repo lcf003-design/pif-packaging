@@ -5,6 +5,8 @@ import TrustBar from "@/components/home/TrustBar";
 import IndustryGrid from "@/components/home/IndustryGrid";
 import ServicesSection from "@/components/home/ServicesSection";
 import ValuePropBanner from "@/components/home/ValuePropBanner";
+import ForwardThinkingBanner from "@/components/home/ForwardThinkingBanner";
+import ExecutionGrid from "@/components/home/ExecutionGrid";
 
 export default function Home() {
   return (
@@ -23,6 +25,12 @@ export default function Home() {
 
       {/* Services Section */}
       <ServicesSection />
+
+      {/* Forward Thinking Banner */}
+      <ForwardThinkingBanner />
+
+      {/* Unmatched Execution Grid */}
+      <ExecutionGrid />
     </div>
   );
 }
