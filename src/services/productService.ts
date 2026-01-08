@@ -17,12 +17,22 @@ export async function fetchProducts(filters?: {
   category?: string;
   material?: string;
   industry?: string;
+  search?: string;
 }): Promise<Product[]> {
   if (USE_MOCK_DATA) {
     // Simulate network delay
     // await new Promise(resolve => setTimeout(resolve, 500));
 
     let filtered = MOCK_PRODUCTS;
+    if (filters?.search) {
+      const q = filters.search.toLowerCase();
+      filtered = filtered.filter(
+        (p) =>
+          p.name.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q) ||
+          p.description?.toLowerCase().includes(q)
+      );
+    }
     if (filters?.category)
       filtered = filtered.filter((p) => p.category === filters.category);
     if (filters?.material)
@@ -44,15 +54,26 @@ export async function fetchProducts(filters?: {
     if (filters?.material)
       q = query(q, where("material", "==", filters.material));
 
-    // Note: 'array-contains' is needed for industry, but you can't chain multiple inequality/array-contains easily without composite indexes.
-    // simpler to do simple filtering logic or use separate queries.
+    // Note: 'array-contains' is needed for industry
     if (filters?.industry)
       q = query(q, where("industry", "array-contains", filters.industry));
 
     const snapshot = await getDocs(q);
-    return snapshot.docs.map(
+    let results = snapshot.docs.map(
       (doc) => ({ id: doc.id, ...doc.data() } as Product)
     );
+
+    // Client-side text filtering for MVP (Firestore doesn't support native fuzzy search)
+    if (filters?.search) {
+      const queryText = filters.search.toLowerCase();
+      results = results.filter(
+        (p) =>
+          p.name.toLowerCase().includes(queryText) ||
+          p.category.toLowerCase().includes(queryText)
+      );
+    }
+
+    return results;
   } catch (error) {
     console.error("Error fetching products from Firestore:", error);
     return [];

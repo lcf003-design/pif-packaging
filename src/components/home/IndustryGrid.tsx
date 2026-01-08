@@ -1,102 +1,80 @@
+"use client";
+
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const INDUSTRIES = [
-  {
-    name: "Food",
-    image:
-      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=500",
-  },
-  {
-    name: "Beverage",
-    image:
-      "https://images.unsplash.com/photo-1602143407151-7111542de6e8?q=80&w=500",
-  },
-  {
-    name: "Spirits",
-    image:
-      "https://images.unsplash.com/photo-1599309605791-cdd1cf70c663?q=80&w=500",
-  },
-  {
-    name: "Wine",
-    image:
-      "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=500",
-  },
-  {
-    name: "Beer",
-    image:
-      "https://images.unsplash.com/photo-1608270586620-248524c67de9?q=80&w=500",
-  },
-  {
-    name: "Personal Healthcare & Beauty",
-    image:
-      "https://images.unsplash.com/photo-1556228720-1987ba8d98d2?q=80&w=500",
-  },
-  {
-    name: "Pharmaceutical & Nutraceutical",
-    image:
-      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=500",
-  },
-  {
-    name: "Home Care",
-    image:
-      "https://images.unsplash.com/photo-1585421514738-01798e148061?q=80&w=500",
-  },
-  {
-    name: "Pet Care & Veterinary",
-    image:
-      "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=500",
-  },
-  {
-    name: "Industrial Chemical",
-    image:
-      "https://images.unsplash.com/photo-1615485499878-8316c026b978?q=80&w=500",
-  },
-  {
-    name: "Automotive",
-    image:
-      "https://images.unsplash.com/photo-1635338573215-685718df2836?q=80&w=500",
-  },
-  {
-    name: "Cannabis & CBD",
-    image:
-      "https://images.unsplash.com/photo-1603573355706-3914977435f3?q=80&w=500",
-  },
+  { name: "Food", image: "/grid_food.png" },
+  { name: "Beverage", image: "/grid_beverage.png" },
+  { name: "Spirits", image: "/grid_spirits.png" },
+  { name: "Wine", image: "/grid_wine.png" },
+  { name: "Beer", image: "/grid_beer.png" },
+  { name: "Beauty & Personal Care", image: "/grid_beauty.png" },
+  { name: "Pharmaceutical", image: "/grid_pharma.png" },
+  { name: "Home Care", image: "/grid_homecare.png" },
+  { name: "Pet Care", image: "/grid_petcare.png" },
+  { name: "Industrial Chemical", image: "/grid_industrial.png" },
+  { name: "Automotive", image: "/grid_automotive.png" },
+  { name: "Cannabis & CBD", image: "/grid_cannabis.png" },
 ];
 
 export default function IndustryGrid() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-24 bg-white border-t border-industrial-100">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-extrabold text-industrial-900 mb-4">
-            Markets & Industries We Serve
+        {/* Header */}
+        <div className="text-center mb-16 max-w-4xl mx-auto">
+          <span className="text-berlin-blue font-bold text-xs tracking-[0.2em] uppercase mb-4 block">
+            Markets We Serve
+          </span>
+          <h2 className="text-4xl font-extrabold text-industrial-900 mb-6">
+            Comprehensive Industry Solutions
           </h2>
-          <p className="text-industrial-500 max-w-2xl mx-auto">
-            Shop wholesale bottles, jars, cans, drums, and more – containers to
-            suit every industry.
+          <p className="text-industrial-500 text-lg leading-relaxed">
+            From regulated pharmaceuticals to artisanal spirits, we provide
+            specialized packaging solutions for every sector.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+        {/* The Clean Collection Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {INDUSTRIES.map((industry) => (
             <Link
               key={industry.name}
-              href={`/products?industry=${industry.name}`}
-              className="group flex flex-col items-center text-center"
+              href={`/products?industry=${encodeURIComponent(industry.name)}`}
+              className="group relative block aspect-[4/5] overflow-hidden rounded-sm bg-industrial-50"
             >
-              <div className="w-full aspect-[3/4] mb-4 relative flex items-end justify-center">
-                {/* Product Image Placeholder - Scaled specifically to look like a "bottle shot" */}
+              {/* Image Container */}
+              <div className="absolute inset-0">
                 <div
-                  className="w-[80%] h-[80%] bg-contain bg-no-repeat bg-bottom transition-transform duration-300 group-hover:-translate-y-2"
+                  className="w-full h-full bg-cover bg-center transition-all duration-700 ease-out group-hover:scale-110 grayscale group-hover:grayscale-0 contrast-[1.1] brightness-[0.95] group-hover:brightness-100"
                   style={{ backgroundImage: `url('${industry.image}')` }}
-                ></div>
+                />
               </div>
-              <h3 className="text-sm font-bold text-industrial-700 group-hover:text-berlin-blue transition-colors">
-                {industry.name}
-              </h3>
+
+              {/* Gradient Overlay (Always visible but subtle, darker on bottom) */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+
+              {/* Text Content */}
+              <div className="absolute bottom-0 left-0 w-full p-6 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                <h3 className="text-xl font-bold text-white mb-2 leading-tight">
+                  {industry.name}
+                </h3>
+                <div className="flex items-center gap-2 text-white/80 text-xs font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                  Shop Collection <ArrowUpRight className="w-4 h-4" />
+                </div>
+              </div>
             </Link>
           ))}
+        </div>
+
+        <div className="text-center mt-16">
+          <Link
+            href="/products"
+            className="inline-block border border-industrial-200 text-industrial-600 hover:border-berlin-blue hover:text-berlin-blue font-bold py-4 px-12 rounded-sm transition-all uppercase tracking-widest text-xs"
+          >
+            View Full Catalog
+          </Link>
         </div>
       </div>
     </section>

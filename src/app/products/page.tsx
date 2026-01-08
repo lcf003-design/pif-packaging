@@ -21,11 +21,13 @@ export default async function ProductsPage({
     typeof params.material === "string" ? params.material : undefined;
   const industry =
     typeof params.industry === "string" ? params.industry : undefined;
+  const search = typeof params.search === "string" ? params.search : undefined;
 
   const filteredProducts = await fetchProducts({
     category,
     material,
     industry,
+    search,
   });
 
   return (

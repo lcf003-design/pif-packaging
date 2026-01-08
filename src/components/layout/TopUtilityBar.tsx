@@ -1,9 +1,30 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState, useEffect } from "react";
 import { Search, Phone, User, ShoppingCart, MessageSquare } from "lucide-react";
+import { useInquiry } from "@/context/InquiryContext";
 
 export default function TopUtilityBar() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [query, setQuery] = useState("");
+  const { totalItems, openSidebar } = useInquiry();
+
+  // Sync state with URL param on load
+  useEffect(() => {
+    const search = searchParams.get("search");
+    if (search) setQuery(search);
+  }, [searchParams]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query.trim()) {
+      router.push(`/products?search=${encodeURIComponent(query.trim())}`);
+    }
+  };
+
   return (
     <div className="bg-white border-b border-industrial-200 py-4">
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-4 md:gap-8">
@@ -21,16 +42,21 @@ export default function TopUtilityBar() {
 
         {/* Search Bar (Fills remaining space) */}
         <div className="flex-grow w-full md:w-auto relative">
-          <div className="flex">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+          <form onSubmit={handleSearch} className="flex">
+            <button
+              type="submit"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-berlin-blue"
+            >
               <Search className="w-5 h-5" />
-            </span>
+            </button>
             <input
               type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
               placeholder="Search Plastic Bottles, Glass Jars & More..."
               className="w-full pl-10 pr-4 py-2.5 border border-industrial-300 rounded-sm text-sm focus:outline-none focus:border-berlin-blue focus:ring-1 focus:ring-berlin-blue"
             />
-          </div>
+          </form>
         </div>
 
         {/* Utility Actions */}
@@ -67,15 +93,17 @@ export default function TopUtilityBar() {
             <User className="w-5 h-5" />
           </Link>
 
-          <Link
-            href="/cart"
+          <button
+            onClick={openSidebar}
             className="hover:text-berlin-blue transition-colors relative"
           >
             <ShoppingCart className="w-5 h-5" />
-            <span className="absolute -top-2 -right-2 bg-berlin-blue text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
-              0
-            </span>
-          </Link>
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-2 bg-berlin-blue text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
+                {totalItems}
+              </span>
+            )}
+          </button>
         </div>
       </div>
     </div>

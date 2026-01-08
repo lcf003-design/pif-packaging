@@ -5,7 +5,7 @@ const STATS = [
   { label: "Locations Worldwide", value: "100+", icon: Users },
   { label: "SKUs Available", value: "50,000+", icon: Package },
   { label: "Packaging Awards", value: "225+", icon: Award },
-  { label: "Berlin Employees", value: "2,200+", icon: Users },
+  { label: "PIF Employees", value: "2,200+", icon: Users },
   { label: "ISO 9001 Certified", value: "Certified", icon: CheckCircle },
 ];
 
