@@ -150,12 +150,6 @@ const NAV_LINKS: NavItem[] = [
         description: "Track orders and manage inventory.",
         icon: <User className="w-5 h-5 text-action" />,
       },
-      {
-        label: "Management Consulting",
-        href: "/services/consulting",
-        description: "Strategic advice for growth.",
-        icon: <Briefcase className="w-5 h-5 text-action" />,
-      },
     ],
   },
   { label: "Markets Served", href: "/markets" },
