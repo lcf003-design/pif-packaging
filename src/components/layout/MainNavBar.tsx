@@ -129,7 +129,7 @@ const NAV_LINKS: NavItem[] = [
       {
         label: "Quality",
         href: "/services/quality",
-        description: "ISO 9001 certified assurance.",
+        description: "Rigorous standards and on-site testing.",
         icon: <ShieldCheck className="w-5 h-5 text-action" />,
       },
       {
