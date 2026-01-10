@@ -1,4 +1,4 @@
-import { MARKETS_DATA, Market } from "@/data/markets";
+import { MARKETS_DATA } from "@/data/markets";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -10,21 +10,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-interface PageProps {
-  params: Promise<{
-    slug: string;
-  }>;
-}
-
-export async function generateStaticParams() {
-  return MARKETS_DATA.map((market) => ({
-    slug: market.slug,
-  }));
-}
-
-export default async function MarketDetailPage({ params }: PageProps) {
-  const { slug } = await params;
-  const market = MARKETS_DATA.find((m) => m.slug === slug);
+export default function PharmaceuticalMarketPage() {
+  const market = MARKETS_DATA.find((m) => m.slug === "pharmaceutical");
 
   if (!market) {
     notFound();
@@ -138,7 +125,6 @@ export default async function MarketDetailPage({ params }: PageProps) {
             </div>
 
             {market.browseCategories ? (
-              // MAKEOVER: CLEAN CATEGORY GRID
               <div className="grid md:grid-cols-3 gap-8">
                 {market.browseCategories.map((item, i) => (
                   <div
@@ -160,7 +146,6 @@ export default async function MarketDetailPage({ params }: PageProps) {
                 ))}
               </div>
             ) : (
-              // DEFAULT ARSENAL GRID
               <div className="grid md:grid-cols-3 gap-8">
                 {market.gallery.map((item, i) => (
                   <div
@@ -192,7 +177,7 @@ export default async function MarketDetailPage({ params }: PageProps) {
         </section>
       )}
 
-      {/* MARKET INTELLIGENCE REPORTS (REPLACEMENT FOR SUPPLY) */}
+      {/* MARKET INTELLIGENCE REPORTS */}
       {market.reports && (
         <section className="py-24 bg-neutral-50 border-t border-neutral-100">
           <div className="container mx-auto px-6 max-w-7xl">
@@ -244,10 +229,8 @@ export default async function MarketDetailPage({ params }: PageProps) {
         </section>
       )}
 
-      {/* TECHNICAL STANDARDS - CINEMATIC (Dark Mode if Image Exists) or CLASSIC (White Mode) */}
       {market.qcImage ? (
         <section className="relative py-32 overflow-hidden bg-neutral-900">
-          {/* Background Image */}
           <div className="absolute inset-0">
             <Image
               src={market.qcImage}
@@ -260,7 +243,6 @@ export default async function MarketDetailPage({ params }: PageProps) {
 
           <div className="relative z-10 container mx-auto px-6 max-w-7xl">
             <div className="grid md:grid-cols-2 gap-16 items-center">
-              {/* LEFT - HEADER */}
               <div className="text-white">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-2 h-2 rounded-full bg-berlin-red animate-pulse" />
@@ -280,7 +262,6 @@ export default async function MarketDetailPage({ params }: PageProps) {
                 </p>
               </div>
 
-              {/* RIGHT - FEATURES LIST (Sleek Dark) */}
               <div className="space-y-2">
                 {market.features.map((feature, i) => (
                   <div
@@ -305,11 +286,9 @@ export default async function MarketDetailPage({ params }: PageProps) {
           </div>
         </section>
       ) : (
-        // FALLBACK: CLASSIC LIGHT MODE
         <section className="py-24 bg-neutral-50">
           <div className="container mx-auto px-6 max-w-7xl">
             <div className="grid md:grid-cols-12 gap-12 lg:gap-24 items-start">
-              {/* LEFT - MISSION */}
               <div className="md:col-span-5 pt-8">
                 <div className="flex items-center gap-2 mb-6">
                   <div className="w-2 h-2 rounded-full bg-berlin-red" />
@@ -329,7 +308,6 @@ export default async function MarketDetailPage({ params }: PageProps) {
                 </p>
               </div>
 
-              {/* RIGHT - CHECKLIST */}
               <div className="md:col-span-7 space-y-6">
                 {market.features.map((feature, i) => (
                   <div
