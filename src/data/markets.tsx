@@ -278,27 +278,69 @@ export const MARKETS_DATA: Market[] = [
   {
     slug: "personal-care",
     title: "Beauty & Personal Care",
-    tagline: "Pure elegance.",
-    desc: "High-end serums & lotions.",
+    tagline: "The science of allure.",
+    desc: "High-performance airless & rigid packaging.",
     icon: Sparkles,
     image: "/images/markets/beauty.png",
     colSpan: "md:col-span-2",
     fullDescription:
-      "Packaging as refined as your formula. Airless pumps, heavy-wall jars, and soft-touch finishes for the beauty industry.",
+      "Your formula is engineered for performance; your packaging should be too. From active ingredient protection to the tactile unboxing experience, we bridge the gap between clinical efficacy and luxury shelf appeal.",
     problem: {
-      title: "Formula Oxidation",
-      desc: "High-active ingredients like Retinol and Vitamin C degrade instantly upon contact with air.",
+      title: "The Retinol Risk",
+      desc: "Bio-active ingredients like Retinol, Vitamin C, and Peptides degrade rapidly when exposed to oxygen and UV light, rendering expensive formulations ineffective before they finish the bottle.",
     },
     solution: {
-      title: "Airless Pump Systems",
-      desc: "Our airless dispensing technology evacuates 99% of the product while preventing any air intake, preserving potency to the last drop.",
+      title: "Clinical Preservation",
+      desc: "Our medical-grade Airless Pump systems utilize a rising piston mechanism to eliminate oxygen contact, while our double-wall acrylics provide a UV sanctuary for your most sensitive serums.",
     },
     stat: {
-      value: "99%",
-      label: "Evacuation Rate",
+      value: "0.2cc",
+      label: "Dosage Precision",
     },
-    gallery: [],
-    features: ["Airless Technology", "PCR Options", "Luxury Finishing"],
+    gallery: [
+      {
+        title: "Airless Serum Pump",
+        desc: "Medical-grade protection.",
+        image: "/images/markets/personal_care_airless_xray.png",
+        imagePosition: "object-center",
+      },
+      {
+        title: "Refillable System",
+        desc: "Sustainable luxury architecture.",
+        image: "/images/markets/personal_care_refill.png",
+      },
+      {
+        title: "Soft-Touch Tube",
+        desc: "Velvet tactile finish.",
+        image: "/images/markets/personal_care_decoration.png",
+      },
+    ],
+    browseCategories: [
+      {
+        title: "Skin & Face Care",
+        image: "/images/markets/personal_care_skin.png",
+      },
+      { title: "Hair Care", image: "/images/markets/personal_care_hair.png" },
+      {
+        title: "Perfume & Fragrance",
+        image: "/images/markets/personal_care_perfume.png",
+      },
+      { title: "Deodorant", image: "/images/markets/personal_care_deo.png" },
+      {
+        title: "Ointment",
+        image: "/images/markets/personal_care_ointment.png",
+      },
+      { title: "Oral Care", image: "/images/markets/personal_care_oral.png" },
+      {
+        title: "Solution Bottles",
+        image: "/images/markets/personal_care_solution.png",
+      },
+      {
+        title: "Tablets & Capsules",
+        image: "/images/markets/personal_care_tablets.png",
+      },
+    ],
+    features: ["Airless Technology", "Heavy-Wall PETG", "Soft-Touch Finishes"],
   },
   {
     slug: "home-care",

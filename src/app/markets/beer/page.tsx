@@ -165,9 +165,9 @@ export default function BeerMarketPage() {
                 UV Protection
               </h3>
               <p className="text-neutral-500 leading-relaxed group-hover:text-neutral-400 transition-colors">
-                Amber glass filters 99.9% of UV wavelengths, preventing
-                "skunking" and preserving hop integrity specifically for IPAs
-                and Lagers.
+                Amber glass filters 99.9% of harmful UV wavelengths below 400nm,
+                preventing "skunking" and protecting the sensitive riboflavin
+                chemistry of your hops.
               </p>
             </div>
 
@@ -234,12 +234,6 @@ export default function BeerMarketPage() {
                       item.imagePosition || "object-center"
                     } group-hover:scale-110 transition-transform duration-700`}
                   />
-                  {/* Overlay Info */}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                    <button className="px-8 py-4 bg-white text-neutral-900 font-bold uppercase tracking-wider hover:bg-berlin-red hover:text-white transition-colors">
-                      Configure
-                    </button>
-                  </div>
                 </div>
                 <div className="flex justify-between items-start border-t border-neutral-200 pt-6">
                   <div>
@@ -300,8 +294,8 @@ export default function BeerMarketPage() {
                     Even micro-migration through closure liners can turn a
                     bright, citrusy profile into wet cardboard. We employ BPA-NI
                     liners with extreme seal-integrity physics, ensuring that
-                    the parts-per-billion (ppb) count of oxygen remains at
-                    equilibrium from production to puncture.
+                    packaged oxygen remains below 50ppb from production to
+                    puncture.
                   </p>
                 </div>
               </div>
@@ -315,10 +309,10 @@ export default function BeerMarketPage() {
                     High-speed filling operates at the edge of carbonation
                     physics. Managing strike temperature while maintaining CO2
                     solubility requires vessels with absolute geometric
-                    consistency. Our reinforced chime designs and precision neck
-                    profiles allow for higher fill pressures without turbulence,
-                    resulting in a cleaner pour and perfect head retention every
-                    time.
+                    consistency. Our pressure-rated profiles facilitate
+                    carbonation up to 5.0 volumes for Belgian-style specialties
+                    and 3.5 volumes for standard longnecks without structural
+                    risk.
                   </p>
                 </div>
 
@@ -337,42 +331,329 @@ export default function BeerMarketPage() {
         </div>
       </section>
 
-      {/* 6. ENGINEERED COMPLIANCE (Technical Standards) */}
-      <section className="py-24 border-t border-neutral-200 bg-white">
+      {/* 6. THE DRAFTING TABLE (Vessel Library Overhaul) */}
+      <section className="py-32 bg-neutral-50 border-t border-neutral-200">
         <div className="container mx-auto px-6 max-w-[1600px]">
-          <div className="grid md:grid-cols-2 gap-16">
-            <div>
-              <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-400 mb-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
+            <div className="max-w-3xl">
+              <div className="text-berlin-red font-mono text-xs uppercase tracking-[0.4em] mb-6 font-bold flex items-center gap-4">
+                <span className="w-8 h-[1px] bg-berlin-red" />
                 Technical Specifications
-              </h3>
-              <h2 className="text-4xl font-black text-neutral-900 tracking-tight mb-8">
-                ENGINEERED FOR <br />
-                CONSISTENCY.
+              </div>
+              <h2 className="text-5xl md:text-6xl font-black text-neutral-900 tracking-tighter mb-6">
+                THE DRAFTING TABLE.
               </h2>
-              <p className="text-lg text-neutral-500 leading-relaxed mb-8">
-                Every can, bottle, and keg we supply meets rigorous ISO 9001
-                standards. We don't deal in "seconds" or "near-misses." Your
-                liquid deserves a container that performs.
+              <p className="text-xl text-neutral-500 font-light max-w-2xl">
+                Precision-engineered glass profiles designed for high-speed
+                filling lines and optimal thermal mass.
               </p>
-              <div className="flex gap-4">
-                <div className="px-4 py-2 bg-neutral-100/50 border border-neutral-200 rounded text-xs font-mono uppercase tracking-wider text-neutral-600">
-                  ISO 9001:2015
+            </div>
+            <div className="hidden md:block">
+              <div className="text-right font-mono text-xs text-neutral-400 uppercase tracking-widest">
+                Scale: 1:1 <br />
+                Units: Imperial/Metric
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Card 1: Longneck */}
+            <div className="group relative bg-white border border-neutral-200 overflow-hidden hover:border-berlin-blue/50 transition-colors duration-500">
+              {/* Technical Grid Background */}
+              <div
+                className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
+                  backgroundSize: "20px 20px",
+                }}
+              />
+
+              <div className="relative aspect-[3/5] p-8 flex items-center justify-center">
+                <Image
+                  src="/images/markets/beer_amber_bottle.png"
+                  alt="Longneck"
+                  fill
+                  className="object-contain p-8 group-hover:scale-105 transition-transform duration-700"
+                />
+
+                {/* Blueprint Overlay (Visible on Hover) */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  {/* Dimensions Lines */}
+                  <div className="absolute top-[10%] bottom-[10%] left-4 border-l border-dashed border-berlin-blue flex items-center pl-2">
+                    <span className="font-mono text-[10px] text-berlin-blue -rotate-90 whitespace-nowrap">
+                      229mm Height
+                    </span>
+                  </div>
+                  <div className="absolute bottom-4 left-[20%] right-[20%] border-t border-dashed border-berlin-blue flex justify-center pt-1">
+                    <span className="font-mono text-[10px] text-berlin-blue">
+                      60mm Dia
+                    </span>
+                  </div>
                 </div>
-                <div className="px-4 py-2 bg-neutral-100/50 border border-neutral-200 rounded text-xs font-mono uppercase tracking-wider text-neutral-600">
-                  BPANI Lining
+              </div>
+
+              <div className="p-6 border-t border-neutral-100 bg-white relative z-10">
+                <h3 className="font-bold text-neutral-900 text-lg uppercase tracking-wide mb-4">
+                  Standard Longneck
+                </h3>
+                <div className="space-y-2 font-mono text-xs text-neutral-500">
+                  <div className="flex justify-between border-b border-neutral-100 pb-1">
+                    <span>Capacity</span>
+                    <span className="text-neutral-900">355ml / 12oz</span>
+                  </div>
+                  <div className="flex justify-between border-b border-neutral-100 pb-1">
+                    <span>Finish</span>
+                    <span className="text-neutral-900">26mm Crown</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Weight</span>
+                    <span className="text-neutral-900">198g</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="space-y-4">
-              {market.features.map((feature, i) => (
-                <div
-                  key={i}
-                  className="flex items-center justify-between p-6 bg-neutral-50 border border-neutral-100 hover:border-berlin-blue/30 transition-colors"
-                >
-                  <span className="font-bold text-neutral-700">{feature}</span>
-                  <ShieldCheck className="w-5 h-5 text-berlin-blue" />
+
+            {/* Card 2: Heritage */}
+            <div className="group relative bg-white border border-neutral-200 overflow-hidden hover:border-berlin-blue/50 transition-colors duration-500">
+              <div
+                className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
+                  backgroundSize: "20px 20px",
+                }}
+              />
+
+              <div className="relative aspect-[3/5] p-8 flex items-center justify-center">
+                <Image
+                  src="/images/markets/beer_stubby.png"
+                  alt="Heritage Stubby"
+                  fill
+                  className="object-contain p-8 scale-90 group-hover:scale-95 transition-transform duration-700"
+                />
+
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <div className="absolute top-[25%] bottom-[10%] left-4 border-l border-dashed border-berlin-blue flex items-center pl-2">
+                    <span className="font-mono text-[10px] text-berlin-blue -rotate-90 whitespace-nowrap">
+                      164mm Height
+                    </span>
+                  </div>
+                  <div className="absolute bottom-4 left-[15%] right-[15%] border-t border-dashed border-berlin-blue flex justify-center pt-1">
+                    <span className="font-mono text-[10px] text-berlin-blue">
+                      66mm Dia
+                    </span>
+                  </div>
                 </div>
-              ))}
+              </div>
+
+              <div className="p-6 border-t border-neutral-100 bg-white relative z-10">
+                <h3 className="font-bold text-neutral-900 text-lg uppercase tracking-wide mb-4">
+                  Heritage Stubby
+                </h3>
+                <div className="space-y-2 font-mono text-xs text-neutral-500">
+                  <div className="flex justify-between border-b border-neutral-100 pb-1">
+                    <span>Capacity</span>
+                    <span className="text-neutral-900">355ml / 12oz</span>
+                  </div>
+                  <div className="flex justify-between border-b border-neutral-100 pb-1">
+                    <span>Finish</span>
+                    <span className="text-neutral-900">26mm Crown</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Weight</span>
+                    <span className="text-neutral-900">180g</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3: Bomber */}
+            <div className="group relative bg-white border border-neutral-200 overflow-hidden hover:border-berlin-blue/50 transition-colors duration-500">
+              <div
+                className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
+                  backgroundSize: "20px 20px",
+                }}
+              />
+
+              <div className="relative aspect-[3/5] p-8 flex items-center justify-center">
+                <Image
+                  src="/images/markets/beer_bomber.png"
+                  alt="Bomber"
+                  fill
+                  className="object-contain p-8 group-hover:scale-105 transition-transform duration-700"
+                />
+
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <div className="absolute top-[5%] bottom-[10%] left-4 border-l border-dashed border-berlin-blue flex items-center pl-2">
+                    <span className="font-mono text-[10px] text-berlin-blue -rotate-90 whitespace-nowrap">
+                      280mm Height
+                    </span>
+                  </div>
+                  <div className="absolute bottom-4 left-[20%] right-[20%] border-t border-dashed border-berlin-blue flex justify-center pt-1">
+                    <span className="font-mono text-[10px] text-berlin-blue">
+                      74mm Dia
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 border-t border-neutral-100 bg-white relative z-10">
+                <h3 className="font-bold text-neutral-900 text-lg uppercase tracking-wide mb-4">
+                  The Bomber
+                </h3>
+                <div className="space-y-2 font-mono text-xs text-neutral-500">
+                  <div className="flex justify-between border-b border-neutral-100 pb-1">
+                    <span>Capacity</span>
+                    <span className="text-neutral-900">650ml / 22oz</span>
+                  </div>
+                  <div className="flex justify-between border-b border-neutral-100 pb-1">
+                    <span>Finish</span>
+                    <span className="text-neutral-900">26mm Crown</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Weight</span>
+                    <span className="text-neutral-900">350g</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 4: Growler */}
+            <div className="group relative bg-white border border-neutral-200 overflow-hidden hover:border-berlin-blue/50 transition-colors duration-500">
+              <div
+                className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
+                  backgroundSize: "20px 20px",
+                }}
+              />
+
+              <div className="relative aspect-[3/5] p-8 flex items-center justify-center">
+                <Image
+                  src="/images/markets/beer_growler.png"
+                  alt="Growler"
+                  fill
+                  className="object-contain p-4 group-hover:scale-105 transition-transform duration-700"
+                />
+
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <div className="absolute top-[10%] bottom-[10%] left-4 border-l border-dashed border-berlin-blue flex items-center pl-2">
+                    <span className="font-mono text-[10px] text-berlin-blue -rotate-90 whitespace-nowrap">
+                      280mm Height
+                    </span>
+                  </div>
+                  <div className="absolute bottom-4 left-[10%] right-[10%] border-t border-dashed border-berlin-blue flex justify-center pt-1">
+                    <span className="font-mono text-[10px] text-berlin-blue">
+                      127mm Dia
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 border-t border-neutral-100 bg-white relative z-10">
+                <h3 className="font-bold text-neutral-900 text-lg uppercase tracking-wide mb-4">
+                  Taproom Growler
+                </h3>
+                <div className="space-y-2 font-mono text-xs text-neutral-500">
+                  <div className="flex justify-between border-b border-neutral-100 pb-1">
+                    <span>Capacity</span>
+                    <span className="text-neutral-900">1.89L / 64oz</span>
+                  </div>
+                  <div className="flex justify-between border-b border-neutral-100 pb-1">
+                    <span>Finish</span>
+                    <span className="text-neutral-900">38mm Screw</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Weight</span>
+                    <span className="text-neutral-900">1120g</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. THE METROLOGY LAB (Enterprise Grade) */}
+      <section className="py-0 bg-neutral-100/50 text-neutral-900 border-t border-neutral-200 relative overflow-hidden flex flex-col md:flex-row h-auto md:h-[600px]">
+        {/* Visual Side */}
+        <div className="w-full md:w-1/2 relative min-h-[400px] bg-white border-r border-neutral-200">
+          <Image
+            src="/images/markets/beer_metrology.png"
+            alt="Video Microscope Metrology"
+            fill
+            className="object-cover p-12"
+          />
+
+          {/* Technical Watermark */}
+          <div className="absolute bottom-6 left-6 font-mono text-[10px] text-neutral-300 uppercase tracking-widest">
+            ENTERPRISE GRADE LAB <br />
+            ID: QC-ZEISS-04
+          </div>
+        </div>
+
+        {/* Content Side */}
+        <div className="w-full md:w-1/2 p-12 md:p-24 flex flex-col justify-center bg-white relative">
+          <div className="text-berlin-blue font-mono text-xs uppercase tracking-widest mb-6 flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4" />
+            Quality Control Protocol
+          </div>
+          <h2 className="text-4xl md:text-5xl font-black mb-8 tracking-tighter leading-none text-neutral-900">
+            VIDEO MICROSCOPE <br />
+            METROLOGY.
+          </h2>
+          <p className="text-neutral-500 text-lg font-light leading-relaxed mb-12 max-w-xl">
+            We utilize advanced video metrology to inspect sealing surfaces and
+            thread profiles with 20MP resolution. This ensures 100% seal
+            integrity on high-speed capping lines.
+          </p>
+
+          <div className="space-y-6">
+            <div className="flex items-center gap-6 group border-b border-neutral-100 pb-6 last:border-0">
+              <div className="w-16 font-mono text-2xl font-bold text-neutral-300 group-hover:text-berlin-blue transition-colors">
+                0.05
+              </div>
+              <div>
+                <h4 className="font-bold text-neutral-900 mb-1">
+                  Millimeter Defect Detection
+                </h4>
+                <p className="text-neutral-500 text-sm">
+                  Identifying checks, stones, and blisters invisible to the
+                  naked eye.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-6 group border-b border-neutral-100 pb-6 last:border-0">
+              <div className="w-16 font-mono text-2xl font-bold text-neutral-300 group-hover:text-berlin-blue transition-colors">
+                100%
+              </div>
+              <div>
+                <h4 className="font-bold text-neutral-900 mb-1">
+                  Finish Integrity
+                </h4>
+                <p className="text-neutral-500 text-sm">
+                  Automated analysis of sealing surface flatness for reliable
+                  carbonation retention.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-6 group border-b border-neutral-100 pb-6 last:border-0">
+              <div className="w-16 font-mono text-2xl font-bold text-neutral-300 group-hover:text-berlin-blue transition-colors">
+                ISO
+              </div>
+              <div>
+                <h4 className="font-bold text-neutral-900 mb-1">
+                  Rigorous Standards
+                </h4>
+                <p className="text-neutral-500 text-sm">
+                  Full traceability from furnace to filler.
+                </p>
+              </div>
             </div>
           </div>
         </div>

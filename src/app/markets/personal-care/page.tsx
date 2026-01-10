@@ -1,14 +1,22 @@
+"use client";
+
 import { MARKETS_DATA } from "@/data/markets";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   ArrowLeft,
-  CheckCircle2,
-  ShieldAlert,
-  ShieldCheck,
   ArrowRight,
+  CheckCircle2,
+  FlaskConical,
+  Sparkles,
+  Repeat,
+  Palette,
+  ScanFace,
+  Droplets,
+  Fingerprint,
 } from "lucide-react";
+import { useState } from "react";
 
 export default function PersonalCareMarketPage() {
   const market = MARKETS_DATA.find((m) => m.slug === "personal-care");
@@ -18,209 +26,282 @@ export default function PersonalCareMarketPage() {
   }
 
   return (
-    <div className="bg-white min-h-screen">
-      {/* HERO SECTION - CINEMATIC */}
-      <section className="relative h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-neutral-950">
+    <div className="bg-white min-h-screen font-sans selection:bg-rose-100 selection:text-berlin-blue">
+      {/* 1. HERO: THE RITUAL - HIGH KEY STUDIO */}
+      <section className="relative h-[90vh] min-h-[700px] flex items-center justify-center overflow-hidden bg-[#f8f6f5]">
         <div className="absolute inset-0 z-0">
           <Image
             src={market.image}
-            alt={market.title}
+            alt="Beauty & Personal Care"
             fill
-            className="object-cover opacity-50 contrast-125 saturate-0"
+            className="object-cover opacity-90"
             priority
           />
-          {/* Grain Overlay */}
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20" />
-          {/* Gradient Scrim */}
-          <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-white/60" />
         </div>
 
-        <div className="relative z-10 container mx-auto px-6 max-w-7xl">
+        <div className="relative z-10 container mx-auto px-6 max-w-[1600px] text-center">
           <Link
             href="/markets"
-            className="inline-flex items-center gap-2 text-white/50 hover:text-white mb-12 transition-colors text-xs font-mono tracking-[0.2em] uppercase"
+            className="inline-flex items-center gap-2 text-neutral-400 hover:text-berlin-blue mb-8 transition-colors text-xs font-mono tracking-[0.3em] uppercase"
           >
-            <ArrowLeft className="w-3 h-3" /> Back to Intelligence
+            <ArrowLeft className="w-3 h-3" /> CatalogPrime Intelligence
           </Link>
 
-          <div className="grid md:grid-cols-2 gap-12 items-end">
-            <div>
-              <div className="inline-flex items-center gap-3 px-4 py-2 bg-berlin-red/10 border border-berlin-red/30 rounded-full text-berlin-red text-sm font-bold uppercase tracking-wider mb-8 backdrop-blur-md">
-                <market.icon className="w-4 h-4" />
-                <span>Sector Intelligence</span>
-              </div>
-              <h1 className="text-6xl md:text-9xl font-black text-white mb-6 tracking-tighter leading-[0.85]">
-                {market.title}
-              </h1>
-              <p className="text-2xl md:text-3xl text-white/90 font-light tracking-tight max-w-2xl">
-                {market.tagline || market.desc}
-              </p>
-            </div>
+          <h1 className="text-7xl md:text-[9rem] font-black text-berlin-blue mb-6 tracking-tighter leading-[0.85] uppercase">
+            The Science <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-300">
+              Of Allure.
+            </span>
+          </h1>
+          <p className="text-xl md:text-2xl text-neutral-500 font-light tracking-wide max-w-3xl mx-auto leading-relaxed mb-12">
+            Where clinical efficacy meets luxury shelf appeal. We engineer
+            medical-grade dispensing systems wrapped in award-winning
+            aesthetics.
+          </p>
 
-            {/* Hero Stat Block if available */}
-            {market.stat && (
-              <div className="md:text-right hidden md:block">
-                <div className="inline-block text-left p-8 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl">
-                  <div className="text-sm text-neutral-400 font-mono uppercase tracking-widest mb-2">
-                    {market.stat.label}
-                  </div>
-                  <div className="text-7xl font-black text-white tracking-tighter">
-                    {market.stat.value}
-                  </div>
-                </div>
-              </div>
-            )}
+          <div className="flex flex-col md:flex-row gap-6 justify-center">
+            <button className="px-8 py-4 bg-berlin-blue text-white font-bold uppercase tracking-widest hover:bg-neutral-900 transition-colors shadow-xl">
+              Start Your Project
+            </button>
+            <button className="px-8 py-4 bg-white text-berlin-blue border border-neutral-200 font-bold uppercase tracking-widest hover:border-berlin-blue transition-colors">
+              Request Samples
+            </button>
           </div>
         </div>
       </section>
 
-      {/* PROBLEM / SOLUTION - SPLIT LAYOUT */}
-      {market.problem && market.solution && (
-        <section className="bg-neutral-950 text-white border-y border-white/5">
-          <div className="grid md:grid-cols-2">
-            {/* PROBLEM - LEFT */}
-            <div className="p-12 md:p-24 border-b md:border-b-0 md:border-r border-white/5 bg-neutral-900/50">
-              <div className="inline-flex items-center gap-2 text-red-500 font-bold uppercase tracking-wider mb-6 text-sm">
-                <ShieldAlert className="w-5 h-5" /> The Challenge
-              </div>
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight text-white">
-                {market.problem.title}
-              </h2>
-              <p className="text-xl text-neutral-400 leading-relaxed max-w-md">
-                {market.problem.desc}
-              </p>
-            </div>
+      {/* 2. THE TRIAD OF DISTINCTION (Capabilities) */}
+      <section className="py-32 bg-white relative z-10">
+        <div className="container mx-auto px-6 max-w-[1600px]">
+          <div className="text-center mb-24">
+            <h2 className="text-4xl font-black text-berlin-blue mb-4 tracking-tight uppercase">
+              Strategic Capabilities
+            </h2>
+            <div className="w-24 h-1 bg-rose-300 mx-auto" />
+          </div>
 
-            {/* SOLUTION - RIGHT */}
-            <div className="p-12 md:p-24 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-blue-900/10 group-hover:bg-blue-900/20 transition-colors" />
-              <div className="relative z-10">
-                <div className="inline-flex items-center gap-2 text-blue-400 font-bold uppercase tracking-wider mb-6 text-sm">
-                  <ShieldCheck className="w-5 h-5" /> The PIF Solution
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Card 1: Bespoke */}
+            <div className="group relative h-[600px] bg-neutral-50 overflow-hidden cursor-pointer">
+              <div className="absolute inset-0 p-12 z-10 flex flex-col justify-between">
+                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-rose-500 shadow-sm mb-6 group-hover:scale-110 transition-transform duration-500">
+                  <FlaskConical className="w-6 h-6" />
                 </div>
-                <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight text-white">
-                  {market.solution.title}
+                <div>
+                  <h3 className="text-3xl font-bold text-berlin-blue mb-4">
+                    Bespoke <br /> Development
+                  </h3>
+                  <p className="text-neutral-500 leading-relaxed opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                    From napkin sketch to rapid prototype in 72 hours. Our
+                    Studio One Eleven team engineers proprietary tooling for
+                    brands that refuse to blend in.
+                  </p>
+                </div>
+              </div>
+              <Image
+                src="/images/markets/personal_care_bespoke.png"
+                alt="Bespoke Development"
+                fill
+                className="object-cover opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none"
+              />
+              <div className="absolute inset-0 border border-neutral-100 group-hover:border-rose-200 transition-colors duration-500" />
+            </div>
+
+            {/* Card 2: Refill */}
+            <div className="group relative h-[600px] bg-neutral-50 overflow-hidden cursor-pointer">
+              <div className="absolute inset-0 p-12 z-10 flex flex-col justify-between">
+                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-rose-500 shadow-sm mb-6 group-hover:scale-110 transition-transform duration-500">
+                  <Repeat className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-3xl font-bold text-berlin-blue mb-4">
+                    Reuse & Refill <br /> Systems
+                  </h3>
+                  <p className="text-neutral-500 leading-relaxed opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                    Loop-ready architectures and intuitive refill cartridges. We
+                    engineer sustainability that feels like an upgrade, not a
+                    compromise.
+                  </p>
+                </div>
+              </div>
+              <Image
+                src="/images/markets/personal_care_refill.png"
+                alt="Refill Systems"
+                fill
+                className="object-cover opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none"
+              />
+              <div className="absolute inset-0 border border-neutral-100 group-hover:border-rose-200 transition-colors duration-500" />
+            </div>
+
+            {/* Card 3: Decoration */}
+            <div className="group relative h-[600px] bg-neutral-50 overflow-hidden cursor-pointer">
+              <div className="absolute inset-0 p-12 z-10 flex flex-col justify-between">
+                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-rose-500 shadow-sm mb-6 group-hover:scale-110 transition-transform duration-500">
+                  <Palette className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-3xl font-bold text-berlin-blue mb-4">
+                    Decoration & <br /> Finishing
+                  </h3>
+                  <p className="text-neutral-500 leading-relaxed opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                    Soft-touch coatings, hot-stamping, and metallic gradients.
+                    Our Finish Metrology Lab ensures your tactile brand language
+                    is consistent across every SKU.
+                  </p>
+                </div>
+              </div>
+              <Image
+                src="/images/markets/personal_care_decoration.png"
+                alt="Decoration"
+                fill
+                className="object-cover opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none"
+              />
+              <div className="absolute inset-0 border border-neutral-100 group-hover:border-rose-200 transition-colors duration-500" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. FORM & FUNCTION (Primary vs Secondary) */}
+      <section className="py-24 bg-[#f8f8f8] border-y border-neutral-200">
+        <div className="container mx-auto px-6 max-w-[1600px]">
+          <div className="grid lg:grid-cols-2 gap-24 items-center">
+            {/* Primary Packaging - Function */}
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-white rounded-sm shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-6">
+                  <ScanFace className="w-5 h-5 text-rose-500" />
+                  <span className="font-mono text-xs uppercase tracking-widest text-neutral-400">
+                    Primary Packaging
+                  </span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-black text-berlin-blue mb-6 tracking-tight">
+                  Airless <br /> Architecture.
                 </h2>
-                <p className="text-xl text-neutral-300 leading-relaxed max-w-md">
-                  {market.solution.desc}
+                <div className="relative aspect-square bg-white border border-neutral-200 mb-8 p-12 flex items-center justify-center overflow-hidden">
+                  <Image
+                    src="/images/markets/personal_care_airless_xray.png"
+                    alt="Airless Pump Mechanism"
+                    fill
+                    className="object-contain p-12 group-hover:scale-105 transition-transform duration-700"
+                  />
+                  {/* Tech Specs Overlay */}
+                  <div className="absolute top-6 right-6 text-right opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="text-xs font-mono text-neutral-400 uppercase">
+                      Dosage
+                    </div>
+                    <div className="text-xl font-bold text-berlin-blue">
+                      0.20cc
+                    </div>
+                  </div>
+                </div>
+                <p className="text-lg text-neutral-500 leading-relaxed font-light">
+                  When it touches the skin, it must be pure. Our airless systems
+                  prevent oxidation of sensitive retinols and Vitamin C serums,
+                  ensuring the formula works as hard as the package looks.
                 </p>
+                <div className="mt-8">
+                  <Link
+                    href="/catalog/airless"
+                    className="text-berlin-blue font-bold uppercase tracking-widest text-xs border-b-2 border-rose-300 hover:border-berlin-blue transition-colors pb-1"
+                  >
+                    View The Catalog
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Secondary Packaging - Experience */}
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-white rounded-sm shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-6">
+                  <Fingerprint className="w-5 h-5 text-rose-500" />
+                  <span className="font-mono text-xs uppercase tracking-widest text-neutral-400">
+                    Secondary Packaging
+                  </span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-black text-berlin-blue mb-6 tracking-tight">
+                  The Unboxing <br /> Experience.
+                </h2>
+                <div className="relative aspect-square bg-white border border-neutral-200 mb-8 p-12 flex items-center justify-center overflow-hidden">
+                  <Image
+                    src="/images/markets/personal_care_unboxing.png"
+                    alt="Secondary Packaging"
+                    fill
+                    className="object-contain p-12 group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="text-xs font-mono text-neutral-400 uppercase">
+                      Finish
+                    </div>
+                    <div className="text-xl font-bold text-berlin-blue">
+                      Soft-Touch
+                    </div>
+                  </div>
+                </div>
+                <p className="text-lg text-neutral-500 leading-relaxed font-light">
+                  The first physical touchpoint of your brand. Rigid setup
+                  boxes, intricate folding cartons, and textured substrates that
+                  create anticipation before the product is even revealed.
+                </p>
+                <div className="mt-8">
+                  <Link
+                    href="/services/design"
+                    className="text-berlin-blue font-bold uppercase tracking-widest text-xs border-b-2 border-rose-300 hover:border-berlin-blue transition-colors pb-1"
+                  >
+                    Explore Studio Design
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {/* THE ARSENAL (or BROWSE CATEGORIES) */}
-      {(market.gallery?.length > 0 ||
-        (market.browseCategories?.length ?? 0) > 0) && (
-        <section className="py-24 bg-white">
-          <div className="container mx-auto px-6 max-w-7xl">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-black text-berlin-blue mb-4 tracking-tight">
-                {market.browseCategories ? "Category Selection" : "The Arsenal"}
-              </h2>
-              <p className="text-neutral-500">
-                Specialized hardware for {market.title} applications.
-              </p>
-            </div>
-
-            {market.browseCategories ? (
-              <div className="grid md:grid-cols-3 gap-8">
-                {market.browseCategories.map((item, i) => (
-                  <div
-                    key={i}
-                    className="group text-center cursor-pointer hover:-translate-y-2 transition-transform duration-300"
-                  >
-                    <div className="relative h-64 w-full mb-6 bg-neutral-50 rounded-2xl overflow-hidden border border-neutral-100 group-hover:shadow-xl transition-shadow">
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        fill
-                        className="object-contain p-8 group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                    <h3 className="text-xl font-bold text-berlin-blue group-hover:text-berlin-red transition-colors">
-                      {item.title}
-                    </h3>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="grid md:grid-cols-3 gap-8">
-                {market.gallery.map((item, i) => (
-                  <div
-                    key={i}
-                    className="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-neutral-100"
-                  >
-                    <div className="relative h-64 overflow-hidden bg-neutral-100">
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        fill
-                        className={`object-cover group-hover:scale-110 transition-transform duration-700 ${
-                          item.imagePosition || "object-center"
-                        }`}
-                      />
-                      <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
-                    </div>
-                    <div className="p-8">
-                      <h3 className="text-xl font-bold text-berlin-blue mb-2">
-                        {item.title}
-                      </h3>
-                      <p className="text-neutral-500 text-sm">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* MARKET INTELLIGENCE REPORTS */}
-      {market.reports && (
-        <section className="py-24 bg-neutral-50 border-t border-neutral-100">
-          <div className="container mx-auto px-6 max-w-7xl">
-            <div className="flex items-end justify-between mb-12">
+      {/* 4. THE APOTHECARY (Category Grid) */}
+      {market.browseCategories && (
+        <section className="py-32 bg-white">
+          <div className="container mx-auto px-6 max-w-[1600px]">
+            <div className="mb-24 flex items-end justify-between">
               <div>
-                <h2 className="text-4xl font-black text-berlin-blue mb-4 tracking-tight">
-                  Market Intelligence
+                <h2 className="text-4xl font-black text-berlin-blue mb-4 tracking-tight uppercase">
+                  The Apothecary
                 </h2>
-                <p className="text-neutral-500 max-w-xl">
-                  stay ahead of supply chain volatility with our latest sector
-                  analysis.
+                <p className="text-neutral-500">
+                  Curated vessels for every formulation type.
                 </p>
               </div>
-              <Link
-                href="/insights"
-                className="text-berlin-red font-bold hover:underline hidden md:block"
-              >
-                View All Reports
-              </Link>
+              <div className="hidden md:flex items-center gap-2 text-xs font-mono text-neutral-400 uppercase tracking-widest">
+                <div className="w-2 h-2 bg-rose-500 rounded-full animate-pulse" />
+                Live Inventory
+              </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
-              {market.reports.map((report, i) => (
-                <div key={i} className="group cursor-pointer">
-                  <div className="relative h-64 rounded-2xl overflow-hidden mb-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-neutral-100 border border-neutral-100">
+              {market.browseCategories.map((item, i) => (
+                <div
+                  key={i}
+                  className="group bg-white p-8 md:p-12 hover:z-10 relative transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
+                >
+                  <div className="relative aspect-[3/4] mb-8 overflow-hidden">
                     <Image
-                      src={report.image}
-                      alt={report.title}
+                      src={item.image}
+                      alt={item.title}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="object-contain group-hover:scale-110 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-berlin-blue/20 group-hover:bg-transparent transition-colors" />
-                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-berlin-blue uppercase tracking-wider">
-                      {report.category}
-                    </div>
                   </div>
-                  <div className="space-y-3">
-                    <p className="text-sm text-neutral-400 font-mono">
-                      {report.date}
-                    </p>
-                    <h3 className="text-2xl font-bold text-berlin-blue leading-tight group-hover:text-berlin-red transition-colors">
-                      {report.title}
-                    </h3>
+                  <h3 className="text-lg font-bold text-berlin-blue mb-2 group-hover:text-rose-500 transition-colors">
+                    {item.title}
+                  </h3>
+                  <div className="flex items-center justify-between border-t border-neutral-100 pt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-xs font-mono text-neutral-400 uppercase">
+                      View Catalog
+                    </span>
+                    <ArrowRight className="w-4 h-4 text-rose-500" />
                   </div>
                 </div>
               ))}
@@ -229,129 +310,151 @@ export default function PersonalCareMarketPage() {
         </section>
       )}
 
-      {market.qcImage ? (
-        <section className="relative py-32 overflow-hidden bg-neutral-900">
-          <div className="absolute inset-0">
-            <Image
-              src={market.qcImage}
-              alt="Technical Standard"
-              fill
-              className="object-cover opacity-60"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/80 to-transparent" />
-          </div>
-
-          <div className="relative z-10 container mx-auto px-6 max-w-7xl">
-            <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div className="text-white">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-2 h-2 rounded-full bg-berlin-red animate-pulse" />
-                  <span className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-400">
-                    Technical Standards
-                  </span>
-                </div>
-                <h2 className="text-5xl font-black mb-8 tracking-tight leading-tight">
-                  {market.qcCopy?.title || "Engineered for"} <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-neutral-500">
-                    {market.qcCopy?.highlight || "Compliance."}
-                  </span>
-                </h2>
-                <p className="text-lg text-neutral-400 leading-relaxed max-w-md">
-                  {market.qcCopy?.desc ||
-                    "We don't just sell packaging; we sell structural integrity. Every unit meets rigorous ISO 9001 quality assurance standards to ensure your product performs as well as it looks."}
-                </p>
+      {/* 5. INNOVATION SPOTLIGHT (Flagship Project) */}
+      <section className="py-24 bg-neutral-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20" />
+        <div className="container mx-auto px-6 max-w-[1400px] relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 text-rose-400 font-mono text-xs uppercase tracking-widest mb-8 border border-rose-400/30 px-3 py-1 rounded-full">
+                <Sparkles className="w-3 h-3" /> Flagship Project
               </div>
-
-              <div className="space-y-2">
-                {market.features.map((feature, i) => (
-                  <div
-                    key={i}
-                    className="group flex items-center gap-6 p-6 border-b border-white/10 hover:bg-white/5 transition-all duration-300 rounded-xl"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-berlin-red group-hover:scale-110 transition-all duration-300">
-                      <CheckCircle2 className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-white group-hover:translate-x-1 transition-transform duration-300">
-                        {feature}
-                      </h3>
-                      <p className="text-xs font-mono text-neutral-500 mt-1 uppercase tracking-wider group-hover:text-neutral-400">
-                        Specification Confirmed
-                      </p>
-                    </div>
+              <h2 className="text-5xl md:text-7xl font-black mb-8 leading-[0.9]">
+                Dual-Chamber <br /> Precision.
+              </h2>
+              <p className="text-xl text-neutral-400 leading-relaxed font-light mb-8">
+                For formulations that require mixing at the moment of
+                application. We engineered a custom 30ml dual-chamber airless
+                system that dispenses two viscous serums in a perfect 1:1 ratio
+                with a single actuation.
+              </p>
+              <div className="grid grid-cols-3 gap-8 mb-12 border-t border-white/10 pt-8">
+                <div>
+                  <div className="text-3xl font-bold text-white mb-1">1:1</div>
+                  <div className="text-xs text-neutral-500 uppercase tracking-wider">
+                    Ratio Accuracy
                   </div>
-                ))}
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-white mb-1">
+                    100<span className="text-sm">%</span>
+                  </div>
+                  <div className="text-xs text-neutral-500 uppercase tracking-wider">
+                    Airless Seal
+                  </div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-white mb-1">
+                    2<span className="text-sm">x</span>
+                  </div>
+                  <div className="text-xs text-neutral-500 uppercase tracking-wider">
+                    Shelf Life
+                  </div>
+                </div>
+              </div>
+              <button className="text-white border-b border-rose-400 pb-1 hover:text-rose-400 transition-colors uppercase tracking-widest text-xs font-bold">
+                Read The Case Study
+              </button>
+            </div>
+            <div className="relative aspect-square bg-[#1a1a1a] rounded-full overflow-hidden border border-white/5 shadow-2xl">
+              <Image
+                src="/images/markets/personal_care_dual_chamber.png"
+                alt="Dual Chamber Innovation"
+                fill
+                className="object-cover scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-tr from-rose-500/20 to-transparent mix-blend-overlay" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. GLOBAL INFRASTRUCTURE (Services) */}
+      {/* 
+          Note: This would typically be an accordion component, 
+          but for simplicity in this view we'll use a static grid layout
+          that mimics the structure of the Service Layer plan. 
+      */}
+      <section className="py-32 bg-white">
+        <div className="container mx-auto px-6 max-w-[1600px]">
+          <div className="grid md:grid-cols-4 gap-12 border-t border-neutral-200 pt-16">
+            <div className="md:col-span-1">
+              <h2 className="text-3xl font-black text-berlin-blue uppercase tracking-tight">
+                Global <br /> Infrastructure
+              </h2>
+            </div>
+            <div className="md:col-span-3 grid md:grid-cols-3 gap-8">
+              <div className="group">
+                <h3 className="text-lg font-bold text-berlin-blue mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-rose-400 rounded-full" />
+                  Design & Innovation
+                </h3>
+                <p className="text-neutral-500 text-sm leading-relaxed mb-4">
+                  Studio One Eleven comprises industrial designers, engineers,
+                  and brand strategists. We don't just design bottles; we design
+                  user experiences.
+                </p>
+                <Link
+                  href="/services/design"
+                  className="text-xs font-bold text-neutral-400 uppercase tracking-widest group-hover:text-berlin-blue transition-colors"
+                >
+                  Explore Studio &rarr;
+                </Link>
+              </div>
+              <div className="group">
+                <h3 className="text-lg font-bold text-berlin-blue mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-rose-400 rounded-full" />
+                  Global Sourcing
+                </h3>
+                <p className="text-neutral-500 text-sm leading-relaxed mb-4">
+                  With feet on the ground in China, Europe, and the Americas, we
+                  navigate the geopolitical landscape to secure the best cost of
+                  goods without compromising quality.
+                </p>
+                <Link
+                  href="/services/sourcing"
+                  className="text-xs font-bold text-neutral-400 uppercase tracking-widest group-hover:text-berlin-blue transition-colors"
+                >
+                  View Network &rarr;
+                </Link>
+              </div>
+              <div className="group">
+                <h3 className="text-lg font-bold text-berlin-blue mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-rose-400 rounded-full" />
+                  Quality Assurance
+                </h3>
+                <p className="text-neutral-500 text-sm leading-relaxed mb-4">
+                  Regulatory grade. Our labs test for chemically aggressive
+                  bulk, vacuum leakage, and drop-test durability before a single
+                  unit ships.
+                </p>
+                <Link
+                  href="/services/quality"
+                  className="text-xs font-bold text-neutral-400 uppercase tracking-widest group-hover:text-berlin-blue transition-colors"
+                >
+                  See The Lab &rarr;
+                </Link>
               </div>
             </div>
           </div>
-        </section>
-      ) : (
-        <section className="py-24 bg-neutral-50">
-          <div className="container mx-auto px-6 max-w-7xl">
-            <div className="grid md:grid-cols-12 gap-12 lg:gap-24 items-start">
-              <div className="md:col-span-5 pt-8">
-                <div className="flex items-center gap-2 mb-6">
-                  <div className="w-2 h-2 rounded-full bg-berlin-red" />
-                  <span className="font-mono text-xs uppercase tracking-widest text-neutral-500">
-                    Technical Standards
-                  </span>
-                </div>
-                <h2 className="text-4xl font-black text-neutral-900 mb-6 tracking-tight">
-                  Engineered for <br />
-                  Compliance.
-                </h2>
-                <p className="text-lg text-neutral-500 leading-relaxed">
-                  In the {market.title.toLowerCase()} aisle, the bottle is the
-                  brand. We supply heavyweight, cosmetic-grade flint glass that
-                  communicates value before the cork is even popped. From
-                  bespoke molds to rapid-launch stock programs.
-                </p>
-              </div>
+        </div>
+      </section>
 
-              <div className="md:col-span-7 space-y-6">
-                {market.features.map((feature, i) => (
-                  <div
-                    key={i}
-                    className="flex items-start gap-6 pb-6 border-b border-neutral-200 last:border-0 last:pb-0 group"
-                  >
-                    <div className="w-12 h-12 bg-white text-blue-600 rounded-xl flex-shrink-0 flex items-center justify-center border border-neutral-200 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 transition-all duration-300 shadow-sm">
-                      <CheckCircle2 className="w-6 h-6" />
-                    </div>
-                    <div className="pt-2">
-                      <h3 className="text-lg font-bold text-neutral-900 mb-2">
-                        {feature}
-                      </h3>
-                      <div className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest bg-white border border-neutral-200 inline-block px-2 py-1 rounded">
-                        Specification Met
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* CTA */}
-      <section className="py-24 bg-berlin-blue text-white text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
-        <div className="container mx-auto px-6 relative z-10">
-          <h2 className="text-4xl md:text-5xl font-black mb-8 tracking-tight uppercase">
-            Solve The <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
-              {market.problem?.title
-                .replace("The ", "")
-                .replace(" Problem", "") || "Packaging"}
-            </span>{" "}
-            Problem.
+      {/* CTA FOOTER */}
+      <section className="py-24 bg-rose-50 text-berlin-blue relative overflow-hidden">
+        <div className="container mx-auto px-6 text-center relative z-10">
+          <h2 className="text-4xl md:text-6xl font-black mb-8 tracking-tighter uppercase">
+            Elevate Your Brand.
           </h2>
+          <p className="text-xl text-neutral-600 mb-12 max-w-2xl mx-auto font-light">
+            Ready to disrupt the shelf? Let's engineer a packaging program that
+            performs as beautifully as it looks.
+          </p>
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-3 px-10 py-5 bg-white text-berlin-blue font-bold text-lg rounded-full hover:bg-neutral-100 transition-colors shadow-2xl"
+            className="inline-block px-12 py-5 bg-berlin-blue text-white font-bold text-lg uppercase tracking-widest hover:bg-neutral-900 transition-colors shadow-2xl"
           >
-            Start Engineering
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            Start Your Project
           </Link>
         </div>
       </section>
