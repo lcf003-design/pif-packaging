@@ -1,12 +1,31 @@
-import { Globe, Package, Award, Users, CheckCircle } from "lucide-react";
+import {
+  Globe,
+  Package,
+  CheckCircle,
+  Factory,
+  ShieldCheck,
+  UserCheck,
+} from "lucide-react";
 
 const STATS = [
-  { label: "Global Suppliers", value: "1,700+", icon: Globe },
-  { label: "Locations Worldwide", value: "100+", icon: Users },
-  { label: "SKUs Available", value: "50,000+", icon: Package },
-  { label: "Packaging Awards", value: "225+", icon: Award },
-  { label: "PIF Employees", value: "2,200+", icon: Users },
-  { label: "ISO 9001 Certified", value: "Certified", icon: CheckCircle },
+  { label: "Vetted Manufacturing Partners", value: "500+", icon: Factory },
+  { label: "Sourcing & Logistics Reach", value: "Global", icon: Globe },
+  {
+    label: "Custom Packaging Solutions",
+    value: "Project-Based",
+    icon: Package,
+  },
+  { label: "Hands-On Execution", value: "Founder-Led", icon: UserCheck },
+  {
+    label: "Production Oversight",
+    value: "Quality-Focused",
+    icon: ShieldCheck,
+  },
+  {
+    label: "ISO-Informed Processes",
+    value: "Standards-Aligned",
+    icon: CheckCircle,
+  },
 ];
 
 export default function TrustBar() {

@@ -41,9 +41,9 @@ export default function Footer() {
           </div>
 
           <div className="w-full lg:w-auto p-6 bg-industrial-800 rounded-lg border border-industrial-700">
-            <h3 className="text-lg font-bold mb-2">Join Industry Insights</h3>
+            <h3 className="text-lg font-bold mb-2">Join the PIF Network</h3>
             <p className="text-industrial-400 text-sm mb-4">
-              Get the latest market trends and packaging innovations.
+              Get packaging news and company updates.
             </p>
             <div className="flex gap-2">
               <input
@@ -65,7 +65,7 @@ export default function Footer() {
             <ul className="space-y-3 text-industrial-400 text-sm">
               <li>
                 <Link
-                  href="/services"
+                  href="/services/design"
                   className="hover:text-white transition-colors"
                 >
                   Custom Design
@@ -73,7 +73,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/services"
+                  href="/services/supply-chain"
                   className="hover:text-white transition-colors"
                 >
                   Supply Chain Services
@@ -81,18 +81,10 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/services"
+                  href="/services/quality"
                   className="hover:text-white transition-colors"
                 >
                   Quality Assurance
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/sustainability"
-                  className="hover:text-white transition-colors"
-                >
-                  Sustainability
                 </Link>
               </li>
             </ul>
@@ -102,7 +94,7 @@ export default function Footer() {
             <ul className="space-y-3 text-industrial-400 text-sm">
               <li>
                 <Link
-                  href="/markets"
+                  href="/markets/food"
                   className="hover:text-white transition-colors"
                 >
                   Food & Beverage
@@ -110,7 +102,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/markets"
+                  href="/markets/personal-care"
                   className="hover:text-white transition-colors"
                 >
                   Personal Care
@@ -118,7 +110,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/markets"
+                  href="/markets/pharmaceutical"
                   className="hover:text-white transition-colors"
                 >
                   Pharmaceutical
@@ -126,7 +118,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/markets"
+                  href="/markets/industrial"
                   className="hover:text-white transition-colors"
                 >
                   Industrial
@@ -145,14 +137,7 @@ export default function Footer() {
                   About Us
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/careers"
-                  className="hover:text-white transition-colors"
-                >
-                  Careers
-                </Link>
-              </li>
+
               <li>
                 <Link
                   href="/locations"

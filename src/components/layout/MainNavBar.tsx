@@ -153,44 +153,6 @@ const NAV_LINKS: NavItem[] = [
     ],
   },
   { label: "Markets Served", href: "/markets" },
-  {
-    label: "Sustainability",
-    href: "/sustainability",
-    subItems: [
-      {
-        label: "Our Sustainability Purpose",
-        href: "/sustainability/purpose",
-        description: "Committed to a greener future.",
-        icon: <Leaf className="w-5 h-5 text-action" />,
-      },
-      {
-        label: "Our Sustainability Framework",
-        href: "/sustainability/framework",
-        description: "Strategic environmental goals.",
-        icon: <ShieldCheck className="w-5 h-5 text-action" />,
-      },
-      {
-        label: "Our Sustainability Solutions",
-        href: "/sustainability/solutions",
-        description: "Eco-friendly packaging options.",
-        icon: <Lightbulb className="w-5 h-5 text-action" />,
-      },
-      {
-        label: "Sustainability Legislations",
-        href: "/sustainability/legislations",
-        description: "Compliance and regulations.",
-        icon: <FileText className="w-5 h-5 text-action" />,
-      },
-      {
-        label: "ESG Report",
-        href: "/sustainability/esg",
-        description: "Download our latest report.",
-        icon: <BookOpen className="w-5 h-5 text-action" />,
-      },
-    ],
-  },
-  { label: "Insights", href: "/insights" },
-  { label: "Careers", href: "/careers" },
 ];
 
 export default function MainNavBar() {
@@ -215,10 +177,11 @@ export default function MainNavBar() {
 
   return (
     <div className="bg-white border-b border-industrial-200 shadow-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center h-16">
+      <div className="flex items-center h-16 w-full">
+        {/* NAV CONTENT AREA */}
+        <div className="flex items-center px-8 gap-8">
           {/* Shop Now Mega Menu Button (Click-Only) */}
-          <div className="relative mr-8 z-50" ref={shopMenuRef}>
+          <div className="relative z-50" ref={shopMenuRef}>
             <button
               onClick={() => setIsShopOpen(!isShopOpen)}
               className={`px-6 h-10 rounded-sm font-bold text-sm flex items-center gap-2 transition-colors ${
@@ -271,10 +234,10 @@ export default function MainNavBar() {
 
                 {/* Rich Mega Menu Dropdown */}
                 {link.subItems && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-max max-w-screen-xl hidden group-hover:block z-50 perspective-[1000px]">
+                  <div className="absolute top-full left-0 pt-2 w-max max-w-screen-xl hidden group-hover:block z-50 perspective-[1000px]">
                     <div className="bg-white/95 backdrop-blur-xl border border-industrial-200 shadow-[0_20px_50px_rgba(0,0,0,0.15)] rounded-lg p-6 animate-in fade-in slide-in-from-top-2 duration-200 ring-1 ring-black/5 mt-1">
                       {/* Decorative Up Arrow */}
-                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white rotate-45 border-l border-t border-industrial-200" />
+                      <div className="absolute -top-2 left-6 w-4 h-4 bg-white rotate-45 border-l border-t border-industrial-200" />
 
                       <div className="grid grid-cols-2 gap-x-12 gap-y-6 w-[600px]">
                         {link.subItems.map((sub, idx) => (

@@ -29,9 +29,25 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased min-h-screen flex flex-col`}>
         <InquiryProvider>
-          <div className="flex flex-col">
-            <TopUtilityBar />
-            <MainNavBar />
+          <div className="flex bg-white relative z-50 border-b border-industrial-200">
+            {/* FULL CORNER BRAND BOX */}
+            <a
+              href="/"
+              className="bg-berlin-red text-white w-56 shrink-0 flex flex-col items-center justify-center hover:bg-red-700 transition-all duration-300 z-50 group"
+            >
+              <span className="font-black text-6xl leading-none tracking-tighter group-hover:scale-110 transition-transform duration-300 ease-out">
+                PIF
+              </span>
+              <span className="text-base font-bold tracking-widest uppercase mt-1 group-hover:tracking-[0.2em] transition-all duration-300 ease-out">
+                Packaging
+              </span>
+            </a>
+
+            {/* RIGHT COLUMN: Utility + Nav */}
+            <div className="flex flex-col flex-1 min-w-0">
+              <TopUtilityBar />
+              <MainNavBar />
+            </div>
           </div>
           <main className="flex-grow">{children}</main>
           <InquirySidebar />

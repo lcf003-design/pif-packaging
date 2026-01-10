@@ -27,19 +27,7 @@ export default function TopUtilityBar() {
 
   return (
     <div className="bg-white border-b border-industrial-200 py-4">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-4 md:gap-8">
-        {/* Logo Area */}
-        <Link href="/" className="flex-shrink-0">
-          <div className="flex flex-col items-center justify-center bg-berlin-red text-white p-2 w-32 h-14">
-            <span className="font-black text-2xl leading-none tracking-tighter">
-              PIF
-            </span>
-            <span className="text-[0.6rem] font-bold tracking-widest uppercase">
-              Packaging
-            </span>
-          </div>
-        </Link>
-
+      <div className="w-full px-8 flex flex-col md:flex-row items-center gap-4 md:gap-8">
         {/* Search Bar (Fills remaining space) */}
         <div className="flex-grow w-full md:w-auto relative">
           <form onSubmit={handleSearch} className="flex">
