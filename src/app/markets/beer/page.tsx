@@ -260,7 +260,84 @@ export default function BeerMarketPage() {
         </div>
       </section>
 
-      {/* 5. ENGINEERED COMPLIANCE (Technical Standards) */}
+      {/* 5. THE BREWMASTER'S INTELLIGENCE: EDITORIAL SECTION */}
+      <section className="py-32 bg-white relative z-10 border-t border-neutral-100">
+        <div className="container mx-auto px-6 max-w-[1400px]">
+          <div className="max-w-4xl">
+            <div className="text-berlin-red font-mono text-xs uppercase tracking-[0.4em] mb-12 font-bold flex items-center gap-4">
+              <span className="w-8 h-[1px] bg-berlin-red" />
+              Technical Brief 012
+            </div>
+
+            <h2 className="text-5xl md:text-7xl font-black text-neutral-900 mb-16 leading-[0.9] tracking-tighter">
+              THE BREWMASTER'S <br />
+              <span className="text-neutral-400">INTELLIGENCE.</span>
+            </h2>
+
+            <div className="grid md:grid-cols-2 gap-16 md:gap-24">
+              <div className="space-y-12">
+                <div className="group">
+                  <h3 className="text-neutral-900 font-mono font-bold uppercase tracking-widest text-sm mb-4 border-b border-neutral-200 pb-2 group-hover:border-berlin-red transition-colors">
+                    01. The UV Fortress
+                  </h3>
+                  <p className="text-neutral-500 font-light leading-relaxed text-lg">
+                    IPAs and hop-forward lagers are chemically vulnerable to
+                    wavelengths between 350-500nm. This exposure triggers a
+                    reaction between riboflavin and iso-alpha acids, producing
+                    3-methyl-2-butene-1-thiol—the compound responsible for
+                    "skunking." Our amber glass isn't just a color choice; it's
+                    a specific chemical filter engineered to preserve the hop
+                    integrity of your most sensitive boils.
+                  </p>
+                </div>
+
+                <div className="group">
+                  <h3 className="text-neutral-900 font-mono font-bold uppercase tracking-widest text-sm mb-4 border-b border-neutral-200 pb-2 group-hover:border-berlin-red transition-colors">
+                    02. The DO Zero Protocol
+                  </h3>
+                  <p className="text-neutral-500 font-light leading-relaxed text-lg">
+                    Dissolved Oxygen (DO) is the primary enemy of shelf life.
+                    Even micro-migration through closure liners can turn a
+                    bright, citrusy profile into wet cardboard. We employ BPA-NI
+                    liners with extreme seal-integrity physics, ensuring that
+                    the parts-per-billion (ppb) count of oxygen remains at
+                    equilibrium from production to puncture.
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-12 md:pt-24">
+                <div className="group">
+                  <h3 className="text-neutral-900 font-mono font-bold uppercase tracking-widest text-sm mb-4 border-b border-neutral-200 pb-2 group-hover:border-berlin-red transition-colors">
+                    03. Equilibrium Path
+                  </h3>
+                  <p className="text-neutral-500 font-light leading-relaxed text-lg">
+                    High-speed filling operates at the edge of carbonation
+                    physics. Managing strike temperature while maintaining CO2
+                    solubility requires vessels with absolute geometric
+                    consistency. Our reinforced chime designs and precision neck
+                    profiles allow for higher fill pressures without turbulence,
+                    resulting in a cleaner pour and perfect head retention every
+                    time.
+                  </p>
+                </div>
+
+                <div className="p-8 border-l-4 border-berlin-red bg-neutral-50">
+                  <p className="italic text-neutral-600 font-serif text-xl leading-relaxed">
+                    "The container is the final ingredient in the brew. If it
+                    cannot protect the chemistry, the art is lost."
+                  </p>
+                  <div className="mt-4 text-xs font-mono uppercase tracking-widest text-neutral-400">
+                    — Senior Packaging Engineer
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. ENGINEERED COMPLIANCE (Technical Standards) */}
       <section className="py-24 border-t border-neutral-200 bg-white">
         <div className="container mx-auto px-6 max-w-[1600px]">
           <div className="grid md:grid-cols-2 gap-16">
