@@ -266,6 +266,18 @@ export default function MainNavBar() {
               </div>
             ))}
           </nav>
+
+          {/* RIGHT SIDE: Utility / Download */}
+          <div className="ml-auto flex items-center gap-4">
+            <a
+              href="/docs/PIF_Capability_Deck_2026.pdf"
+              download
+              className="hidden lg:flex items-center gap-2 px-4 py-2 text-xs font-bold uppercase tracking-wider border border-industrial-200 rounded-sm hover:bg-industrial-50 transition-colors text-industrial-600"
+            >
+              <FileText className="w-4 h-4" />
+              <span className="mt-0.5">Capability Deck</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>

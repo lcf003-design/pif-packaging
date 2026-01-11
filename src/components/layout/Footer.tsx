@@ -28,13 +28,13 @@ export default function Footer() {
               <div className="flex items-center gap-1.5">
                 <Award className="w-5 h-5 text-berlin-red" />
                 <span className="text-xs font-bold uppercase tracking-wider">
-                  ISO 9001 Certified
+                  ISO 9001 Standards
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Leaf className="w-5 h-5 text-action" />
                 <span className="text-xs font-bold uppercase tracking-wider">
-                  Sustainable
+                  Sustainable Practices
                 </span>
               </div>
             </div>
@@ -135,23 +135,6 @@ export default function Footer() {
                   className="hover:text-white transition-colors"
                 >
                   About Us
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/locations"
-                  className="hover:text-white transition-colors"
-                >
-                  Locations
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/news"
-                  className="hover:text-white transition-colors"
-                >
-                  News & Events
                 </Link>
               </li>
             </ul>
