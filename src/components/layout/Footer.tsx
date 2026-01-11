@@ -150,14 +150,7 @@ export default function Footer() {
                   Contact Us
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/faqs"
-                  className="hover:text-white transition-colors"
-                >
-                  FAQs
-                </Link>
-              </li>
+
               <li>
                 <Link
                   href="/shipping"
@@ -168,10 +161,18 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/returns"
+                  href="/terms"
                   className="hover:text-white transition-colors"
                 >
-                  T&C
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/privacy"
+                  className="hover:text-white transition-colors"
+                >
+                  Privacy Policy
                 </Link>
               </li>
             </ul>

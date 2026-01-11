@@ -196,12 +196,6 @@ export default function DivisionsPage() {
                 help clients balance environmental goals with functionality,
                 compliance, and budget.
               </p>
-              <Link
-                href="/sustainability"
-                className="text-green-700 font-bold text-sm uppercase tracking-wider hover:text-green-900 flex items-center gap-2"
-              >
-                View Our Eco-Commitment <ArrowRight className="w-4 h-4" />
-              </Link>
             </div>
             {/* Image Right */}
             <div className="relative order-1 lg:order-2 h-[500px]">

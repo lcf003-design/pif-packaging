@@ -1,4 +1,4 @@
-import { MARKETS_DATA } from "@/data/markets";
+import { MARKETS_DATA, Market } from "@/data/markets";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 export default function HomeCareMarketPage() {
-  const market = MARKETS_DATA.find((m) => m.slug === "home-care");
+  const market = MARKETS_DATA.find((m: Market) => m.slug === "home-care");
 
   if (!market) {
     notFound();

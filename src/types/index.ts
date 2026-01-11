@@ -66,3 +66,12 @@ export interface Inquiry {
   };
   submittedAt?: Date;
 }
+
+export interface ContactMessage {
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  message: string;
+  submittedAt?: any; // Firestore serverTimestamp
+}

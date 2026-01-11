@@ -1,6 +1,6 @@
 "use client";
 
-import { MARKETS_DATA } from "@/data/markets";
+import { MARKETS_DATA, Market } from "@/data/markets";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -19,7 +19,7 @@ import {
 import { useState } from "react";
 
 export default function PersonalCareMarketPage() {
-  const market = MARKETS_DATA.find((m) => m.slug === "personal-care");
+  const market = MARKETS_DATA.find((m: Market) => m.slug === "personal-care");
 
   if (!market) {
     notFound();
@@ -281,30 +281,32 @@ export default function PersonalCareMarketPage() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-neutral-100 border border-neutral-100">
-              {market.browseCategories.map((item, i) => (
-                <div
-                  key={i}
-                  className="group bg-white p-8 md:p-12 hover:z-10 relative transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
-                >
-                  <div className="relative aspect-[3/4] mb-8 overflow-hidden">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="object-contain group-hover:scale-110 transition-transform duration-700"
-                    />
+              {market.browseCategories.map(
+                (item: { title: string; image: string }, i: number) => (
+                  <div
+                    key={i}
+                    className="group bg-white p-8 md:p-12 hover:z-10 relative transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
+                  >
+                    <div className="relative aspect-[3/4] mb-8 overflow-hidden">
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className="object-contain group-hover:scale-110 transition-transform duration-700"
+                      />
+                    </div>
+                    <h3 className="text-lg font-bold text-berlin-blue mb-2 group-hover:text-rose-500 transition-colors">
+                      {item.title}
+                    </h3>
+                    <div className="flex items-center justify-between border-t border-neutral-100 pt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span className="text-xs font-mono text-neutral-400 uppercase">
+                        View Catalog
+                      </span>
+                      <ArrowRight className="w-4 h-4 text-rose-500" />
+                    </div>
                   </div>
-                  <h3 className="text-lg font-bold text-berlin-blue mb-2 group-hover:text-rose-500 transition-colors">
-                    {item.title}
-                  </h3>
-                  <div className="flex items-center justify-between border-t border-neutral-100 pt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-xs font-mono text-neutral-400 uppercase">
-                      View Catalog
-                    </span>
-                    <ArrowRight className="w-4 h-4 text-rose-500" />
-                  </div>
-                </div>
-              ))}
+                )
+              )}
             </div>
           </div>
         </section>

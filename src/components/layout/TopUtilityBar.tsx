@@ -8,12 +8,15 @@ import { useInquiry } from "@/context/InquiryContext";
 import ContactModal from "./ContactModal";
 import AccountModal from "./AccountModal";
 
+import SignUpModal from "@/components/layout/SignUpModal";
+
 export default function TopUtilityBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const { totalItems, openSidebar } = useInquiry();
 
   // Sync state with URL param on load
@@ -108,6 +111,18 @@ export default function TopUtilityBar() {
       <AccountModal
         isOpen={isAccountOpen}
         onClose={() => setIsAccountOpen(false)}
+        onSwitchToSignUp={() => {
+          setIsAccountOpen(false);
+          setIsSignUpOpen(true);
+        }}
+      />
+      <SignUpModal
+        isOpen={isSignUpOpen}
+        onClose={() => setIsSignUpOpen(false)}
+        onSwitchToLogin={() => {
+          setIsSignUpOpen(false);
+          setIsAccountOpen(true);
+        }}
       />
     </>
   );
