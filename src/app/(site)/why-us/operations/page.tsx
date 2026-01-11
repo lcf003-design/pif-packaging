@@ -93,7 +93,7 @@ export default function OperationsPage() {
       },
     },
     {
-      title: "99% On-Time Delivery",
+      title: "On-Time Delivery",
       icon: (isActive: boolean) => (
         <motion.div
           variants={iconVariants.drive}
@@ -182,7 +182,7 @@ export default function OperationsPage() {
         </motion.div>
 
         <div className="relative z-10 container mx-auto px-6 text-center max-w-5xl pt-20">
-          <div className="inline-flex flex-col items-center backdrop-blur-xl bg-white/5 p-12 rounded-[3rem] border border-white/20 shadow-xl shadow-white/5">
+          <div className="inline-flex flex-col items-center backdrop-blur-2xl bg-white/90 p-12 rounded-[3rem] border border-white/40 shadow-2xl shadow-black/5">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-blue-600/20 text-blue-600 text-sm font-extrabold uppercase tracking-widest mb-8 animate-fade-in-up shadow-lg shadow-white/50 focus-within:ring-2 ring-blue-600/20 ring-offset-2">
               <Activity className="w-4 h-4" />
               <span>Operational Excellence</span>

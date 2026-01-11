@@ -275,8 +275,8 @@ export default function DivisionsPage() {
             One Partner. All Formats.
           </h2>
           <p className="text-xl text-industrial-600 mb-10 max-w-2xl mx-auto">
-            Stop managing five different vendors for one product launch. Combine
-            your rigid, flexible, and closure needs with PIF.
+            Stop managing five different vendors for one product launch.
+            Consolidate and streamline your supply chain with PIF.
           </p>
           <Link
             href="/contact"

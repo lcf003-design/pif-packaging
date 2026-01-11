@@ -70,7 +70,7 @@ export default function AccountModal({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-[100] flex items-end md:items-center justify-center p-0 md:p-4">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -82,24 +82,41 @@ export default function AccountModal({
 
         {/* Modal Card */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 10 }}
-          className="relative w-full max-w-5xl bg-white rounded-sm shadow-2xl overflow-hidden border border-industrial-200 z-[101]"
+          initial={{ opacity: 0, y: "100%" }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: "100%" }}
+          transition={{ type: "spring", damping: 25, stiffness: 300 }}
+          className="relative w-full md:max-w-5xl h-full md:h-auto md:max-h-[90vh] bg-white md:rounded-sm shadow-2xl overflow-hidden border-t md:border border-industrial-200 z-[101] flex flex-col md:block"
         >
-          {/* Close Button */}
+          {/* Mobile Header (Visible only on small screens) */}
+          <div className="md:hidden px-4 py-4 border-b border-industrial-100 flex items-center justify-between bg-white sticky top-0 z-20">
+            <span className="font-bold text-lg text-industrial-900">
+              Account
+            </span>
+            <button
+              onClick={onClose}
+              className="p-2 -mr-2 text-industrial-500 hover:text-industrial-900"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Desktop Close Button (Hidden on mobile) */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 hover:bg-industrial-50 rounded-full transition-colors text-industrial-400 hover:text-berlin-red z-10"
+            className="hidden md:block absolute top-4 right-4 p-2 hover:bg-industrial-50 rounded-full transition-colors text-industrial-400 hover:text-berlin-red z-10"
           >
             <X className="w-6 h-6" />
           </button>
 
-          <div className="grid md:grid-cols-2">
+          <div className="grid md:grid-cols-2 flex-1 overflow-y-auto">
             {/* LEFT COLUMN: Existing Customer */}
             <div className="p-8 md:p-12 border-b md:border-b-0 md:border-r border-industrial-100">
-              <h2 className="text-2xl font-black text-industrial-900 mb-8">
+              <h2 className="text-2xl font-black text-industrial-900 mb-8 hidden md:block">
                 Existing Customer?
+              </h2>
+              <h2 className="text-xl font-bold text-industrial-900 mb-6 md:hidden">
+                Existing Customer
               </h2>
 
               {error && (

@@ -2,7 +2,7 @@ import {
   fetchProductById,
   fetchRecommendedClosures,
 } from "@/services/productService";
-import ProductDetailClient from "@/app/products/ProductDetailClient";
+import ProductDetailClient from "../ProductDetailClient";
 
 export default async function ProductDetailPage({
   params,

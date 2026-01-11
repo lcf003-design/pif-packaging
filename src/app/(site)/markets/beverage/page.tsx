@@ -27,16 +27,16 @@ export default function BeverageMarketPage() {
       {/* 1. HERO: THE PRESSURE CHAMBER */}
       <section className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden">
         {/* Cinematic Background */}
-        <div className="absolute inset-0 z-0 bg-[#02040a]">
+        <div className="absolute inset-0 z-0 bg-[#0a101f]">
           <Image
             src={market.image}
             alt="Beverage"
             fill
-            className="object-cover opacity-60 mix-blend-overlay"
+            className="object-cover opacity-80"
             priority
           />
-          {/* Deep Ocean Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#02040a] via-[#02040a]/80 to-transparent" />
+          {/* Deep Ocean Gradient - softened */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a101f] via-[#0a101f]/60 to-transparent" />
 
           {/* CSS Micro-Bubbles Overlay */}
           <div className="absolute inset-0 opacity-30 animate-pulse bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay" />

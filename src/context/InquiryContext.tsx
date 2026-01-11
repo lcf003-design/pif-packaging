@@ -12,6 +12,10 @@ interface InquiryContextType {
   isSidebarOpen: boolean;
   openSidebar: () => void;
   closeSidebar: () => void;
+  isMobileMenuOpen: boolean;
+  openMobileMenu: () => void;
+  closeMobileMenu: () => void;
+  toggleMobileMenu: () => void;
 }
 
 const InquiryContext = createContext<InquiryContextType | undefined>(undefined);
@@ -19,6 +23,7 @@ const InquiryContext = createContext<InquiryContextType | undefined>(undefined);
 export function InquiryProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<InquiryItem[]>([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Optional: Load from local storage
   useEffect(() => {
@@ -70,6 +75,10 @@ export function InquiryProvider({ children }: { children: React.ReactNode }) {
         isSidebarOpen,
         openSidebar: () => setIsSidebarOpen(true),
         closeSidebar: () => setIsSidebarOpen(false),
+        isMobileMenuOpen,
+        openMobileMenu: () => setIsMobileMenuOpen(true),
+        closeMobileMenu: () => setIsMobileMenuOpen(false),
+        toggleMobileMenu: () => setIsMobileMenuOpen((prev) => !prev),
       }}
     >
       {children}

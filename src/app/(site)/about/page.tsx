@@ -70,6 +70,54 @@ export default function AboutUsPage() {
         </motion.div>
       </section>
 
+      {/* 1.5. HUMAN CONNECTION: Boutique Scale */}
+      <section className="py-24 bg-industrial-50 relative overflow-hidden border-t border-industrial-100">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="relative h-[600px] w-full rounded-sm overflow-hidden shadow-2xl border border-white group">
+              <Image
+                src="/images/about/about_boutique_consultation.png"
+                alt="Boutique Design Consultation"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-industrial-900/10 group-hover:bg-transparent transition-colors duration-700" />
+            </div>
+
+            <div>
+              <h2 className="text-sm font-bold text-berlin-red uppercase tracking-widest mb-4">
+                The Human Standard
+              </h2>
+              <h2 className="text-5xl font-black text-industrial-900 mb-8 leading-tight">
+                Technology is the Tool. <br />
+                Humanity is the Driver.
+              </h2>
+              <div className="prose prose-lg text-industrial-600">
+                <p className="text-xl font-medium text-industrial-800 mb-6">
+                  We are a boutique packaging company, and the difference is our
+                  hands-on approach.
+                </p>
+                <p className="mb-6">
+                  There is no doubt that technology is our friend, but sometimes
+                  in order to run a business as smoothly as possible, you need
+                  to talk to a real human being.
+                </p>
+                <p className="mb-6">
+                  That’s why, rather than generic online quotes, we will liaise
+                  with you via email, on the phone, or in person to create the
+                  perfect solution for your business.
+                </p>
+                <p>
+                  This means we can negotiate competitively, consult with you
+                  personally, and provide you with a dedicated point person who
+                  can guide you through the process seamlessly.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 2. THE ORIGIN: The Broker Blackout */}
       <section className="py-24 bg-white relative overflow-hidden">
         <div className="container mx-auto px-6 max-w-7xl">
@@ -166,13 +214,15 @@ export default function AboutUsPage() {
                 Only Partners.
               </h2>
               <p className="text-xl text-industrial-600 mb-8 leading-relaxed">
-                At most agencies, you meet the "A Team" during the pitch, and
-                then you're handed off to a junior account manager.
+                At most agencies, you <em>might</em> meet the "A Team" during
+                the pitch, and then you're handed off to a junior account
+                manager.
               </p>
               <p className="text-lg text-industrial-600 mb-8 leading-relaxed">
-                At PIF, your point of contact is a Technical Lead. Someone who
-                knows neck finishes, resin grades, and freight lanes. We believe
-                that competence is the best form of customer service.
+                At PIF, your point of contact, throughout, is a senior partner.
+                Someone who knows neck finishes, resin grades, and freight
+                lanes. We believe that competence is the best form of customer
+                service.
               </p>
               <ul className="space-y-4">
                 <li className="flex items-center gap-4">

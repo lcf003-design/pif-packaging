@@ -21,9 +21,10 @@ const ValuePropBanner = () => {
                   Unique Small Business Partner
                 </strong>{" "}
                 means we bring together the best elements of packaging
-                manufacturing, distribution, and income-boosting services. We
-                offer a comprehensive array of products and solutions to
-                streamline packaging supply chains and grow your profits.
+                manufacturing, distribution, and income-boosting services with a
+                personalized, hands-on approach. We offer a comprehensive array
+                of products and solutions to streamline packaging supply chains
+                and grow your profits.
               </p>
               <p className="font-bold text-berlin-blue text-lg">
                 With PIF Packaging, one call brings it all!

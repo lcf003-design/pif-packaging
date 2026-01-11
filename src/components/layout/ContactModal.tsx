@@ -14,7 +14,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-[100] flex items-end md:items-center justify-center p-0 md:p-4">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -26,13 +26,14 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
         {/* Modal Card */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 10 }}
-          className="relative w-full max-w-5xl bg-white rounded-sm shadow-2xl overflow-hidden border border-industrial-200 z-[101]"
+          initial={{ opacity: 0, y: "100%" }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: "100%" }}
+          transition={{ type: "spring", damping: 25, stiffness: 300 }}
+          className="relative w-full md:max-w-5xl h-full md:h-auto md:max-h-[90vh] bg-white md:rounded-sm shadow-2xl overflow-hidden border-t md:border border-industrial-200 z-[101] flex flex-col md:block"
         >
           {/* Header */}
-          <div className="px-8 py-6 border-b border-industrial-100 flex items-center justify-between">
+          <div className="px-4 md:px-8 py-6 border-b border-industrial-100 flex items-center justify-between">
             <h2 className="text-2xl font-black text-industrial-900 uppercase tracking-tight">
               Contact Us
             </h2>
@@ -44,7 +45,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             </button>
           </div>
 
-          <div className="p-8 md:p-12">
+          <div className="p-8 md:p-12 flex-1 overflow-y-auto">
             <p className="text-industrial-600 mb-12 max-w-3xl leading-relaxed text-lg">
               Our Customer Care Advocates are ready to help you with order
               inquiries, product questions, and more. Our regular business hours

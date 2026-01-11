@@ -11,11 +11,11 @@ export default function SiteLayout({
 }>) {
   return (
     <InquiryProvider>
-      <div className="flex bg-white relative z-50 border-b border-industrial-200">
+      <div className="flex bg-white relative z-50">
         {/* FULL CORNER BRAND BOX - Replicating the logic from the original layout */}
         <a
           href="/"
-          className="bg-berlin-red text-white w-56 shrink-0 flex flex-col items-center justify-center hover:bg-red-700 transition-all duration-300 z-50 group"
+          className="bg-berlin-red text-white w-56 shrink-0 hidden md:flex flex-col items-center justify-center hover:bg-red-700 transition-all duration-300 z-50 group"
         >
           <span className="relative font-black text-6xl leading-none tracking-tighter group-hover:scale-110 transition-transform duration-300 ease-out">
             PIF

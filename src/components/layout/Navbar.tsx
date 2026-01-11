@@ -29,6 +29,31 @@ export default function Navbar() {
     setUserMenuOpen(false);
   };
 
+  /* Mobile Menu State */
+  const [mobileMarketOpen, setMobileMarketOpen] = useState(false);
+  const [mobileContainerOpen, setMobileContainerOpen] = useState(false);
+
+  /* Desktop Menu State */
+  const [activeDesktopMenu, setActiveDesktopMenu] = useState<string | null>(
+    null
+  );
+  let menuTimeout: NodeJS.Timeout;
+
+  const handleMouseEnter = (menu: string) => {
+    clearTimeout(menuTimeout);
+    setActiveDesktopMenu(menu);
+  };
+
+  const handleMouseLeave = () => {
+    menuTimeout = setTimeout(() => {
+      setActiveDesktopMenu(null);
+    }, 100);
+  };
+
+  const toggleMenu = (menu: string) => {
+    setActiveDesktopMenu(activeDesktopMenu === menu ? null : menu);
+  };
+
   return (
     <>
       <header className="sticky top-0 z-50 w-full border-b border-industrial-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
@@ -45,60 +70,96 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <div className="group relative">
-              <button className="flex items-center space-x-1 text-sm font-medium text-industrial-600 hover:text-industrial-900">
+            {/* 1. Shop by Market */}
+            <div
+              className="relative"
+              onMouseEnter={() => handleMouseEnter("market")}
+              onMouseLeave={handleMouseLeave}
+            >
+              <button
+                onClick={() => toggleMenu("market")}
+                className={`flex items-center space-x-1 text-sm font-medium transition-colors ${
+                  activeDesktopMenu === "market"
+                    ? "text-industrial-900"
+                    : "text-industrial-600 hover:text-industrial-900"
+                }`}
+              >
                 <span>Shop by Market</span>
-                <ChevronDown className="w-4 h-4" />
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform ${
+                    activeDesktopMenu === "market" ? "rotate-180" : ""
+                  }`}
+                />
               </button>
-              {/* Mega Menu Dropdown */}
-              <div className="absolute top-full left-0 w-64 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out">
-                <div className="bg-white border border-industrial-100 shadow-xl rounded-md p-4 grid gap-2">
-                  {[
-                    "Food",
-                    "Beverage",
-                    "Personal Care",
-                    "Pharmaceutical",
-                    "Home Care",
-                    "Industrial",
-                  ].map((item) => (
-                    <Link
-                      key={item}
-                      href={`/products?industry=${item}`}
-                      className="block text-sm text-industrial-600 hover:text-action hover:bg-industrial-50 p-2 rounded"
-                    >
-                      {item}
-                    </Link>
-                  ))}
+              {activeDesktopMenu === "market" && (
+                <div className="absolute top-full left-0 w-64 pt-2 z-50 animate-in fade-in zoom-in-95 duration-200">
+                  <div className="bg-white border border-industrial-100 shadow-xl rounded-md p-4 grid gap-2">
+                    {[
+                      "Food",
+                      "Beverage",
+                      "Personal Care",
+                      "Pharmaceutical",
+                      "Home Care",
+                      "Industrial",
+                    ].map((item) => (
+                      <Link
+                        key={item}
+                        href={`/products?industry=${item}`}
+                        onClick={() => setActiveDesktopMenu(null)}
+                        className="block text-sm text-industrial-600 hover:text-action hover:bg-industrial-50 p-2 rounded"
+                      >
+                        {item}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
-            <div className="group relative">
-              <button className="flex items-center space-x-1 text-sm font-medium text-industrial-600 hover:text-industrial-900">
+            {/* 2. Shop by Container */}
+            <div
+              className="relative"
+              onMouseEnter={() => handleMouseEnter("container")}
+              onMouseLeave={handleMouseLeave}
+            >
+              <button
+                onClick={() => toggleMenu("container")}
+                className={`flex items-center space-x-1 text-sm font-medium transition-colors ${
+                  activeDesktopMenu === "container"
+                    ? "text-industrial-900"
+                    : "text-industrial-600 hover:text-industrial-900"
+                }`}
+              >
                 <span>Shop by Container</span>
-                <ChevronDown className="w-4 h-4" />
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform ${
+                    activeDesktopMenu === "container" ? "rotate-180" : ""
+                  }`}
+                />
               </button>
-              {/* Mega Menu Dropdown */}
-              <div className="absolute top-full left-0 w-64 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out">
-                <div className="bg-white border border-industrial-100 shadow-xl rounded-md p-4 grid gap-2">
-                  {[
-                    "Bottles",
-                    "Jars",
-                    "Jugs",
-                    "Vials",
-                    "Tubes",
-                    "Closures",
-                  ].map((item) => (
-                    <Link
-                      key={item}
-                      href={`/products?category=${item}`}
-                      className="block text-sm text-industrial-600 hover:text-action hover:bg-industrial-50 p-2 rounded"
-                    >
-                      {item}
-                    </Link>
-                  ))}
+              {activeDesktopMenu === "container" && (
+                <div className="absolute top-full left-0 w-64 pt-2 z-50 animate-in fade-in zoom-in-95 duration-200">
+                  <div className="bg-white border border-industrial-100 shadow-xl rounded-md p-4 grid gap-2">
+                    {[
+                      "Bottles",
+                      "Jars",
+                      "Jugs",
+                      "Vials",
+                      "Tubes",
+                      "Closures",
+                    ].map((item) => (
+                      <Link
+                        key={item}
+                        href={`/products?category=${item}`}
+                        onClick={() => setActiveDesktopMenu(null)}
+                        className="block text-sm text-industrial-600 hover:text-action hover:bg-industrial-50 p-2 rounded"
+                      >
+                        {item}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             <Link
@@ -190,22 +251,95 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-industrial-100 bg-white p-4 space-y-4">
-            {["Shop by Market", "Shop by Container", "Services"].map((item) => (
-              <div
-                key={item}
-                className="block py-2 text-base font-medium text-industrial-900 border-b border-industrial-50"
+          <div className="md:hidden border-t border-industrial-100 bg-white p-4 space-y-2 h-[calc(100vh-64px)] overflow-y-auto">
+            {/* Shop by Market */}
+            <div className="border-b border-industrial-50 pb-2">
+              <button
+                onClick={() => setMobileMarketOpen(!mobileMarketOpen)}
+                className="flex items-center justify-between w-full py-2 text-base font-bold text-industrial-900"
               >
-                {item}
-              </div>
-            ))}
+                <span>Shop by Market</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform ${
+                    mobileMarketOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {mobileMarketOpen && (
+                <div className="pl-4 mt-2 space-y-2">
+                  {[
+                    "Food",
+                    "Beverage",
+                    "Personal Care",
+                    "Pharmaceutical",
+                    "Home Care",
+                    "Industrial",
+                  ].map((item) => (
+                    <Link
+                      key={item}
+                      href={`/products?industry=${item}`}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block py-1 text-sm text-industrial-600 hover:text-action"
+                    >
+                      {item}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Shop by Container */}
+            <div className="border-b border-industrial-50 pb-2">
+              <button
+                onClick={() => setMobileContainerOpen(!mobileContainerOpen)}
+                className="flex items-center justify-between w-full py-2 text-base font-bold text-industrial-900"
+              >
+                <span>Shop by Container</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform ${
+                    mobileContainerOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {mobileContainerOpen && (
+                <div className="pl-4 mt-2 space-y-2">
+                  {[
+                    "Bottles",
+                    "Jars",
+                    "Jugs",
+                    "Vials",
+                    "Tubes",
+                    "Closures",
+                  ].map((item) => (
+                    <Link
+                      key={item}
+                      href={`/products?category=${item}`}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block py-1 text-sm text-industrial-600 hover:text-action"
+                    >
+                      {item}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Direct Links */}
+            <Link
+              href="/services"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block py-2 text-base font-bold text-industrial-900 border-b border-industrial-50"
+            >
+              Services
+            </Link>
+
             {!user && (
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   setLoginOpen(true);
                 }}
-                className="block w-full text-left py-2 text-base font-medium text-industrial-900 border-b border-industrial-50"
+                className="block w-full text-left py-2 text-base font-bold text-industrial-900 border-b border-industrial-50"
               >
                 Log In / Sign Up
               </button>

@@ -34,7 +34,79 @@ export default function StoryPage() {
         </div>
       </section>
 
-      {/* 2. THE ORIGIN: The Gap We Saw */}
+      {/* 2. PHILOSOPHY: Boutique Soul, Enterprise Scale */}
+      <section className="py-24 bg-industrial-50">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-4xl font-black text-industrial-900 mb-6">
+                Boutique Soul. <br />
+                <span className="text-berlin-red">Enterprise Scale.</span>
+              </h2>
+              <p className="text-xl text-industrial-600 mb-8 leading-relaxed">
+                Founded in Los Angeles in 2014, PIF has become a leader in{" "}
+                <strong>pharmaceutical, nutraceutical, and cannabis</strong>{" "}
+                packaging in the US and Canada. As a global company, we are
+                proud to have bases in the US, Asia and Europe.
+              </p>
+              <p className="text-lg text-industrial-600 mb-8 leading-relaxed">
+                The 2026 Licensing Scheme means a major regulatory change for
+                the UK, and we are proud to be at the forefront of affordable,
+                sustainable and compliant packaging solutions. We are a team of
+                obsessed packaging nerds. We don't have call centers; we have
+                experts who answer their own phones.
+              </p>
+              <Link
+                href="/why-us/mission"
+                className="inline-flex items-center gap-2 font-bold text-industrial-900 border-b-2 border-industrial-900 pb-1 hover:text-berlin-red hover:border-berlin-red transition-all"
+              >
+                Explore Our Mission <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* Visual: Team Candid */}
+            <div className="relative h-[500px] overflow-hidden rounded-sm group">
+              <img
+                src="/story_team_candid.png"
+                alt="Our Team at Work"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0"
+              />
+              <div className="absolute inset-0 bg-berlin-blue/20 mix-blend-multiply transition-opacity duration-700 group-hover:opacity-0" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. IMPACT SCROLL: Silent Partner */}
+      <section className="py-32 bg-industrial-950 text-white relative overflow-hidden">
+        {/* Background Silhouettes */}
+        <div className="absolute inset-0 opacity-20">
+          <img
+            src="/story_impact_silhouettes.png"
+            className="w-full h-full object-cover mix-blend-screen"
+            alt="Product Silhouettes"
+          />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <Quote className="w-16 h-16 text-industrial-700 mx-auto mb-8 opacity-50" />
+          <h2 className="text-3xl md:text-5xl font-serif italic text-gray-300 max-w-4xl mx-auto leading-tight mb-12">
+            "We operate in the shadows so your brand can shine in the light. Our
+            name isn't on the bottle, but our engineering is in the glass."
+          </h2>
+          <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-50 font-bold uppercase tracking-widest text-sm md:text-base">
+            <span>Personal Care</span>
+            <span>•</span>
+            <span>Spirits</span>
+            <span>•</span>
+            <span>Pharmaceutical</span>
+            <span>•</span>
+            <span>Food & Bev</span>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. THE ORIGIN: The Gap We Saw */}
       <section className="py-24 bg-white relative overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -89,75 +161,6 @@ export default function StoryPage() {
                   raw manufacturing muscle of a global enterprise.
                 </p>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. IMPACT SCROLL: Silent Partner */}
-      <section className="py-32 bg-industrial-950 text-white relative overflow-hidden">
-        {/* Background Silhouettes */}
-        <div className="absolute inset-0 opacity-20">
-          <img
-            src="/story_impact_silhouettes.png"
-            className="w-full h-full object-cover mix-blend-screen"
-            alt="Product Silhouettes"
-          />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <Quote className="w-16 h-16 text-industrial-700 mx-auto mb-8 opacity-50" />
-          <h2 className="text-3xl md:text-5xl font-serif italic text-gray-300 max-w-4xl mx-auto leading-tight mb-12">
-            "We operate in the shadows so your brand can shine in the light. Our
-            name isn't on the bottle, but our engineering is in the glass."
-          </h2>
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-50 font-bold uppercase tracking-widest text-sm md:text-base">
-            <span>Personal Care</span>
-            <span>•</span>
-            <span>Spirits</span>
-            <span>•</span>
-            <span>Pharmaceutical</span>
-            <span>•</span>
-            <span>Food & Bev</span>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. PHILOSOPHY: Boutique Soul, Enterprise Scale */}
-      <section className="py-24 bg-industrial-50">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl font-black text-industrial-900 mb-6">
-                Boutique Soul. <br />
-                <span className="text-berlin-red">Enterprise Scale.</span>
-              </h2>
-              <p className="text-xl text-industrial-600 mb-8 leading-relaxed">
-                We are a team of obsessed packaging nerds. We don't have call
-                centers; we have experts who answer their own phones.
-              </p>
-              <p className="text-lg text-industrial-600 mb-8 leading-relaxed">
-                But behind that personal touch is a network of 900+ qualified
-                manufacturing partners and a logistics engine that moves
-                millions of units across oceans every month. It's the best of
-                both worlds.
-              </p>
-              <Link
-                href="/careers"
-                className="inline-flex items-center gap-2 font-bold text-industrial-900 border-b-2 border-industrial-900 pb-1 hover:text-berlin-red hover:border-berlin-red transition-all"
-              >
-                Meet the Team <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-
-            {/* Visual: Team Candid */}
-            <div className="relative h-[500px] overflow-hidden rounded-sm group">
-              <img
-                src="/story_team_candid.png"
-                alt="Our Team at Work"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0"
-              />
-              <div className="absolute inset-0 bg-berlin-blue/20 mix-blend-multiply transition-opacity duration-700 group-hover:opacity-0" />
             </div>
           </div>
         </div>
