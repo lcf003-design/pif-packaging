@@ -11,7 +11,11 @@ import {
   MessageSquare,
   Menu,
   ChevronDown,
+  LayoutDashboard,
+  LogOut,
 } from "lucide-react";
+import { useAuth, logOut } from "@/services/authService";
+import { getUserProfile } from "@/services/userService";
 import { useInquiry } from "@/context/InquiryContext";
 import ContactModal from "./ContactModal";
 import AccountModal from "./AccountModal";
@@ -26,6 +30,20 @@ export default function TopUtilityBar() {
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const { totalItems, openSidebar, toggleMobileMenu } = useInquiry();
+
+  const { user } = useAuth();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      getUserProfile(user.uid).then((p) => {
+        if (p?.role === "admin") setIsAdmin(true);
+      });
+    } else {
+      setIsAdmin(false);
+    }
+  }, [user]);
 
   // Sync state with URL param on load
   useEffect(() => {
@@ -49,8 +67,11 @@ export default function TopUtilityBar() {
             href="/"
             className="md:hidden flex-shrink-0 bg-berlin-red text-white flex flex-col items-center justify-center -my-3 -ml-4 z-40 h-[68px] w-24 px-1"
           >
-            <span className="font-black text-4xl leading-none tracking-tighter">
+            <span className="relative font-black text-4xl leading-none tracking-tighter">
               PIF
+              <span className="absolute top-0 -right-3 text-[0.4rem] font-bold tracking-normal opacity-80">
+                TM
+              </span>
             </span>
             <span className="text-[0.55rem] font-bold tracking-[0.2em] uppercase mt-0.5 border-t border-white/20 pt-0.5 w-full text-center">
               PACKAGING
@@ -120,12 +141,69 @@ export default function TopUtilityBar() {
             </button>
 
             {/* User (Desktop Only) */}
-            <button
-              onClick={() => setIsAccountOpen(true)}
-              className="hover:text-berlin-blue transition-colors hidden md:block"
-            >
-              <User className="w-5 h-5" />
-            </button>
+            {user ? (
+              <div className="relative hidden md:block">
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="hover:text-berlin-blue transition-colors flex items-center gap-1"
+                >
+                  <div className="w-8 h-8 rounded-full bg-industrial-100 flex items-center justify-center border border-industrial-200">
+                    <User className="w-5 h-5 text-industrial-600" />
+                  </div>
+                </button>
+
+                {isUserMenuOpen && (
+                  <div className="absolute top-full right-0 mt-2 w-56 bg-white border border-industrial-200 rounded-lg shadow-xl py-2 z-50 animate-in fade-in zoom-in-95 duration-200">
+                    <div className="px-4 py-2 border-b border-industrial-100 mb-2">
+                      <p className="text-xs font-medium text-industrial-500">
+                        Signed in as
+                      </p>
+                      <p className="text-sm font-bold text-industrial-900 truncate">
+                        {user.email}
+                      </p>
+                    </div>
+
+                    {isAdmin && (
+                      <Link
+                        href="/admin/products"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-industrial-700 hover:bg-industrial-50 hover:text-berlin-blue transition-colors"
+                      >
+                        <LayoutDashboard className="w-4 h-4" />
+                        Admin Dashboard
+                      </Link>
+                    )}
+
+                    <Link
+                      href="/portal"
+                      onClick={() => setIsUserMenuOpen(false)}
+                      className="flex items-center gap-2 px-4 py-2 text-sm text-industrial-700 hover:bg-industrial-50 hover:text-berlin-blue transition-colors"
+                    >
+                      <User className="w-4 h-4" />
+                      My Portal
+                    </Link>
+
+                    <button
+                      onClick={() => {
+                        logOut();
+                        setIsUserMenuOpen(false);
+                      }}
+                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors text-left"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Log Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                onClick={() => setIsAccountOpen(true)}
+                className="hover:text-berlin-blue transition-colors hidden md:block"
+              >
+                <User className="w-5 h-5" />
+              </button>
+            )}
 
             {/* 3. Cart (Visible Mobile & Desktop) */}
             <button

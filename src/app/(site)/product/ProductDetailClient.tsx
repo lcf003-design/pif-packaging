@@ -125,6 +125,26 @@ export default function ProductDetailClient({
                       {product.material}
                     </td>
                   </tr>
+                  {product.color && (
+                    <tr className="bg-industrial-50/50">
+                      <td className="px-4 py-3 text-industrial-500 font-medium">
+                        Color
+                      </td>
+                      <td className="px-4 py-3 text-industrial-900 font-bold">
+                        {product.color}
+                      </td>
+                    </tr>
+                  )}
+                  {product.shape && (
+                    <tr>
+                      <td className="px-4 py-3 text-industrial-500 font-medium">
+                        Shape
+                      </td>
+                      <td className="px-4 py-3 text-industrial-900 font-bold">
+                        {product.shape}
+                      </td>
+                    </tr>
+                  )}
                   <tr className="bg-industrial-50/50">
                     <td className="px-4 py-3 text-industrial-500 font-medium">
                       Neck Finish

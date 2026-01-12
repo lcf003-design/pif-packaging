@@ -62,6 +62,11 @@ export interface Market {
 export const MARKETS_DATA: Market[] = [
   {
     slug: "automotive",
+    // ... (skipping unchanged parts for brevity if tool supported it, but here replacing interface definition and jump to data)
+    // Actually I need to be careful with REPLACE logic. I will target the interface first then the data.
+    // Wait, REPLACE tool recommends single contiguous block.
+    // I'll do two replaces. First the interface.
+
     title: "Automotive",
     tagline: "Performance under pressure.",
     desc: "Aftermarket fluids & industrial lubricants.",

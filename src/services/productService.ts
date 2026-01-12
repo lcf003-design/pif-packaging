@@ -8,6 +8,9 @@ import {
   getDoc,
   query,
   where,
+  addDoc,
+  updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 
 // Feature Flag: Set to false to attempt real Firestore connections
@@ -18,6 +21,8 @@ export async function fetchProducts(filters?: {
   material?: string;
   industry?: string;
   search?: string;
+  color?: string;
+  shape?: string;
 }): Promise<Product[]> {
   if (USE_MOCK_DATA) {
     // Simulate network delay
@@ -37,6 +42,10 @@ export async function fetchProducts(filters?: {
       filtered = filtered.filter((p) => p.category === filters.category);
     if (filters?.material)
       filtered = filtered.filter((p) => p.material === filters.material);
+    if (filters?.color)
+      filtered = filtered.filter((p) => p.color === filters.color);
+    if (filters?.shape)
+      filtered = filtered.filter((p) => p.shape === filters.shape);
     if (filters?.industry)
       filtered = filtered.filter((p) =>
         p.industry.includes(filters.industry as any)
@@ -53,6 +62,8 @@ export async function fetchProducts(filters?: {
       q = query(q, where("category", "==", filters.category));
     if (filters?.material)
       q = query(q, where("material", "==", filters.material));
+    if (filters?.color) q = query(q, where("color", "==", filters.color));
+    if (filters?.shape) q = query(q, where("shape", "==", filters.shape));
 
     // Note: 'array-contains' is needed for industry
     if (filters?.industry)
@@ -129,5 +140,56 @@ export async function fetchRecommendedClosures(
   } catch (error) {
     console.error("Error fetching closures:", error);
     return [];
+  }
+}
+
+export async function addProduct(
+  product: Omit<Product, "id">
+): Promise<string> {
+  // If mock mode, just return a fake ID (or handle differently)
+  if (USE_MOCK_DATA) {
+    console.warn("Adding product in MOCK MODE - not persisting.");
+    return "mock-id-" + Date.now();
+  }
+
+  try {
+    const docRef = await addDoc(collection(db, "products"), product);
+    return docRef.id;
+  } catch (error) {
+    console.error("Error adding product:", error);
+    throw error;
+  }
+}
+
+export async function updateProduct(
+  id: string,
+  updates: Partial<Product>
+): Promise<void> {
+  if (USE_MOCK_DATA) {
+    console.warn("Updating product in MOCK MODE - not persisting.");
+    return;
+  }
+
+  try {
+    const docRef = doc(db, "products", id);
+    const { id: _, ...data } = updates as any; // Ensure ID is not in the data
+    await updateDoc(docRef, data);
+  } catch (error) {
+    console.error("Error updating product:", error);
+    throw error;
+  }
+}
+
+export async function deleteProduct(id: string): Promise<void> {
+  if (USE_MOCK_DATA) {
+    console.warn("Deleting product in MOCK MODE - not persisting.");
+    return;
+  }
+
+  try {
+    await deleteDoc(doc(db, "products", id));
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    throw error;
   }
 }

@@ -92,6 +92,11 @@ export const getUserProfile = async (uid: string) => {
   return snap.exists() ? (snap.data() as UserProfile) : null;
 };
 
+export const setUserRole = async (uid: string, role: string) => {
+  const ref = doc(db, "users", uid);
+  await updateDoc(ref, { role });
+};
+
 // --- Projects (Wishlists) ---
 
 export const getProjects = async (uid: string): Promise<Project[]> => {

@@ -7,6 +7,7 @@ import Footer from "@/components/layout/Footer"; // Assuming we want footer here
 // My previous POA said "I will omit (the marketing footer)". So let's OMIT it.
 
 import { InquiryProvider } from "@/context/InquiryContext";
+import PortalAuthGuard from "@/components/auth/PortalAuthGuard";
 
 export default function PortalLayout({
   children,
@@ -15,46 +16,48 @@ export default function PortalLayout({
 }>) {
   return (
     <InquiryProvider>
-      <div className="flex flex-col min-h-screen bg-gray-50">
-        {/* HEADER SECTION (Sticky?) */}
-        <div className="sticky top-0 z-50 bg-white border-b border-industrial-200">
-          {/* FULL CORNER BRAND BOX Logic - Simplified for dashboard? 
-               Actually the screenshot shows a standard header with "Berlin Packaging" logo.
-               So reusing the (site) logic is best. */}
+      <PortalAuthGuard>
+        <div className="flex flex-col min-h-screen bg-gray-50">
+          {/* HEADER SECTION (Sticky?) */}
+          <div className="sticky top-0 z-50 bg-white border-b border-industrial-200">
+            {/* FULL CORNER BRAND BOX Logic - Simplified for dashboard? 
+                 Actually the screenshot shows a standard header with "Berlin Packaging" logo.
+                 So reusing the (site) logic is best. */}
 
-          <div className="flex">
-            <a
-              href="/"
-              className="bg-berlin-red text-white w-56 shrink-0 flex flex-col items-center justify-center hover:bg-red-700 transition-all duration-300 group"
-            >
-              <span className="relative font-black text-6xl leading-none tracking-tighter group-hover:scale-110 transition-transform duration-300 ease-out">
-                PIF
-                <span className="absolute top-1 -right-5 text-[0.6rem] font-bold tracking-normal opacity-80">
-                  TM
+            <div className="flex">
+              <a
+                href="/"
+                className="hidden md:flex bg-berlin-red text-white w-56 shrink-0 flex-col items-center justify-center hover:bg-red-700 transition-all duration-300 group"
+              >
+                <span className="relative font-black text-6xl leading-none tracking-tighter group-hover:scale-110 transition-transform duration-300 ease-out">
+                  PIF
+                  <span className="absolute top-1 -right-5 text-[0.6rem] font-bold tracking-normal opacity-80">
+                    TM
+                  </span>
                 </span>
-              </span>
-              <span className="text-base font-bold tracking-widest uppercase mt-1 group-hover:tracking-[0.2em] transition-all duration-300 ease-out">
-                Packaging
-              </span>
-            </a>
+                <span className="text-base font-bold tracking-widest uppercase mt-1 group-hover:tracking-[0.2em] transition-all duration-300 ease-out">
+                  Packaging
+                </span>
+              </a>
 
-            {/* RIGHT COLUMN: Utility + Nav */}
-            <div className="flex flex-col flex-1 min-w-0">
-              <TopUtilityBar />
-              <MainNavBar />
+              {/* RIGHT COLUMN: Utility + Nav */}
+              <div className="flex flex-col flex-1 min-w-0">
+                <TopUtilityBar />
+                <MainNavBar />
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* MAIN CONTENT ROW */}
-        <div className="flex flex-1">
-          {/* SIDEBAR */}
-          <PortalSidebar />
+          {/* MAIN CONTENT ROW */}
+          <div className="flex flex-1">
+            {/* SIDEBAR */}
+            <PortalSidebar />
 
-          {/* PAGE CONTENT */}
-          <main className="flex-1 p-8 overflow-y-auto">{children}</main>
+            {/* PAGE CONTENT */}
+            <main className="flex-1 p-8 overflow-y-auto">{children}</main>
+          </div>
         </div>
-      </div>
+      </PortalAuthGuard>
     </InquiryProvider>
   );
 }

@@ -25,7 +25,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <Link
-      href={`/products/${product.id}`}
+      href={`/product/${product.id}`}
       className="group block bg-white rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-out border border-industrial-100 overflow-hidden relative"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

@@ -3,78 +3,76 @@ import FilterSidebar from "@/components/catalog/FilterSidebar";
 import ProductCard from "@/components/catalog/ProductCard";
 import { fetchProducts } from "@/services/productService";
 
-// Client component wrapper for search params usage in Next.js App Router (or usage inside Suspense)
-// Actually, in App Router pages are Server Components by default and receive searchParams prop.
-// However, filtering logic is often easier if we fetch data based on params.
-
-export default async function ProductsPage({
+export default async function CategoryPage({
+  params,
   searchParams,
 }: {
-  // Next.js 15+ searchParams is a promise
+  params: Promise<{ category: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const params = await searchParams;
+  const { category: rawCategory } = await params;
+  const searchParamsValue = await searchParams;
 
-  // Initialize generic filters
-  let category =
-    typeof params.category === "string" ? params.category : undefined;
+  // Format category param to Title Case (e.g., "bottles" -> "Bottles")
+  const categoryParam =
+    rawCategory.charAt(0).toUpperCase() + rawCategory.slice(1);
+
+  // Initialize filters
+  let category: string | undefined = categoryParam;
   let material =
-    typeof params.material === "string" ? params.material : undefined;
+    typeof searchParamsValue.material === "string"
+      ? searchParamsValue.material
+      : undefined;
   let industry =
-    typeof params.industry === "string" ? params.industry : undefined;
-  let search = typeof params.search === "string" ? params.search : undefined;
-  let color: string | undefined = undefined;
-  let shape: string | undefined = undefined;
+    typeof searchParamsValue.industry === "string"
+      ? searchParamsValue.industry
+      : undefined;
+  let search =
+    typeof searchParamsValue.search === "string"
+      ? searchParamsValue.search
+      : undefined;
+  let color =
+    typeof searchParamsValue.color === "string"
+      ? searchParamsValue.color
+      : undefined;
+  let shape =
+    typeof searchParamsValue.shape === "string"
+      ? searchParamsValue.shape
+      : undefined;
 
-  // Specific Shop Menu Query Mapping
-  if (params.market) {
-    if (params.market === "pet-care")
-      industry = "Personal Care"; // Example mapping
-    else if (params.market === "beauty") industry = "Personal Care";
-    else if (params.market === "pharma") industry = "Pharmaceutical";
-    else if (params.market === "home-care") industry = "Home Care";
-    else if (typeof params.market === "string")
-      industry = params.market.charAt(0).toUpperCase() + params.market.slice(1);
-  }
+  // Specific Shop Menu Query Mapping (reused logic for robustness)
+  // We still check query params in case they override or add context
+  const sParams = searchParamsValue;
 
-  // Helper to extract category from key prefix (e.g. 'bottles_material' -> 'Bottles')
+  // Helper to extract category from key prefix
   const extractCategory = (key: string) => {
     if (key.startsWith("bottles")) return "Bottles";
     if (key.startsWith("jars")) return "Jars";
     if (key.startsWith("jugs")) return "Jugs";
     if (key.startsWith("vials")) return "Vials";
     if (key.startsWith("tubes")) return "Tubes";
-    if (key.startsWith("caps")) return "Closures"; // approximate mapping
+    if (key.startsWith("caps")) return "Closures";
     return undefined;
   };
 
-  // Iterate over params to find specific filters
-  Object.keys(params).forEach((key) => {
-    const value = params[key];
+  Object.keys(sParams).forEach((key) => {
+    const value = sParams[key];
     if (typeof value !== "string") return;
 
-    // Material Handling (e.g., bottles_material=Fiber Drums)
     if (key.endsWith("_material")) {
-      category = extractCategory(key);
+      // If the URL category matches (or is generic), use the specific material
+      // We don't overwrite category since it's in the URL path, but we could validat it
       material = value;
     }
 
-    // Color Handling (e.g., bottles_color=Blue Bottles -> value=Blue)
     if (key.endsWith("_color")) {
-      category = extractCategory(key);
-      // Attempt to clean up value: "Blue Bottles" -> "Blue"
-      // This regex removes the category name if present at the end
       color = value.replace(/ (Bottles|Jars|Vials|Jugs|Tubes|Caps)$/i, "");
     }
 
-    // Shape Handling
     if (key.endsWith("_shape")) {
-      category = extractCategory(key);
       shape = value.replace(/ (Jars|Bottles|Vials)$/i, "");
     }
 
-    // "Popular", "Beauty", "Food", "More" -> Fallback to Search
-    // These often contain specific terms like "Mason Jars" or "Honey Bottles"
     if (
       key.endsWith("_popular") ||
       key.endsWith("_beauty") ||
@@ -89,10 +87,7 @@ export default async function ProductsPage({
       key.endsWith("_seamless") ||
       key.endsWith("_accessories")
     ) {
-      // If we don't have a search term yet, use this
       if (!search) search = value;
-      // Also try to set category if implicit
-      if (!category) category = extractCategory(key);
     }
   });
 
@@ -119,7 +114,7 @@ export default async function ProductsPage({
         <div className="flex-1">
           <div className="mb-6 flex items-center justify-between">
             <h1 className="text-2xl font-bold text-industrial-900">
-              Product Catalog{" "}
+              {categoryParam}{" "}
               <span className="text-industrial-400 font-light ml-2">
                 ({filteredProducts.length} Items)
               </span>
@@ -135,7 +130,7 @@ export default async function ProductsPage({
           ) : (
             <div className="py-20 text-center border border-dashed border-industrial-200">
               <p className="text-industrial-500">
-                No products match your criteria.
+                No products found in {categoryParam}.
               </p>
             </div>
           )}
