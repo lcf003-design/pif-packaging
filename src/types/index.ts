@@ -4,6 +4,7 @@ export type Industry =
   | "Food"
   | "Personal Care"
   | "Pharmaceutical"
+  | "Nutraceuticals"
   | "Home Care"
   | "Industrial";
 
@@ -25,6 +26,7 @@ export type Material =
 
 export interface Product {
   id: string;
+  slug?: string;
   sku: string;
   name: string;
   brand: string;
@@ -45,9 +47,15 @@ export interface Product {
   weight?: string;
   caseQty?: number;
   imageUrl: string;
+  images?: string[];
   description: string;
   recommendedClosureIds?: string[];
   isClosure?: boolean;
+  features?: string[];
+  palletQty?: number;
+  capSize?: string;
+  downloads?: { label: string; url: string }[];
+  specifications?: Record<string, string>;
 }
 
 export interface InquiryItem {
@@ -57,6 +65,7 @@ export interface InquiryItem {
 }
 
 export interface Inquiry {
+  id?: string;
   items: InquiryItem[];
   customer: {
     name: string;
@@ -64,7 +73,8 @@ export interface Inquiry {
     email: string;
     phone: string;
   };
-  submittedAt?: Date;
+  status?: "new" | "contacted" | "quoted" | "closed";
+  submittedAt?: any;
 }
 
 export interface ContactMessage {

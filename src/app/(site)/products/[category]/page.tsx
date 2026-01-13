@@ -1,7 +1,10 @@
 import { Suspense } from "react";
-import FilterSidebar from "@/components/catalog/FilterSidebar";
+import FilterBar from "@/components/catalog/FilterBar";
 import ProductCard from "@/components/catalog/ProductCard";
 import { fetchProducts } from "@/services/productService";
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
+import CategoryDescription from "@/components/catalog/CategoryDescription";
 
 export default async function CategoryPage({
   params,
@@ -39,29 +42,19 @@ export default async function CategoryPage({
     typeof searchParamsValue.shape === "string"
       ? searchParamsValue.shape
       : undefined;
+  let neck =
+    typeof searchParamsValue.neck === "string"
+      ? searchParamsValue.neck
+      : undefined;
 
-  // Specific Shop Menu Query Mapping (reused logic for robustness)
-  // We still check query params in case they override or add context
+  // Specific Shop Menu Query Mapping
   const sParams = searchParamsValue;
-
-  // Helper to extract category from key prefix
-  const extractCategory = (key: string) => {
-    if (key.startsWith("bottles")) return "Bottles";
-    if (key.startsWith("jars")) return "Jars";
-    if (key.startsWith("jugs")) return "Jugs";
-    if (key.startsWith("vials")) return "Vials";
-    if (key.startsWith("tubes")) return "Tubes";
-    if (key.startsWith("caps")) return "Closures";
-    return undefined;
-  };
 
   Object.keys(sParams).forEach((key) => {
     const value = sParams[key];
     if (typeof value !== "string") return;
 
     if (key.endsWith("_material")) {
-      // If the URL category matches (or is generic), use the specific material
-      // We don't overwrite category since it's in the URL path, but we could validat it
       material = value;
     }
 
@@ -91,6 +84,21 @@ export default async function CategoryPage({
     }
   });
 
+  // Determine display title based on active filters
+  let displayTitle = categoryParam;
+
+  if (material) {
+    displayTitle = `${material} ${categoryParam}`;
+  } else if (search) {
+    // If there's a specific search term that looks like a sub-category (e.g. "Juice Bottles"), use it
+    // Simple heuristic: if search contains the category name, use it as title
+    if (
+      search.toLowerCase().includes(categoryParam.toLowerCase().slice(0, -1))
+    ) {
+      displayTitle = search;
+    }
+  }
+
   const filteredProducts = await fetchProducts({
     category,
     material,
@@ -102,39 +110,74 @@ export default async function CategoryPage({
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col md:flex-row gap-8">
-        {/* Sidebar */}
-        <aside className="w-full md:w-64 flex-shrink-0">
-          <Suspense fallback={<div>Loading filters...</div>}>
-            <FilterSidebar />
-          </Suspense>
-        </aside>
+      {/* Breadcrumbs */}
+      <div className="flex items-center text-xs text-industrial-500 mb-6 font-medium">
+        <Link href="/" className="hover:text-industrial-900 transition-colors">
+          Home
+        </Link>
+        <ChevronRight className="w-3 h-3 mx-2" />
+        <Link
+          href="/shop-all"
+          className="hover:text-industrial-900 transition-colors"
+        >
+          Shop All
+        </Link>
+        <ChevronRight className="w-3 h-3 mx-2" />
+        {displayTitle !== categoryParam ? (
+          <>
+            <Link
+              href={`/products/${rawCategory}`}
+              className="hover:text-industrial-900 transition-colors"
+            >
+              {categoryParam}
+            </Link>
+            <ChevronRight className="w-3 h-3 mx-2" />
+            <span className="text-industrial-900 font-bold">
+              {displayTitle}
+            </span>
+          </>
+        ) : (
+          <span className="text-industrial-900 font-bold">{categoryParam}</span>
+        )}
+      </div>
 
-        {/* Grid */}
-        <div className="flex-1">
-          <div className="mb-6 flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-industrial-900">
-              {categoryParam}{" "}
-              <span className="text-industrial-400 font-light ml-2">
-                ({filteredProducts.length} Items)
-              </span>
-            </h1>
+      {/* Dynamic Header with Expansion */}
+      {/* Pass the fully qualified title (e.g. "Aluminum Bottles") so the component matches it */}
+      <CategoryDescription category={displayTitle} />
+
+      {/* Item Count (moved below header for clean layout, slightly tweaked) */}
+      <div className="flex justify-end mb-4">
+        <span className="text-industrial-400 font-medium text-sm">
+          Showing 1-{filteredProducts.length} of {filteredProducts.length} Items
+        </span>
+      </div>
+
+      {/* Horizontal Filter Bar */}
+      <Suspense fallback={<div>Loading filters...</div>}>
+        <FilterBar />
+      </Suspense>
+
+      {/* Grid - Full Width */}
+      <div className="mt-6">
+        {filteredProducts.length > 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {filteredProducts.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
           </div>
-
-          {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredProducts.map((p) => (
-                <ProductCard key={p.id} product={p} />
-              ))}
-            </div>
-          ) : (
-            <div className="py-20 text-center border border-dashed border-industrial-200">
-              <p className="text-industrial-500">
-                No products found in {categoryParam}.
-              </p>
-            </div>
-          )}
-        </div>
+        ) : (
+          <div className="py-32 text-center bg-industrial-50 rounded-lg border border-dashed border-industrial-200">
+            <p className="text-industrial-500 text-lg font-medium">
+              No products found matching your customized criteria.
+            </p>
+            <button
+              className="mt-4 text-berlin-red font-bold hover:underline"
+              // This would need to trigger a clear function or be a link
+            >
+              Clear Filters
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

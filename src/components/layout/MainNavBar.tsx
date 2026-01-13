@@ -14,22 +14,27 @@ import {
   Clock,
   MessageSquare,
   ShieldCheck,
-  FileText,
-  Lightbulb,
-  BookOpen,
-  PenTool,
-  Palette,
-  Truck,
+  Search,
   User,
-  Briefcase,
   Menu,
   X,
+  Phone,
+  Truck,
+  Zap,
+  Box,
+  ArrowRight,
+  PenTool,
+  Palette,
+  BookOpen,
+  FileText,
+  Lightbulb,
+  Briefcase,
   LayoutDashboard, // Added
   LogOut, // Added
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import ShopNowMegaMenu from "./mega-menu/ShopNowMegaMenu";
+import ShopNowDrawer from "./ShopNowDrawer";
 import { useAuth, logOut } from "@/services/authService"; // Added
 import { getUserProfile } from "@/services/userService"; // Added
 
@@ -45,6 +50,36 @@ interface NavItem {
 }
 
 const NAV_LINKS: NavItem[] = [
+  {
+    label: "Manufacturing",
+    href: "/manufacturing",
+    subItems: [
+      {
+        label: "Capabilities",
+        href: "/manufacturing",
+        description: "Custom molding, automation, and engineering.",
+        icon: <Zap className="w-5 h-5 text-action" />,
+      },
+      {
+        label: "Supply Chain",
+        href: "/services/supply-chain",
+        description: "Global logistics and freight management.",
+        icon: <Truck className="w-5 h-5 text-action" />,
+      },
+      {
+        label: "Decoration",
+        href: "/services/design",
+        description: "Silk screen, hot stamping, and labeling.",
+        icon: <Box className="w-5 h-5 text-action" />, // Using Box as placeholder for decoration
+      },
+      {
+        label: "Start Project",
+        href: "/contact",
+        description: "Get a quote for custom manufacturing.",
+        icon: <ArrowRight className="w-5 h-5 text-action" />,
+      },
+    ],
+  },
   {
     label: "Why PIF",
     href: "/why-us",
@@ -286,8 +321,10 @@ export default function MainNavBar() {
       <div className="flex items-center md:h-16 h-0 w-full relative">
         {/* NAV CONTENT AREA */}
         <div className="flex items-center px-4 md:px-8 gap-4 md:gap-8 w-full">
-          {/* Shop Now Mega Menu Button (Hidden on Mobile - Moved to Drawer) */}
-          <div className="relative z-50 hidden md:block" ref={shopMenuRef}>
+          {/* Shop Now Drawer Button */}
+          <div className="hidden md:block">
+            {" "}
+            {/* Removed relative z-50 and ref */}
             <button
               onClick={() => setIsShopOpen(!isShopOpen)}
               className={`px-4 md:px-6 h-10 rounded-sm font-bold text-sm flex items-center gap-2 transition-colors ${
@@ -303,12 +340,6 @@ export default function MainNavBar() {
                 }`}
               />
             </button>
-            {/* Mega Menu Dropdown */}
-            {isShopOpen && (
-              <div className="absolute top-full left-0 pt-2 animate-in fade-in zoom-in-95 duration-200 origin-top-left w-[90vw] md:w-auto">
-                <ShopNowMegaMenu onClose={() => setIsShopOpen(false)} />
-              </div>
-            )}
           </div>
 
           {/* Desktop Navigation Links */}
@@ -729,6 +760,9 @@ export default function MainNavBar() {
         isOpen={isContactOpen}
         onClose={() => setIsContactOpen(false)}
       />
+
+      {/* Shop Now Drawer */}
+      <ShopNowDrawer isOpen={isShopOpen} onClose={() => setIsShopOpen(false)} />
     </div>
   );
 }

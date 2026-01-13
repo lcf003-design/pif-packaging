@@ -7,6 +7,7 @@ import ServicesSection from "@/components/home/ServicesSection";
 import ValuePropBanner from "@/components/home/ValuePropBanner";
 import ForwardThinkingBanner from "@/components/home/ForwardThinkingBanner";
 import ExecutionGrid from "@/components/home/ExecutionGrid";
+import ManufacturingPreview from "@/components/home/ManufacturingPreview";
 
 export default function Home() {
   return (
@@ -16,6 +17,9 @@ export default function Home() {
 
       {/* Trust Indicators */}
       <TrustBar />
+
+      {/* Manufacturing Preview - Hybrid Strategy */}
+      <ManufacturingPreview />
 
       {/* Markets Grid */}
       <IndustryGrid />

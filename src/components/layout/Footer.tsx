@@ -1,13 +1,5 @@
 import Link from "next/link";
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-  Twitter,
-  ShieldCheck,
-  Award,
-  Leaf,
-} from "lucide-react";
+import { ShieldCheck, Award, Leaf } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -185,20 +177,6 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} PIF Packaging. All rights
             reserved.
           </p>
-          <div className="flex items-center gap-6">
-            <Link href="#" className="hover:text-white transition-colors">
-              <Linkedin className="w-5 h-5" />
-            </Link>
-            <Link href="#" className="hover:text-white transition-colors">
-              <Twitter className="w-5 h-5" />
-            </Link>
-            <Link href="#" className="hover:text-white transition-colors">
-              <Instagram className="w-5 h-5" />
-            </Link>
-            <Link href="#" className="hover:text-white transition-colors">
-              <Facebook className="w-5 h-5" />
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

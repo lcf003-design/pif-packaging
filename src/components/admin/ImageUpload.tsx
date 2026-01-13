@@ -123,7 +123,7 @@ export default function ImageUpload({
         onDragOver={handleDrag}
         onDrop={handleDrop}
         className={`
-            relative group flex flex-col items-center justify-center w-full h-64 
+            relative group flex flex-col items-center justify-center w-full h-full
             border-2 border-dashed rounded-lg cursor-pointer transition-all duration-200
             ${
               isDragging
@@ -172,17 +172,11 @@ export default function ImageUpload({
           ) : (
             // Upload Prompt
             <>
-              <div className="mb-3 p-3 bg-white rounded-full shadow-sm">
-                <Upload className="w-6 h-6 text-gray-400" />
+              <div className="mb-2 p-2 bg-white rounded-full shadow-sm">
+                <Upload className="w-5 h-5 text-gray-400" />
               </div>
-              <p className="mb-2 text-sm text-gray-500 font-medium">
-                <span className="font-semibold text-berlin-blue">
-                  Click to upload
-                </span>{" "}
-                or drag and drop
-              </p>
-              <p className="text-xs text-gray-400">
-                SVG, PNG, JPG or WEBP (max. 5MB)
+              <p className="text-xs font-bold text-berlin-blue text-center">
+                Add Photo
               </p>
             </>
           )}

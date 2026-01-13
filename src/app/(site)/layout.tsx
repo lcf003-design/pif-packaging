@@ -3,6 +3,7 @@ import MainNavBar from "@/components/layout/MainNavBar";
 import Footer from "@/components/layout/Footer";
 import { InquiryProvider } from "@/context/InquiryContext";
 import { InquirySidebar } from "@/components/layout/InquirySidebar";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
 export default function SiteLayout({
   children,
@@ -11,7 +12,7 @@ export default function SiteLayout({
 }>) {
   return (
     <InquiryProvider>
-      <div className="flex bg-white relative z-50">
+      <div className="flex bg-white relative z-50 sticky top-0 shadow-xl">
         {/* FULL CORNER BRAND BOX - Replicating the logic from the original layout */}
         <a
           href="/"
@@ -36,6 +37,7 @@ export default function SiteLayout({
       </div>
       <main className="flex-grow">{children}</main>
       <InquirySidebar />
+      <ScrollToTop />
       <Footer />
     </InquiryProvider>
   );

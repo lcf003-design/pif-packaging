@@ -99,14 +99,43 @@ export async function fetchProductById(
   }
 
   try {
+    console.log(`[Service] Fetching product with ID: "${id}"`);
     const docRef = doc(db, "products", id);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
+      console.log(`[Service] Found product: ${docSnap.id}`);
       return { id: docSnap.id, ...docSnap.data() } as Product;
     }
+    console.log(`[Service] Product ${id} does not exist in Firestore.`);
     return undefined;
   } catch (error) {
     console.error(`Error fetching product ${id}:`, error);
+    return undefined;
+  }
+}
+
+export async function fetchProductBySlug(
+  slug: string
+): Promise<Product | undefined> {
+  if (USE_MOCK_DATA) {
+    return MOCK_PRODUCTS.find((p) => p.slug === slug);
+  }
+
+  try {
+    console.log(`[Service] Fetching product with Slug: "${slug}"`);
+    const productsRef = collection(db, "products");
+    const q = query(productsRef, where("slug", "==", slug));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      const docSnap = querySnapshot.docs[0];
+      return { id: docSnap.id, ...docSnap.data() } as Product;
+    }
+
+    console.log(`[Service] Slug ${slug} not found.`);
+    return undefined;
+  } catch (error) {
+    console.error(`Error fetching product by slug ${slug}:`, error);
     return undefined;
   }
 }
@@ -153,6 +182,29 @@ export async function addProduct(
   }
 
   try {
+    // Unique Slug Logic
+    let uniqueSlug = product.slug;
+    if (uniqueSlug) {
+      let counter = 0;
+      let exists = true;
+      while (exists) {
+        const candidate: string =
+          counter === 0 ? uniqueSlug : `${uniqueSlug}-${counter}`;
+        const q = query(
+          collection(db, "products"),
+          where("slug", "==", candidate)
+        );
+        const snap = await getDocs(q);
+        if (snap.empty) {
+          uniqueSlug = candidate;
+          exists = false;
+        } else {
+          counter++;
+        }
+      }
+      product.slug = uniqueSlug;
+    }
+
     const docRef = await addDoc(collection(db, "products"), product);
     return docRef.id;
   } catch (error) {

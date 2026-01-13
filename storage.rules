@@ -1,0 +1,28 @@
+rules_version = '2';
+
+// Craft rules based on data in your Firestore database
+// allow write: if firestore.get(
+//    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper function to check auth
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    match /products/{allPaths=**} {
+      // Allow read access to everyone (public catalog)
+      allow read: if true;
+      
+      // Allow write access only to authenticated users (ideally admins)
+      // For now, any logged in user can upload for simplicity during setup
+      allow write: if isAuthenticated();
+    }
+    
+    // Default deny for everything else
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

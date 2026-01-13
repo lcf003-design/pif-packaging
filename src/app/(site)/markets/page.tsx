@@ -71,48 +71,50 @@ function MarketBento() {
     <section className="bg-neutral-950 pb-32 px-6">
       <div className="container mx-auto max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          {MARKETS_DATA.map((market, i) => (
-            <Link
-              key={market.slug}
-              href={`/markets/${market.slug}`}
-              className={`relative h-[300px] rounded-3xl overflow-hidden group cursor-pointer border border-white/10 ${market.colSpan}`}
-            >
-              <motion.div
-                className="h-full w-full"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
+          {MARKETS_DATA.filter((m) => m.slug !== "cannabis").map(
+            (market, i) => (
+              <Link
+                key={market.slug}
+                href={`/markets/${market.slug}`}
+                className={`relative h-[300px] rounded-3xl overflow-hidden group cursor-pointer border border-white/10 ${market.colSpan}`}
               >
-                {/* Background Image */}
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    src={market.image}
-                    alt={market.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100"
-                  />
-                  <div className="absolute inset-0 bg-neutral-900/40 group-hover:bg-neutral-900/20 transition-colors duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent opacity-90" />
-                </div>
-
-                {/* Content */}
-                <div className="absolute inset-0 z-10 p-8 flex flex-col justify-end">
-                  <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                    <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-4 text-white border border-white/20 group-hover:bg-blue-600 group-hover:border-blue-500 transition-colors duration-300">
-                      <market.icon className="w-6 h-6" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-white mb-2">
-                      {market.title}
-                    </h3>
-                    <p className="text-neutral-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
-                      {market.desc}
-                    </p>
+                <motion.div
+                  className="h-full w-full"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05 }}
+                >
+                  {/* Background Image */}
+                  <div className="absolute inset-0 z-0">
+                    <Image
+                      src={market.image}
+                      alt={market.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100"
+                    />
+                    <div className="absolute inset-0 bg-neutral-900/40 group-hover:bg-neutral-900/20 transition-colors duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent opacity-90" />
                   </div>
-                </div>
-              </motion.div>
-            </Link>
-          ))}
+
+                  {/* Content */}
+                  <div className="absolute inset-0 z-10 p-8 flex flex-col justify-end">
+                    <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                      <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-4 text-white border border-white/20 group-hover:bg-blue-600 group-hover:border-blue-500 transition-colors duration-300">
+                        <market.icon className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-white mb-2">
+                        {market.title}
+                      </h3>
+                      <p className="text-neutral-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
+                        {market.desc}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              </Link>
+            )
+          )}
         </div>
       </div>
     </section>

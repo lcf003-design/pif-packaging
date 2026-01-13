@@ -51,7 +51,7 @@ export default function SupplyChainPage() {
             className="object-cover opacity-60 mix-blend-overlay"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
           {/* Abstract Grid Overlay */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:60px_60px] opacity-[0.03]" />
         </motion.div>
@@ -88,7 +88,7 @@ export default function SupplyChainPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-xl text-neutral-600 max-w-lg leading-relaxed mb-10 font-medium"
+                className="text-xl text-white max-w-lg leading-relaxed mb-10 font-medium"
               >
                 We handle the global shipping, customs, and storage so you don't
                 have to. Simple, reliable logistics that let you focus on

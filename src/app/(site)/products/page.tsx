@@ -1,11 +1,10 @@
 import { Suspense } from "react";
-import FilterSidebar from "@/components/catalog/FilterSidebar";
+import FilterBar from "@/components/catalog/FilterBar";
 import ProductCard from "@/components/catalog/ProductCard";
 import { fetchProducts } from "@/services/productService";
-
-// Client component wrapper for search params usage in Next.js App Router (or usage inside Suspense)
-// Actually, in App Router pages are Server Components by default and receive searchParams prop.
-// However, filtering logic is often easier if we fetch data based on params.
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
+import CategoryDescription from "@/components/catalog/CategoryDescription";
 
 export default async function ProductsPage({
   searchParams,
@@ -23,8 +22,9 @@ export default async function ProductsPage({
   let industry =
     typeof params.industry === "string" ? params.industry : undefined;
   let search = typeof params.search === "string" ? params.search : undefined;
-  let color: string | undefined = undefined;
-  let shape: string | undefined = undefined;
+  let color = typeof params.color === "string" ? params.color : undefined;
+  let shape = typeof params.shape === "string" ? params.shape : undefined;
+  let neck = typeof params.neck === "string" ? params.neck : undefined;
 
   // Specific Shop Menu Query Mapping
   if (params.market) {
@@ -44,7 +44,7 @@ export default async function ProductsPage({
     if (key.startsWith("jugs")) return "Jugs";
     if (key.startsWith("vials")) return "Vials";
     if (key.startsWith("tubes")) return "Tubes";
-    if (key.startsWith("caps")) return "Closures"; // approximate mapping
+    if (key.startsWith("caps")) return "Closures";
     return undefined;
   };
 
@@ -53,17 +53,15 @@ export default async function ProductsPage({
     const value = params[key];
     if (typeof value !== "string") return;
 
-    // Material Handling (e.g., bottles_material=Fiber Drums)
+    // Material Handling
     if (key.endsWith("_material")) {
       category = extractCategory(key);
       material = value;
     }
 
-    // Color Handling (e.g., bottles_color=Blue Bottles -> value=Blue)
+    // Color Handling
     if (key.endsWith("_color")) {
       category = extractCategory(key);
-      // Attempt to clean up value: "Blue Bottles" -> "Blue"
-      // This regex removes the category name if present at the end
       color = value.replace(/ (Bottles|Jars|Vials|Jugs|Tubes|Caps)$/i, "");
     }
 
@@ -74,7 +72,6 @@ export default async function ProductsPage({
     }
 
     // "Popular", "Beauty", "Food", "More" -> Fallback to Search
-    // These often contain specific terms like "Mason Jars" or "Honey Bottles"
     if (
       key.endsWith("_popular") ||
       key.endsWith("_beauty") ||
@@ -89,9 +86,7 @@ export default async function ProductsPage({
       key.endsWith("_seamless") ||
       key.endsWith("_accessories")
     ) {
-      // If we don't have a search term yet, use this
       if (!search) search = value;
-      // Also try to set category if implicit
       if (!category) category = extractCategory(key);
     }
   });
@@ -105,41 +100,76 @@ export default async function ProductsPage({
     shape,
   });
 
+  // Calculate Display Title
+  let displayTitle = "All Products";
+  if (category) {
+    displayTitle = category;
+    if (material) displayTitle = `${material} ${category}`;
+  } else if (material) {
+    displayTitle = `${material} Packaging`;
+  } else if (search) {
+    displayTitle = `Search: ${search}`;
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col md:flex-row gap-8">
-        {/* Sidebar */}
-        <aside className="w-full md:w-64 flex-shrink-0">
-          <Suspense fallback={<div>Loading filters...</div>}>
-            <FilterSidebar />
-          </Suspense>
-        </aside>
+      {/* Breadcrumbs */}
+      <div className="flex items-center text-xs text-industrial-500 mb-6 font-medium">
+        <Link href="/" className="hover:text-industrial-900 transition-colors">
+          Home
+        </Link>
+        <ChevronRight className="w-3 h-3 mx-2" />
+        <Link
+          href="/shop-all"
+          className="hover:text-industrial-900 transition-colors"
+        >
+          Shop All
+        </Link>
+        <ChevronRight className="w-3 h-3 mx-2" />
+        <span className="text-industrial-900 font-bold">All Products</span>
+        {category && (
+          <>
+            <ChevronRight className="w-3 h-3 mx-2" />
+            <span className="text-industrial-900 font-bold">
+              {displayTitle}
+            </span>
+          </>
+        )}
+      </div>
 
-        {/* Grid */}
-        <div className="flex-1">
-          <div className="mb-6 flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-industrial-900">
-              Product Catalog{" "}
-              <span className="text-industrial-400 font-light ml-2">
-                ({filteredProducts.length} Items)
-              </span>
-            </h1>
+      {/* Dynamic Header */}
+      <CategoryDescription category={displayTitle} />
+
+      {/* Item Count */}
+      <div className="flex justify-end mb-4">
+        <span className="text-industrial-400 font-medium text-sm">
+          Showing 1-{filteredProducts.length} of {filteredProducts.length} Items
+        </span>
+      </div>
+
+      {/* Filter Bar */}
+      <Suspense fallback={<div>Loading filters...</div>}>
+        <FilterBar />
+      </Suspense>
+
+      {/* Grid */}
+      <div className="mt-6">
+        {filteredProducts.length > 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {filteredProducts.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
           </div>
-
-          {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredProducts.map((p) => (
-                <ProductCard key={p.id} product={p} />
-              ))}
-            </div>
-          ) : (
-            <div className="py-20 text-center border border-dashed border-industrial-200">
-              <p className="text-industrial-500">
-                No products match your criteria.
-              </p>
-            </div>
-          )}
-        </div>
+        ) : (
+          <div className="py-32 text-center bg-industrial-50 rounded-lg border border-dashed border-industrial-200">
+            <p className="text-industrial-500 text-lg font-medium">
+              No products match your criteria.
+            </p>
+            <button className="mt-4 text-berlin-red font-bold hover:underline">
+              Clear All Filters
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

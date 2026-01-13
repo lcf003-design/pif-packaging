@@ -5,7 +5,14 @@ import { getUserProfile } from "@/services/userService";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { LayoutDashboard, LogOut, Store, Upload } from "lucide-react";
+import {
+  LayoutDashboard,
+  LogOut,
+  Store,
+  Upload,
+  MessageSquare,
+  Users,
+} from "lucide-react";
 import { logOut } from "@/services/authService";
 
 export default function AdminLayout({
@@ -83,12 +90,57 @@ export default function AdminLayout({
 
         <nav className="p-4 space-y-1">
           <Link
+            href="/admin"
+            className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-md transition-colors"
+          >
+            <LayoutDashboard className="w-5 h-5 text-slate-400" />
+            Dashboard
+          </Link>
+
+          <Link
+            href="/admin/inquiries"
+            className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-md transition-colors"
+          >
+            <div className="relative">
+              <MessageSquare className="w-5 h-5 text-slate-400" />
+              {/* Notification Dot Placeholder */}
+              <div className="absolute -top-1 -right-1 w-2 h-2 bg-berlin-red rounded-full hidden" />
+            </div>
+            Inquiries
+          </Link>
+
+          <Link
             href="/admin/products"
-            className="flex items-center gap-3 px-4 py-3 text-sm font-medium bg-slate-800 text-white rounded-md"
+            className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-md transition-colors"
           >
             <Upload className="w-5 h-5 text-slate-400" />
             Products
           </Link>
+
+          <Link
+            href="/admin/users"
+            className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-md transition-colors"
+          >
+            <Users className="w-5 h-5 text-slate-400" />
+            Directory
+          </Link>
+
+          {/* Hidden Assets (Private Access) */}
+          <div className="pt-4 mt-4 border-t border-slate-800">
+            <div className="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+              Private Links
+            </div>
+            <Link
+              href="/markets/cannabis"
+              target="_blank"
+              className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-md transition-colors group"
+            >
+              <span className="w-5 h-5 flex items-center justify-center bg-slate-800 rounded text-xs font-bold text-green-500 border border-slate-700 group-hover:border-green-500 transition-colors">
+                C
+              </span>
+              Cannabis Page
+            </Link>
+          </div>
 
           <Link
             href="/"

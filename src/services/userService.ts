@@ -97,6 +97,13 @@ export const setUserRole = async (uid: string, role: string) => {
   await updateDoc(ref, { role });
 };
 
+export const getAllUsers = async (): Promise<UserProfile[]> => {
+  const ref = collection(db, "users");
+  const q = query(ref, orderBy("createdAt", "desc"));
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => ({ ...d.data() } as UserProfile));
+};
+
 // --- Projects (Wishlists) ---
 
 export const getProjects = async (uid: string): Promise<Project[]> => {

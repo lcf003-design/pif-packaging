@@ -12,6 +12,7 @@ export interface NavigationSubSection {
 export interface NavigationCategory {
   id: string; // unique id for active state logic
   label: string; // Display name "Jars"
+  image?: string; // For Shop All grid
   subSections?: NavigationSubSection[]; // For nested lists (accordions/groups)
   flatItems?: NavigationItem[]; // For simple lists without groups
 }
@@ -21,21 +22,63 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
     id: "market",
     label: "Shop by Market",
     flatItems: [
-      { label: "Automotive", href: "/products?market=automotive" },
-      { label: "Food", href: "/products?market=food" },
-      { label: "Pet Care & Veterinary", href: "/products?market=pet-care" },
-      { label: "Beer", href: "/products?market=beer" },
-      { label: "Home Care", href: "/products?market=home-care" },
+      {
+        label: "Automotive",
+        href: "/markets/automotive",
+        image: "/images/markets/automotive.png",
+      },
+      {
+        label: "Food",
+        href: "/markets/food",
+        image: "/images/markets/food.png",
+      },
+      {
+        label: "Pet Care & Veterinary",
+        href: "/markets/pet-care",
+        image: "/images/markets/pet.png",
+      },
+      {
+        label: "Beer",
+        href: "/markets/beer",
+        image: "/images/markets/beer.png",
+      },
+      {
+        label: "Home Care",
+        href: "/markets/home-care",
+        image: "/images/markets/home.png",
+      },
       {
         label: "Pharma, Nutraceutical & Healthcare",
-        href: "/products?market=pharma",
+        href: "/markets/pharmaceutical",
+        image: "/images/markets/pharma.png",
       },
-      { label: "Beverage", href: "/products?market=beverage" },
-      { label: "Industrial Chemical", href: "/products?market=chemical" },
-      { label: "Spirits", href: "/products?market=spirits" },
-      { label: "Cannabis & CBD", href: "/products?market=cannabis" },
-      { label: "Personal Health & Beauty", href: "/products?market=beauty" },
-      { label: "Wine", href: "/products?market=wine" },
+      {
+        label: "Beverage",
+        href: "/markets/beverage",
+        image: "/images/markets/beverage.png",
+      },
+      {
+        label: "Industrial Chemical",
+        href: "/markets/industrial",
+        image: "/images/markets/industrial.png",
+      },
+      {
+        label: "Spirits",
+        href: "/markets/spirits",
+        image: "/images/markets/spirits.png",
+      },
+
+      {
+        label: "Personal Health & Beauty",
+        href: "/markets/personal-care",
+        image: "/images/markets/beauty.png",
+      },
+      {
+        label: "Wine",
+        href: "/markets/wine",
+        image:
+          "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2670&auto=format&fit=crop",
+      },
     ],
   },
   {
@@ -67,25 +110,31 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "bottles",
     label: "Bottles",
+    image:
+      "https://images.unsplash.com/photo-1602143407151-11115cd20ad4?q=80&w=2670&auto=format&fit=crop",
     subSections: [
       {
         label: "Material",
         items: [
           {
-            label: "Fiber Drums",
-            href: "/products/bottles?material=Fiber Drums",
+            label: "Aluminum Bottles",
+            href: "/products/bottles?material=Aluminum",
           },
           {
-            label: "Plastic Drums",
-            href: "/products/bottles?material=Plastic Drums",
+            label: "Glass Bottles",
+            href: "/products/bottles?material=Glass",
           },
           {
-            label: "Stainless Steel Drums",
-            href: "/products/bottles?material=Stainless Steel Drums",
+            label: "PET Bottles",
+            href: "/products/bottles?material=PET",
           },
           {
-            label: "Steel Barrels",
-            href: "/products/bottles?material=Steel Barrels",
+            label: "Plastic Bottles",
+            href: "/products/bottles?material=Plastic",
+          },
+          {
+            label: "HDPE Bottles",
+            href: "/products/bottles?material=HDPE",
           },
         ],
       },
@@ -122,16 +171,24 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
         label: "Shop Popular Bottles",
         items: [
           {
-            label: "Juice Bottles",
-            href: "/products/bottles?search=Juice Bottles",
+            label: "Boston Round Bottles",
+            href: "/products/bottles?style=Boston Round",
           },
           {
-            label: "Milk Bottles",
-            href: "/products/bottles?search=Milk Bottles",
+            label: "Decanter Bottles",
+            href: "/products/bottles?style=Decanter",
           },
           {
-            label: "Water Bottles",
-            href: "/products/bottles?search=Water Bottles",
+            label: "Squeeze Bottles",
+            href: "/products/bottles?style=Squeeze",
+          },
+          {
+            label: "Bullet Bottles",
+            href: "/products/bottles?style=Bullet",
+          },
+          {
+            label: "Cylinder Bottles",
+            href: "/products/bottles?style=Cylinder",
           },
         ],
       },
@@ -236,8 +293,8 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
             href: "/products/bottles?search=Oil & Lubricant Bottles",
           },
           {
-            label: "Leak-Resistant Bottles",
-            href: "/products/bottles?search=Leak-Resistant Bottles",
+            label: "Leak Proof Bottles",
+            href: "/products/bottles?search=Leak Proof Bottles",
           },
         ],
       },
@@ -246,45 +303,31 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "jars",
     label: "Jars",
+    image:
+      "https://images.unsplash.com/photo-1622325377508-3165b6a7885b?q=80&w=2670&auto=format&fit=crop",
     subSections: [
       {
         label: "Material",
         items: [
-          { label: "Fiber Drums", href: "/products/jars?material=Fiber Drums" },
-          {
-            label: "Plastic Drums",
-            href: "/products/jars?material=Plastic Drums",
-          },
-          {
-            label: "Stainless Steel Drums",
-            href: "/products/jars?material=Stainless Steel Drums",
-          },
-          {
-            label: "Steel Barrels",
-            href: "/products/jars?material=Steel Barrels",
-          },
+          { label: "Glass Jars", href: "/products/jars?material=Glass" },
+          { label: "Plastic Jars", href: "/products/jars?material=Plastic" },
+          { label: "PET Jars", href: "/products/jars?material=PET" },
+          { label: "HDPE Jars", href: "/products/jars?material=HDPE" },
         ],
       },
       {
         label: "Popular Colors",
         items: [
-          { label: "Amber Glass", href: "/products/jars?color=Amber Glass" },
-          { label: "Blue Glass", href: "/products/jars?color=Blue Glass" },
-          { label: "Clear Glass", href: "/products/jars?color=Clear Glass" },
-          { label: "Green Glass", href: "/products/jars?color=Green Glass" },
-          {
-            label: "Clear Plastic",
-            href: "/products/jars?color=Clear Plastic",
-          },
+          { label: "Amber Jars", href: "/products/jars?color=Amber" },
+          { label: "Blue Jars", href: "/products/jars?color=Blue" },
+          { label: "Green Jars", href: "/products/jars?color=Green" },
+          { label: "Clear Jars", href: "/products/jars?color=Clear" },
+          { label: "Black Jars", href: "/products/jars?color=Black" },
         ],
       },
       {
         label: "Popular Jar Shapes",
-        items: [
-          { label: "Round Jars", href: "/products/jars?shape=Round" },
-          { label: "Square Jars", href: "/products/jars?shape=Square" },
-          { label: "Gripper Jars", href: "/products/jars?shape=Gripper" },
-        ],
+        items: [{ label: "Round Jars", href: "/products/jars?shape=Round" }],
       },
       {
         label: "Shop Popular Jars",
@@ -340,8 +383,8 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
             href: "/products/jars?search=Pharmacy Jars",
           },
           {
-            label: "Cannabis Jars",
-            href: "/products/jars?search=Cannabis Jars",
+            label: "Marijuana Jars",
+            href: "/products/jars?search=Marijuana Jars",
           },
         ],
       },
@@ -350,23 +393,14 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "jugs",
     label: "Jugs",
+    image:
+      "https://images.unsplash.com/photo-1615486511484-92e172cc416d?q=80&w=2670&auto=format&fit=crop",
     subSections: [
       {
         label: "Material",
         items: [
-          { label: "Fiber Drums", href: "/products/jugs?material=Fiber Drums" },
-          {
-            label: "Plastic Drums",
-            href: "/products/jugs?material=Plastic Drums",
-          },
-          {
-            label: "Stainless Steel Drums",
-            href: "/products/jugs?material=Stainless Steel Drums",
-          },
-          {
-            label: "Steel Barrels",
-            href: "/products/jugs?material=Steel Barrels",
-          },
+          { label: "Glass Jugs", href: "/products/jugs?material=Glass" },
+          { label: "Plastic Jugs", href: "/products/jugs?material=Plastic" },
         ],
       },
       {
@@ -413,6 +447,8 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "vials",
     label: "Vials",
+    image:
+      "https://images.unsplash.com/photo-1542315832-b7b134d1bc95?q=80&w=2670&auto=format&fit=crop",
     subSections: [
       {
         label: "Popular Vials",
@@ -466,6 +502,8 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "cans",
     label: "Cans & Tins",
+    image:
+      "https://images.unsplash.com/photo-1579295325983-4a11b66fe853?q=80&w=2670&auto=format&fit=crop",
     subSections: [
       {
         label: "Popular Cans",
@@ -526,6 +564,8 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "tubs",
     label: "Tubs",
+    image:
+      "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=2670&auto=format&fit=crop",
     subSections: [
       {
         label: "Popular Tubs",
@@ -555,7 +595,39 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "buckets",
     label: "Buckets & Drums",
+    image:
+      "https://images.unsplash.com/photo-1563220464-9646452243f7?q=80&w=2574&auto=format&fit=crop",
     subSections: [
+      {
+        label: "Material",
+        items: [
+          {
+            label: "Plastic Buckets",
+            href: "/products/buckets?material=Plastic Buckets",
+          },
+          {
+            label: "Steel Buckets",
+            href: "/products/buckets?material=Steel Buckets",
+          },
+        ],
+      },
+      {
+        label: "Popular Buckets",
+        items: [
+          {
+            label: "5 Gallon Buckets",
+            href: "/products/buckets?search=5 Gallon Buckets",
+          },
+          {
+            label: "Carboys & Jerry Cans",
+            href: "/products/buckets?search=Carboys & Jerry Cans",
+          },
+          {
+            label: "Bucket & Pail Accessories",
+            href: "/products/buckets?search=Bucket & Pail Accessories",
+          },
+        ],
+      },
       {
         label: "Material",
         items: [
@@ -578,40 +650,15 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
         ],
       },
       {
-        label: "Popular Buckets",
-        items: [
-          {
-            label: "5 Gallon Buckets",
-            href: "/products/buckets?search=5 Gallon Buckets",
-          },
-          {
-            label: "Carboys & Jerry Cans",
-            href: "/products/buckets?search=Carboys & Jerry Cans",
-          },
-          {
-            label: "Bucket & Pail Accessories",
-            href: "/products/buckets?search=Bucket & Pail Accessories",
-          },
-        ],
-      },
-      {
         label: "Popular Drums",
         items: [
           {
-            label: "Fiber Drums",
-            href: "/products/buckets?search=Fiber Drums",
+            label: "55 Gallon Drums",
+            href: "/products/buckets?search=55 Gallon Drums",
           },
           {
-            label: "Plastic Drums",
-            href: "/products/buckets?search=Plastic Drums",
-          },
-          {
-            label: "Stainless Steel Drums",
-            href: "/products/buckets?search=Stainless Steel Drums",
-          },
-          {
-            label: "Steel Barrels",
-            href: "/products/buckets?search=Steel Barrels",
+            label: "Overpack Drums",
+            href: "/products/buckets?search=Overpack Drums",
           },
         ],
       },
@@ -645,6 +692,8 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "tubes",
     label: "Tubes",
+    image:
+      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=2574&auto=format&fit=crop",
     subSections: [
       {
         label: "Health & Beauty Tubes",
@@ -681,6 +730,8 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "caps",
     label: "Caps & Closures",
+    image:
+      "https://images.unsplash.com/photo-1602867055041-9aee9cc5ea9e?q=80&w=2670&auto=format&fit=crop",
     subSections: [
       {
         label: "Popular Caps & Closures",
@@ -756,13 +807,15 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "bottling-tools",
     label: "Bottling Tools",
+    image:
+      "https://images.unsplash.com/photo-1582806742013-43f657c6d66e?q=80&w=2670&auto=format&fit=crop",
     subSections: [
       {
         label: "Popular Bottling Tools",
         items: [
           {
-            label: "Measuring Container",
-            href: "/products/bottling-tools?search=Measuring Container",
+            label: "Measuring Containers",
+            href: "/products/bottling-tools?search=Measuring Containers",
           },
           {
             label: "Bottle Funnels",
@@ -776,6 +829,10 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
             label: "Capping Tools",
             href: "/products/bottling-tools?search=Capping Tools",
           },
+          {
+            label: "Bottling Labels & Labeling Machines",
+            href: "/products/bottling-tools?search=Bottling Labels & Labeling Machines",
+          },
         ],
       },
     ],
@@ -783,6 +840,8 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "boxes",
     label: "Boxes, Bags & Supplies",
+    image:
+      "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?q=80&w=2670&auto=format&fit=crop",
     subSections: [
       {
         label: "Popular Boxes",
@@ -808,44 +867,10 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
         items: [
           { label: "Poly Bags", href: "/products/boxes?search=Poly Bags" },
           {
-            label: "Plastic Bags",
-            href: "/products/boxes?search=Plastic Bags",
+            label: "Resealable Poly Bags",
+            href: "/products/boxes?search=Resealable Poly Bags",
           },
-          {
-            label: "Food Bags/Pouches",
-            href: "/products/boxes?search=Food Bags/Pouches",
-          },
-          {
-            label: "Paper Bags - Shopping & Grocery",
-            href: "/products/boxes?search=Paper Bags - Shopping & Grocery",
-          },
-          {
-            label: "Merchandise Bags",
-            href: "/products/boxes?search=Merchandise Bags",
-          },
-          { label: "Net Bags", href: "/products/boxes?search=Net Bags" },
-          {
-            label: "Drawstring Bags",
-            href: "/products/boxes?search=Drawstring Bags",
-          },
-          { label: "Burlap Bags", href: "/products/boxes?search=Burlap Bags" },
-          {
-            label: "Mailing Bags",
-            href: "/products/boxes?search=Mailing Bags",
-          },
-          {
-            label: "Specimen Bags",
-            href: "/products/boxes?search=Specimen Bags",
-          },
-          {
-            label: "Biohazard Bags",
-            href: "/products/boxes?search=Biohazard Bags",
-          },
-          {
-            label: "Anti-Static Bags",
-            href: "/products/boxes?search=Anti-Static Bags",
-          },
-          { label: "Trash Bags", href: "/products/boxes?search=Trash Bags" },
+          { label: "Custom Bags", href: "/products/boxes?search=Custom Bags" },
         ],
       },
     ],
@@ -853,45 +878,27 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "hazmat",
     label: "Hazmat Packaging",
+    image:
+      "https://images.unsplash.com/photo-1617953141905-b27fb1f79eb9?q=80&w=2670&auto=format&fit=crop",
     subSections: [
       {
         label: "Popular Hazmat Packaging",
         items: [
           {
-            label: "UN Rated Packaging",
-            href: "/products/hazmat?search=UN Rated Packaging",
+            label: "UN Rated Bottles",
+            href: "/products/hazmat?search=UN Rated Bottles",
           },
           {
-            label: "Hazmat Boxes (4G/4GV)",
-            href: "/products/hazmat?search=Hazmat Boxes (4G/4GV)",
-          },
-          {
-            label: "UN Rated Pails & Buckets",
-            href: "/products/hazmat?search=UN Rated Pails & Buckets",
+            label: "UN Rated Buckets",
+            href: "/products/hazmat?search=UN Rated Buckets",
           },
           {
             label: "UN Rated Drums",
             href: "/products/hazmat?search=UN Rated Drums",
           },
           {
-            label: "UN Rated Bottles",
-            href: "/products/hazmat?search=UN Rated Bottles",
-          },
-          {
-            label: "UN Rated Cans",
-            href: "/products/hazmat?search=UN Rated Cans",
-          },
-          {
-            label: "UN Rated Jerricans",
-            href: "/products/hazmat?search=UN Rated Jerricans",
-          },
-          {
-            label: "Hazmat Labels & Placards",
-            href: "/products/hazmat?search=Hazmat Labels & Placards",
-          },
-          {
-            label: "Shippers for Lithium Batteries",
-            href: "/products/hazmat?search=Shippers for Lithium Batteries",
+            label: "UN Rated Jerrycans & Kegs",
+            href: "/products/hazmat?search=UN Rated Jerrycans & Kegs",
           },
         ],
       },
