@@ -15,7 +15,7 @@ export function generateProductMetadata(
   category: string
 ): { title: string; slug: string } {
   // 1. Construct Title
-  // Template: [capacity] [unit] [material] [shape] [type] - [color] ([neck] Neck)
+  // Template: [capacity] [unit] [color] [material] [shape] [type] - [neck]
 
   const parts: string[] = [];
 
@@ -23,11 +23,11 @@ export function generateProductMetadata(
     parts.push(`${specs.capacity_value} ${specs.capacity_unit}`);
   }
 
+  if (specs.color) parts.push(specs.color);
   if (specs.material_type) parts.push(specs.material_type);
   if (specs.shape) parts.push(specs.shape);
 
   // Use category (singularized if possible) as Item Type
-  // Simple singularization mapping
   const singularCategory = category.endsWith("s")
     ? category.slice(0, -1)
     : category;
@@ -35,12 +35,8 @@ export function generateProductMetadata(
 
   let title = parts.join(" ");
 
-  if (specs.color) {
-    title += ` - ${specs.color}`;
-  }
-
   if (specs.neck_finish) {
-    title += ` (${specs.neck_finish} Neck)`;
+    title += ` - ${specs.neck_finish}`; // " - CT" or " - ROPP"
   }
 
   // 2. Construct Slug

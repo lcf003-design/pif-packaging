@@ -21,6 +21,7 @@ import ContactModal from "./ContactModal";
 import AccountModal from "./AccountModal";
 
 import SignUpModal from "@/components/layout/SignUpModal";
+import PredictiveSearch from "@/components/search/PredictiveSearch";
 
 export default function TopUtilityBar() {
   const router = useRouter();
@@ -81,23 +82,9 @@ export default function TopUtilityBar() {
           {/* Spacer to push utility to right */}
           <div className="flex-grow md:hidden" />
 
-          {/* Search Bar (Desktop Only - Logic maintained) */}
+          {/* Search Bar (Predictive) */}
           <div className="hidden md:flex flex-grow justify-end md:justify-start">
-            <form onSubmit={handleSearch} className="w-full max-w-xl relative">
-              <button
-                type="submit"
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-berlin-blue"
-              >
-                <Search className="w-5 h-5" />
-              </button>
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search Plastic Bottles, Glass Jars & More..."
-                className="w-full pl-10 pr-4 py-2.5 border border-industrial-300 rounded-sm text-sm focus:outline-none focus:border-berlin-blue focus:ring-1 focus:ring-berlin-blue"
-              />
-            </form>
+            <PredictiveSearch />
           </div>
 
           {/* Utility Actions */}

@@ -5,19 +5,27 @@ import { fetchProducts, deleteProduct } from "@/services/productService";
 import { Product } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
-import { Edit, Trash2, Plus, Search } from "lucide-react";
+import { Edit, Trash2, Plus, Search, ExternalLink } from "lucide-react";
 import { useRouter } from "next/navigation";
+
+import { CATEGORIES, INDUSTRIES } from "@/data/constants";
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedIndustry, setSelectedIndustry] = useState("");
   const router = useRouter();
 
   const loadProducts = async () => {
     setLoading(true);
-    // Fetch products with search filter if exists
-    const data = await fetchProducts({ search: searchTerm });
+    // Fetch products with filters
+    const data = await fetchProducts({
+      search: searchTerm,
+      category: selectedCategory || undefined,
+      industry: selectedIndustry || undefined,
+    });
     setProducts(data);
     setLoading(false);
   };
@@ -25,9 +33,9 @@ export default function AdminProductsPage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       loadProducts();
-    }, 300); // Debounce search
+    }, 300); // Debounce search & filters
     return () => clearTimeout(timer);
-  }, [searchTerm]);
+  }, [searchTerm, selectedCategory, selectedIndustry]);
 
   const handleDelete = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this product?"))
@@ -57,16 +65,65 @@ export default function AdminProductsPage() {
         </Link>
       </div>
 
-      {/* Search Bar */}
-      <div className="relative max-w-md">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-        <input
-          type="text"
-          placeholder="Search by name, SKU, or category..."
-          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-berlin-blue focus:border-transparent transition-all"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+      {/* Filters Bar */}
+      <div className="flex flex-col md:flex-row gap-4 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+        {/* Search */}
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search by name, SKU..."
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-berlin-blue focus:border-transparent transition-all"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+
+        {/* Category Filter */}
+        <div className="w-full md:w-48">
+          <select
+            className="w-full h-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-berlin-blue bg-white"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            <option value="">All Categories</option>
+            {CATEGORIES.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Industry Filter */}
+        <div className="w-full md:w-48">
+          <select
+            className="w-full h-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-berlin-blue bg-white"
+            value={selectedIndustry}
+            onChange={(e) => setSelectedIndustry(e.target.value)}
+          >
+            <option value="">All Industries</option>
+            {INDUSTRIES.map((ind) => (
+              <option key={ind} value={ind}>
+                {ind}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Reset Button (Only show if filters active) */}
+        {(searchTerm || selectedCategory || selectedIndustry) && (
+          <button
+            onClick={() => {
+              setSearchTerm("");
+              setSelectedCategory("");
+              setSelectedIndustry("");
+            }}
+            className="text-sm font-bold text-red-500 hover:text-red-700 px-2"
+          >
+            Reset
+          </button>
+        )}
       </div>
 
       {/* Table */}
@@ -127,7 +184,7 @@ export default function AdminProductsPage() {
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center bg-gray-50 text-gray-300">
-                              <Image className="w-6 h-6" />
+                              <span className="text-xs">No Img</span>
                             </div>
                           )}
                         </div>
@@ -185,6 +242,14 @@ export default function AdminProductsPage() {
                           title="Edit"
                         >
                           <Edit className="w-5 h-5" />
+                        </Link>
+                        <Link
+                          href={`/product/${product.slug || product.id}`}
+                          target="_blank"
+                          className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-full transition-all"
+                          title="View Live"
+                        >
+                          <ExternalLink className="w-5 h-5" />
                         </Link>
                         <button
                           onClick={() => handleDelete(product.id)}

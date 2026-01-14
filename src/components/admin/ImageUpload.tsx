@@ -7,15 +7,17 @@ import { Upload, X, Check, Loader2, Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 
 interface ImageUploadProps {
-  onUploadComplete: (url: string) => void;
+  onUploadComplete: (url: string | string[]) => void;
   currentImage?: string;
   className?: string;
+  fileNamePrefix?: string;
 }
 
 export default function ImageUpload({
   onUploadComplete,
   currentImage,
   className = "",
+  fileNamePrefix = "",
 }: ImageUploadProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -38,57 +40,76 @@ export default function ImageUpload({
     }
   }, []);
 
-  const uploadFile = async (file: File) => {
-    // Validate file type
-    if (!file.type.startsWith("image/")) {
-      setError("Please upload an image file (JPG, PNG, WEBP)");
-      return;
-    }
+  // Modified to handle multiple files
+  const uploadFiles = async (files: File[]) => {
+    const validFiles = files.filter((file) => {
+      // Validate type
+      if (!file.type.startsWith("image/")) {
+        setError("Skipped non-image file");
+        return false;
+      }
+      // Validate size (5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setError("Skipped file larger than 5MB");
+        return false;
+      }
+      return true;
+    });
 
-    // Validate size (e.g. 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      setError("File size must be less than 5MB");
-      return;
-    }
+    if (validFiles.length === 0) return;
 
     setError(null);
     setIsUploading(true);
     setUploadProgress(0);
 
-    // Create a local preview immediately
-    const objectUrl = URL.createObjectURL(file);
+    // Show preview of first file immediately
+    const objectUrl = URL.createObjectURL(validFiles[0]);
     setPreview(objectUrl);
 
     try {
-      const storageRef = ref(storage, `products/${Date.now()}_${file.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, file);
+      const uploadPromises = validFiles.map((file, idx) => {
+        let finalName = file.name;
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setUploadProgress(progress);
-        },
-        (error) => {
-          console.error("Upload error:", error);
-          setError("Upload failed. Please try again.");
-          setIsUploading(false);
-        },
-        async () => {
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          onUploadComplete(downloadURL);
-          // Keep the preview as is, or switch to the remote URL to be safe,
-          // though local objectUrl is faster. Usually switching to remote proves it works.
-          setPreview(downloadURL);
-          setIsUploading(false);
-          // Optionally revoke objectUrl to free memory
-          URL.revokeObjectURL(objectUrl);
+        if (fileNamePrefix) {
+          const ext = file.name.split(".").pop() || "jpg";
+          // If multiple files, append -1, -2, etc. logic
+          // Or if just one file, keep strict SKU? User asked for -1, -2 if > 1.
+          const suffix = validFiles.length > 1 ? `-${idx + 1}` : "";
+          finalName = `${fileNamePrefix}${suffix}.${ext}`;
+        } else {
+          // Fallback to timestamp if no SKU provided
+          finalName = `${Date.now()}_${file.name}`;
         }
-      );
+
+        const storageRef = ref(storage, `products/${finalName}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        return new Promise<string>((resolve, reject) => {
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              // Calculate aggregate progress could be complex, simplifying to last file
+              const progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              setUploadProgress(progress);
+            },
+            (error) => reject(error),
+            async () => {
+              const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+              resolve(downloadURL);
+            }
+          );
+        });
+      });
+
+      const urls = await Promise.all(uploadPromises);
+      onUploadComplete(urls); // Pass array back
+      setPreview(undefined); // Clear preview, parent handles display
+      setIsUploading(false);
+      URL.revokeObjectURL(objectUrl);
     } catch (err) {
-      console.error("Upload setup error:", err);
-      setError("Something went wrong initializing upload.");
+      console.error("Upload error:", err);
+      setError("One or more uploads failed.");
       setIsUploading(false);
     }
   };
@@ -98,14 +119,14 @@ export default function ImageUpload({
     e.stopPropagation();
     setIsDragging(false);
 
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      uploadFile(e.dataTransfer.files[0]);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      uploadFiles(Array.from(e.dataTransfer.files));
     }
   }, []);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      uploadFile(e.target.files[0]);
+    if (e.target.files && e.target.files.length > 0) {
+      uploadFiles(Array.from(e.target.files));
     }
   };
 
@@ -184,6 +205,7 @@ export default function ImageUpload({
           {/* Hidden Input */}
           <input
             type="file"
+            multiple
             className="hidden"
             accept="image/*"
             onChange={handleFileSelect}

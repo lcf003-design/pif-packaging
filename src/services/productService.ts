@@ -23,6 +23,7 @@ export async function fetchProducts(filters?: {
   search?: string;
   color?: string;
   shape?: string;
+  capacity?: string;
 }): Promise<Product[]> {
   if (USE_MOCK_DATA) {
     // Simulate network delay
@@ -50,22 +51,56 @@ export async function fetchProducts(filters?: {
       filtered = filtered.filter((p) =>
         p.industry.includes(filters.industry as any)
       );
+    if (filters?.capacity) {
+      const val = parseFloat(filters.capacity);
+      if (!isNaN(val)) {
+        // Val is assumed to be in OZ (from COMMON_CAPACITIES)
+        const targetOz = val;
+        const targetMl = val * 29.5735;
+
+        // Allow small tolerance (e.g. 10%) or match nominal values
+        filtered = filtered.filter((p) => {
+          if (!p.capacity) return false;
+
+          if (p.capacity.unit === "oz") {
+            return Math.abs(p.capacity.value - targetOz) < 0.1;
+          }
+          if (p.capacity.unit === "ml") {
+            // Check if it matches the ML equivalent
+            return Math.abs(p.capacity.value - targetMl) < 5; // +/- 5ml tolerance
+          }
+          return false;
+        });
+      }
+    }
     return filtered;
   }
 
   // Real Firestore Implementation
   try {
     const productsRef = collection(db, "products");
+
+    // Firestore QueryBuilder
+    // Note: Complex OR logic (oz OR ml) is hard in a single Firestore query without 'OR' operators (available in newer SDKs but complex with other filters).
+    // Strategy: Fetch slightly broader set if possible, or use client-side refinement for Capacity.
+
+    // We will apply all filters EXCEPT capacity first, then filter capacity in memory (Client-Side Refinement).
+    // This is safer for "Smart" conversions.
+
     let q = query(productsRef);
 
     if (filters?.category)
       q = query(q, where("category", "==", filters.category));
-    if (filters?.material)
-      q = query(q, where("material", "==", filters.material));
+    if (filters?.material) {
+      if (filters.material === "Glass") {
+        q = query(q, where("material", "in", ["Glass", "Type III Glass"]));
+      } else {
+        q = query(q, where("material", "==", filters.material));
+      }
+    }
     if (filters?.color) q = query(q, where("color", "==", filters.color));
     if (filters?.shape) q = query(q, where("shape", "==", filters.shape));
 
-    // Note: 'array-contains' is needed for industry
     if (filters?.industry)
       q = query(q, where("industry", "array-contains", filters.industry));
 
@@ -73,6 +108,34 @@ export async function fetchProducts(filters?: {
     let results = snapshot.docs.map(
       (doc) => ({ id: doc.id, ...doc.data() } as Product)
     );
+
+    // Smart Capacity Filter (Client Side Memory)
+    if (filters?.capacity) {
+      console.log("[Debug] Filtering by capacity:", filters.capacity);
+      const val = parseFloat(filters.capacity);
+      if (!isNaN(val)) {
+        const targetOz = val;
+        const targetMl = val * 29.5735;
+        console.log(`[Debug] Target: ${targetOz} oz / ${targetMl} ml`);
+
+        results = results.filter((p) => {
+          if (!p.capacity) {
+            console.log(`[Debug] Product ${p.sku} has no capacity`);
+            return false;
+          }
+          console.log(`[Debug] Checking ${p.sku}:`, p.capacity);
+
+          if (p.capacity.unit === "oz") {
+            return Math.abs(p.capacity.value - targetOz) < 0.1;
+          }
+          if (p.capacity.unit === "ml") {
+            return Math.abs(p.capacity.value - targetMl) < 10; // +/- 10ml
+          }
+          return false;
+        });
+        console.log("[Debug] Results after capacity filter:", results.length);
+      }
+    }
 
     // Client-side text filtering for MVP (Firestore doesn't support native fuzzy search)
     if (filters?.search) {
@@ -243,5 +306,77 @@ export async function deleteProduct(id: string): Promise<void> {
   } catch (error) {
     console.error("Error deleting product:", error);
     throw error;
+  }
+}
+
+export async function fetchProductVariants(
+  product: Product
+): Promise<Product[]> {
+  if (USE_MOCK_DATA) {
+    // Mock logic: simply find products with same Material + Shape logic
+    return MOCK_PRODUCTS.filter(
+      (p) =>
+        p.id !== product.id &&
+        p.material === product.material &&
+        p.shape === product.shape &&
+        p.color === product.color
+    );
+  }
+
+  try {
+    const productsRef = collection(db, "products");
+
+    // NEW LOGIC: Match based on Physical Attributes (Fingerprint), NOT Name.
+    // Why? Because names often contain the size (e.g. "80ml Bottle" vs "250ml Bottle"),
+    // so checking name equality fails to group them.
+
+    // Core attributes that define a "Product Line":
+    // 1. Category (e.g. Bottles)
+    // 2. Material (e.g. Aluminum)
+    // 3. Shape (e.g. Round)
+    // 4. Color (e.g. Silver)
+
+    // Note: Firestore requires an index for every combination of 'where' clauses.
+    // To safe-guard against missing indexes, we will query strictly on the most stable attributes
+    // and filter the rest in memory (client-side).
+
+    // Strategy: Query by Category + Material + Shape
+    let q = query(
+      productsRef,
+      where("category", "==", product.category || "Bottles"),
+      where("material", "==", product.material || "Plastic"),
+      where("shape", "==", product.shape || "Round")
+    );
+
+    const snapshot = await getDocs(q);
+    const candidates = snapshot.docs.map(
+      (doc) => ({ id: doc.id, ...doc.data() } as Product)
+    );
+
+    // Client-side Refinement:
+    // 1. Exclude self.
+    // 2. Match Color (if applicable).
+    // 3. Match Closure (if applicable) -> Crucial for "Pump" vs "Cap" variants.
+    const strictVariants = candidates.filter((p) => {
+      if (p.id === product.id) return false;
+
+      const isColorMatch = (p.color || "N/A") === (product.color || "N/A");
+
+      // Strict Closure Match: If current product has a closure, variant must have SAME closure type & color
+      const pClosure = product.closure?.type
+        ? `${product.closure.type}-${product.closure.color}`
+        : "NONE";
+      const vClosure = p.closure?.type
+        ? `${p.closure.type}-${p.closure.color}`
+        : "NONE";
+      const isClosureMatch = pClosure === vClosure;
+
+      return isColorMatch && isClosureMatch;
+    });
+
+    return strictVariants;
+  } catch (error) {
+    console.error("Error fetching product variants:", error);
+    return [];
   }
 }

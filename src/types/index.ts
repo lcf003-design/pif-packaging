@@ -2,11 +2,16 @@ export type Industry =
   | "Automotive"
   | "Beverage"
   | "Food"
-  | "Personal Care"
-  | "Pharmaceutical"
-  | "Nutraceuticals"
+  | "Personal Health & Beauty"
+  | "Pharma, Nutraceuticals & Healthcare"
   | "Home Care"
-  | "Industrial";
+  | "Pet Care & Veterinary"
+  | "Beer"
+  | "Spirits"
+  | "Industrial Chemical"
+  | "Wine"
+  | "Cosmetics"
+  | "Cannabis & CBD";
 
 export type Category =
   | "Bottles"
@@ -18,11 +23,19 @@ export type Category =
 
 export type Material =
   | "Glass"
+  | "Glass (Type III)"
   | "HDPE"
   | "PET"
   | "PP"
+  | "LDPE"
+  | "PVC"
   | "Aluminum"
-  | "Tinplate";
+  | "Tinplate"
+  | "PCR PET"
+  | "PCR HDPE"
+  | "BPA-Free Plastic";
+
+export type MaterialGroup = "Plastic" | "Glass" | "Metal" | "Other";
 
 export interface Product {
   id: string;
@@ -32,9 +45,20 @@ export interface Product {
   brand: string;
   category: Category;
   industry: Industry[];
-  material: Material;
+  material: string | Material;
+  materialGroup?: MaterialGroup;
   shape?: string;
   color?: string;
+  closure?: {
+    type: string;
+    color: string;
+    material?: string;
+    liner?: string;
+  };
+  labelPanel?: {
+    dimensions: string;
+    shape: string;
+  };
   capacity?: {
     value: number;
     unit: "oz" | "ml" | "gal";

@@ -3,6 +3,7 @@ import {
   fetchProductBySlug,
   fetchProductById,
   fetchRecommendedClosures,
+  fetchProductVariants,
 } from "@/services/productService";
 import ProductDetailClient from "../ProductDetailClient";
 
@@ -64,11 +65,13 @@ export default async function ProductDetailPage({
   }
 
   const recommendedClosures = await fetchRecommendedClosures(product);
+  const variants = await fetchProductVariants(product);
 
   return (
     <ProductDetailClient
       product={product}
       recommendedClosures={recommendedClosures}
+      variants={variants}
     />
   );
 }
