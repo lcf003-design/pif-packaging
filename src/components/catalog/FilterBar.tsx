@@ -3,15 +3,14 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { ChevronDown, X, Check } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import { Material, Category } from "@/types";
 import {
   MATERIALS,
   COLORS,
   SHAPES,
   INDUSTRIES,
-  NECK_FINISH_TYPES,
   COMMON_CAPACITIES,
   CAP_SIZES,
+  CATEGORIES,
 } from "@/data/constants";
 
 type FilterType =
@@ -23,9 +22,17 @@ type FilterType =
   | "Capacity"
   | "Industry";
 
-import { createPortal } from "react-dom";
+interface Facets {
+  materials: string[];
+  categories: string[];
+  industries: string[];
+  colors: string[];
+  shapes: string[];
+  neckFinishes: string[];
+  capacities: string[];
+}
 
-export default function FilterBar() {
+export default function FilterBar({ facets }: { facets?: Facets }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [openDropdown, setOpenDropdown] = useState<FilterType | null>(null);
@@ -81,23 +88,92 @@ export default function FilterBar() {
   const activeFilters: { key: string; label: string; value: string }[] = [];
   searchParams.forEach((value, key) => {
     if (
-      ["material", "color", "shape", "neck", "capacity", "industry"].includes(
-        key
-      )
+      [
+        "category",
+        "material",
+        "color",
+        "shape",
+        "neck",
+        "capacity",
+        "industry",
+      ].includes(key)
     ) {
       activeFilters.push({ key, label: key, value });
     }
   });
 
   const clearAll = () => {
-    router.push("?");
+    router.push("/products");
   };
+
+  // --- DYNAMIC FILTER LISTS ---
+  // If facets are provided, use them. Otherwise fallback to constants (or empty).
+  // We INTERSECT constants with facets to maintain Order but hide unused.
+
+  const getVisibleOptions = (
+    allOptions: string[] | any[],
+    facetList?: string[]
+  ) => {
+    if (!facetList || facetList.length === 0) return allOptions; // Show all if no facets yet (or show none? User wants 'advanced', likely show only real)
+    // Actually, if we have facets, filtering is better.
+    // However, for complex objects like Capacities locally defined, we need to match carefully.
+    return allOptions.filter((opt) => {
+      const val = typeof opt === "string" ? opt : opt.value.toString();
+      return facetList.includes(val);
+    });
+  };
+
+  const visibleCategories = getVisibleOptions(CATEGORIES, facets?.categories);
+  const visibleMaterials = getVisibleOptions(MATERIALS, facets?.materials);
+  const visibleColors = getVisibleOptions(COLORS, facets?.colors);
+  const visibleShapes = getVisibleOptions(SHAPES, facets?.shapes);
+  const visibleNeck = getVisibleOptions(CAP_SIZES, facets?.neckFinishes); // CAP_SIZES maps to neck finish
+  const visibleIndustries = getVisibleOptions(INDUSTRIES, facets?.industries);
+  const visibleCapacities = getVisibleOptions(
+    COMMON_CAPACITIES,
+    facets?.capacities
+  );
 
   return (
     <div className="w-full mb-8 relative z-30" ref={dropdownRef}>
       {/* Top Row: Dropdown Buttons */}
-      <div className="flex flex-wrap items-center gap-2 pb-4 border-b border-industrial-200">
-        {/* Capacity (Priority) */}
+      <div className="flex flex-nowrap overflow-x-auto items-center gap-2 pb-4 border-b border-industrial-200 mask-fade-right px-4 -mx-4 no-scrollbar">
+        {/* Container Type (Category) - NOW ADDED */}
+        <div className="relative">
+          <button
+            onClick={() => toggleDropdown("Category")}
+            className={`flex items-center gap-2 px-4 py-2 border rounded-full text-sm font-bold transition-all ${
+              openDropdown === "Category"
+                ? "border-industrial-900 bg-industrial-900 text-white"
+                : "border-industrial-200 bg-white text-industrial-700 hover:border-industrial-400"
+            }`}
+          >
+            Container
+            <ChevronDown
+              className={`w-4 h-4 transition-transform ${
+                openDropdown === "Category" ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+          {openDropdown === "Category" && (
+            <div className="absolute top-full left-0 mt-2 w-56 bg-white border border-industrial-200 rounded-lg shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-left max-h-64 overflow-y-auto">
+              {visibleCategories.map((c: string) => (
+                <button
+                  key={c}
+                  onClick={() => updateFilter("category", c)}
+                  className="flex items-center justify-between w-full px-3 py-2 text-sm text-left rounded-md hover:bg-industrial-50 text-industrial-700"
+                >
+                  {c}
+                  {isActive("category", c) && (
+                    <Check className="w-4 h-4 text-berlin-red" />
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Capacity */}
         <div className="relative">
           <button
             onClick={() => toggleDropdown("Capacity")}
@@ -116,8 +192,8 @@ export default function FilterBar() {
           </button>
 
           {openDropdown === "Capacity" && (
-            <div className="absolute top-full left-0 mt-2 w-56 bg-white border border-industrial-200 rounded-lg shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-left">
-              {COMMON_CAPACITIES.map((c: any) => (
+            <div className="absolute top-full left-0 mt-2 w-56 bg-white border border-industrial-200 rounded-lg shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-left max-h-64 overflow-y-auto">
+              {visibleCapacities.map((c: any) => (
                 <button
                   key={c.value}
                   onClick={() => updateFilter("capacity", c.value.toString())}
@@ -133,46 +209,11 @@ export default function FilterBar() {
           )}
         </div>
 
-        {/* Industry (Secondary) */}
-        <div className="relative">
-          <button
-            onClick={() => toggleDropdown("Industry")}
-            className={`flex items-center gap-2 px-4 py-2 border rounded-full text-sm font-bold transition-all ${
-              openDropdown === "Industry"
-                ? "border-industrial-900 bg-industrial-900 text-white"
-                : "border-industrial-200 bg-white text-industrial-700 hover:border-industrial-400"
-            }`}
-          >
-            Industry
-            <ChevronDown
-              className={`w-4 h-4 transition-transform ${
-                openDropdown === "Industry" ? "rotate-180" : ""
-              }`}
-            />
-          </button>
-
-          {openDropdown === "Industry" && (
-            <div className="absolute top-full left-0 mt-2 w-56 bg-white border border-industrial-200 rounded-lg shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-left">
-              {INDUSTRIES.map((ind: string) => (
-                <button
-                  key={ind}
-                  onClick={() => updateFilter("industry", ind)}
-                  className="flex items-center justify-between w-full px-3 py-2 text-sm text-left rounded-md hover:bg-industrial-50 text-industrial-700"
-                >
-                  {ind}
-                  {isActive("industry", ind) && (
-                    <Check className="w-4 h-4 text-berlin-red" />
-                  )}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
         {/* Material */}
         <div className="relative">
           <button
             onClick={() => toggleDropdown("Material")}
-            className={`flex items-center gap-2 px-4 py-2 border rounded-full text-sm font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 border rounded-full text-sm font-bold transition-all whitespace-nowrap ${
               openDropdown === "Material"
                 ? "border-industrial-900 bg-industrial-900 text-white"
                 : "border-industrial-200 bg-white text-industrial-700 hover:border-industrial-400"
@@ -187,8 +228,8 @@ export default function FilterBar() {
           </button>
 
           {openDropdown === "Material" && (
-            <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-industrial-200 rounded-lg shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-left">
-              {MATERIALS.map((m: string) => (
+            <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-industrial-200 rounded-lg shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-left max-h-64 overflow-y-auto">
+              {visibleMaterials.map((m: string) => (
                 <button
                   key={m}
                   onClick={() => updateFilter("material", m)}
@@ -204,47 +245,11 @@ export default function FilterBar() {
           )}
         </div>
 
-        {/* Color */}
-        <div className="relative">
-          <button
-            onClick={() => toggleDropdown("Color")}
-            className={`flex items-center gap-2 px-4 py-2 border rounded-full text-sm font-bold transition-all ${
-              openDropdown === "Color"
-                ? "border-industrial-900 bg-industrial-900 text-white"
-                : "border-industrial-200 bg-white text-industrial-700 hover:border-industrial-400"
-            }`}
-          >
-            Color
-            <ChevronDown
-              className={`w-4 h-4 transition-transform ${
-                openDropdown === "Color" ? "rotate-180" : ""
-              }`}
-            />
-          </button>
-
-          {openDropdown === "Color" && (
-            <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-industrial-200 rounded-lg shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-left">
-              {COLORS.map((c: string) => (
-                <button
-                  key={c}
-                  onClick={() => updateFilter("color", c)}
-                  className="flex items-center justify-between w-full px-3 py-2 text-sm text-left rounded-md hover:bg-industrial-50 text-industrial-700"
-                >
-                  {c}
-                  {isActive("color", c) && (
-                    <Check className="w-4 h-4 text-berlin-red" />
-                  )}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
         {/* Shape */}
         <div className="relative">
           <button
             onClick={() => toggleDropdown("Shape")}
-            className={`flex items-center gap-2 px-4 py-2 border rounded-full text-sm font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 border rounded-full text-sm font-bold transition-all whitespace-nowrap ${
               openDropdown === "Shape"
                 ? "border-industrial-900 bg-industrial-900 text-white"
                 : "border-industrial-200 bg-white text-industrial-700 hover:border-industrial-400"
@@ -259,8 +264,8 @@ export default function FilterBar() {
           </button>
 
           {openDropdown === "Shape" && (
-            <div className="absolute top-full left-0 mt-2 w-56 bg-white border border-industrial-200 rounded-lg shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-left">
-              {SHAPES.map((s: string) => (
+            <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-industrial-200 rounded-lg shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-left max-h-64 overflow-y-auto">
+              {visibleShapes.map((s: string) => (
                 <button
                   key={s}
                   onClick={() => updateFilter("shape", s)}
@@ -276,11 +281,47 @@ export default function FilterBar() {
           )}
         </div>
 
+        {/* Color */}
+        <div className="relative">
+          <button
+            onClick={() => toggleDropdown("Color")}
+            className={`flex items-center gap-2 px-4 py-2 border rounded-full text-sm font-bold transition-all whitespace-nowrap ${
+              openDropdown === "Color"
+                ? "border-industrial-900 bg-industrial-900 text-white"
+                : "border-industrial-200 bg-white text-industrial-700 hover:border-industrial-400"
+            }`}
+          >
+            Color
+            <ChevronDown
+              className={`w-4 h-4 transition-transform ${
+                openDropdown === "Color" ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+
+          {openDropdown === "Color" && (
+            <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-industrial-200 rounded-lg shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-left max-h-64 overflow-y-auto">
+              {visibleColors.map((c: string) => (
+                <button
+                  key={c}
+                  onClick={() => updateFilter("color", c)}
+                  className="flex items-center justify-between w-full px-3 py-2 text-sm text-left rounded-md hover:bg-industrial-50 text-industrial-700"
+                >
+                  {c}
+                  {isActive("color", c) && (
+                    <Check className="w-4 h-4 text-berlin-red" />
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
         {/* Neck Finish */}
         <div className="relative">
           <button
             onClick={() => toggleDropdown("Neck Finish")}
-            className={`flex items-center gap-2 px-4 py-2 border rounded-full text-sm font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 border rounded-full text-sm font-bold transition-all whitespace-nowrap ${
               openDropdown === "Neck Finish"
                 ? "border-industrial-900 bg-industrial-900 text-white"
                 : "border-industrial-200 bg-white text-industrial-700 hover:border-industrial-400"
@@ -295,8 +336,8 @@ export default function FilterBar() {
           </button>
 
           {openDropdown === "Neck Finish" && (
-            <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-industrial-200 rounded-lg shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-left">
-              {CAP_SIZES.map((n: string) => (
+            <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-industrial-200 rounded-lg shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-left max-h-64 overflow-y-auto">
+              {visibleNeck.map((n: string) => (
                 <button
                   key={n}
                   onClick={() => updateFilter("neck", n)}
@@ -312,7 +353,7 @@ export default function FilterBar() {
           )}
         </div>
 
-        {/* See All Filters (Red Button) */}
+        {/* More Filters / All Filters Button */}
         <button
           onClick={() => setIsSidebarOpen(true)}
           className="flex items-center gap-2 px-4 py-2 bg-berlin-red hover:bg-red-700 text-white rounded-md text-sm font-bold transition-colors ml-auto"
@@ -353,7 +394,7 @@ export default function FilterBar() {
         </div>
       )}
 
-      {/* Mobile/All Filters Sidebar Drawer */}
+      {/* SIDEBAR DRAWER - REFACTORED TO HORIZONTAL SCROLLING TABS */}
       {isSidebarOpen && (
         <>
           {/* Backdrop */}
@@ -363,7 +404,7 @@ export default function FilterBar() {
           />
 
           {/* Sidebar */}
-          <div className="fixed top-[65px] right-0 h-[calc(100vh-65px)] w-80 bg-white z-[101] shadow-2xl p-6 overflow-y-auto animate-in slide-in-from-right duration-300 border-l border-industrial-200">
+          <div className="fixed top-[65px] right-0 h-[calc(100vh-65px)] w-full md:w-96 bg-white z-[101] shadow-2xl p-6 overflow-y-auto animate-in slide-in-from-right duration-300 border-l border-industrial-200">
             <div className="flex items-center justify-between mb-8 pb-4 border-b border-industrial-100">
               <h2 className="text-xl font-black text-industrial-900 uppercase tracking-tight">
                 All Filters
@@ -376,67 +417,43 @@ export default function FilterBar() {
               </button>
             </div>
 
-            <div className="space-y-8">
-              {/* Capacity Section */}
+            <div className="space-y-8 pb-32">
+              {/* Category (Container Type) */}
               <div className="space-y-3">
                 <h3 className="text-xs font-bold uppercase tracking-widest text-industrial-500">
-                  Capacity
+                  Container Type
                 </h3>
-                <div className="grid grid-cols-2 gap-2">
-                  {COMMON_CAPACITIES.map((c: any) => (
+                <div className="flex overflow-x-auto gap-2 pb-2 -mx-2 px-2 no-scrollbar mask-fade-right">
+                  {visibleCategories.map((c: string) => (
                     <button
-                      key={c.value}
-                      onClick={() =>
-                        updateFilter("capacity", c.value.toString())
-                      }
-                      className={`px-3 py-2 text-xs font-medium border rounded-md text-left transition-colors ${
-                        isActive("capacity", c.value.toString())
+                      key={c}
+                      onClick={() => updateFilter("category", c)}
+                      className={`whitespace-nowrap px-4 py-2 text-xs font-bold border rounded-full transition-colors flex-shrink-0 ${
+                        isActive("category", c)
                           ? "bg-industrial-900 text-white border-industrial-900"
-                          : "bg-white text-industrial-600 border-industrial-200 hover:border-industrial-400"
+                          : "bg-white text-industrial-600 border-industrial-200 hover:border-berlin-blue"
                       }`}
                     >
-                      {c.label}
+                      {c}
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Industry Section */}
-              <div className="space-y-3">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-industrial-500">
-                  Industry
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {INDUSTRIES.map((ind: string) => (
-                    <button
-                      key={ind}
-                      onClick={() => updateFilter("industry", ind)}
-                      className={`px-3 py-1.5 text-xs font-medium border rounded-full transition-colors ${
-                        isActive("industry", ind)
-                          ? "bg-industrial-900 text-white border-industrial-900"
-                          : "bg-white text-industrial-600 border-industrial-200 hover:border-industrial-400"
-                      }`}
-                    >
-                      {ind}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Material Section */}
+              {/* Material */}
               <div className="space-y-3">
                 <h3 className="text-xs font-bold uppercase tracking-widest text-industrial-500">
                   Material
                 </h3>
-                <div className="flex flex-wrap gap-2">
-                  {MATERIALS.map((m: string) => (
+                <div className="flex overflow-x-auto gap-2 pb-2 -mx-2 px-2 no-scrollbar">
+                  {visibleMaterials.map((m: string) => (
                     <button
                       key={m}
                       onClick={() => updateFilter("material", m)}
-                      className={`px-3 py-1.5 text-xs font-medium border rounded-full transition-colors ${
+                      className={`whitespace-nowrap px-4 py-2 text-xs font-bold border rounded-full transition-colors flex-shrink-0 ${
                         isActive("material", m)
                           ? "bg-industrial-900 text-white border-industrial-900"
-                          : "bg-white text-industrial-600 border-industrial-200 hover:border-industrial-400"
+                          : "bg-white text-industrial-600 border-industrial-200 hover:border-berlin-blue"
                       }`}
                     >
                       {m}
@@ -445,20 +462,44 @@ export default function FilterBar() {
                 </div>
               </div>
 
-              {/* Shape Section */}
+              {/* Capacity */}
+              <div className="space-y-3">
+                <h3 className="text-xs font-bold uppercase tracking-widest text-industrial-500">
+                  Capacity
+                </h3>
+                <div className="flex overflow-x-auto gap-2 pb-2 -mx-2 px-2 no-scrollbar">
+                  {visibleCapacities.map((c: any) => (
+                    <button
+                      key={c.value}
+                      onClick={() =>
+                        updateFilter("capacity", c.value.toString())
+                      }
+                      className={`whitespace-nowrap px-4 py-2 text-xs font-bold border rounded-full transition-colors flex-shrink-0 ${
+                        isActive("capacity", c.value.toString())
+                          ? "bg-industrial-900 text-white border-industrial-900"
+                          : "bg-white text-industrial-600 border-industrial-200 hover:border-berlin-blue"
+                      }`}
+                    >
+                      {c.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Shape */}
               <div className="space-y-3">
                 <h3 className="text-xs font-bold uppercase tracking-widest text-industrial-500">
                   Shape
                 </h3>
-                <div className="flex flex-wrap gap-2">
-                  {SHAPES.map((s: string) => (
+                <div className="flex overflow-x-auto gap-2 pb-2 -mx-2 px-2 no-scrollbar">
+                  {visibleShapes.map((s: string) => (
                     <button
                       key={s}
                       onClick={() => updateFilter("shape", s)}
-                      className={`px-3 py-1.5 text-xs font-medium border rounded-full transition-colors ${
+                      className={`whitespace-nowrap px-4 py-2 text-xs font-bold border rounded-full transition-colors flex-shrink-0 ${
                         isActive("shape", s)
                           ? "bg-industrial-900 text-white border-industrial-900"
-                          : "bg-white text-industrial-600 border-industrial-200 hover:border-industrial-400"
+                          : "bg-white text-industrial-600 border-industrial-200 hover:border-berlin-blue"
                       }`}
                     >
                       {s}
@@ -467,23 +508,67 @@ export default function FilterBar() {
                 </div>
               </div>
 
-              {/* Color Section */}
+              {/* Color */}
               <div className="space-y-3">
                 <h3 className="text-xs font-bold uppercase tracking-widest text-industrial-500">
                   Color
                 </h3>
-                <div className="flex flex-wrap gap-2">
-                  {COLORS.map((c: string) => (
+                <div className="flex overflow-x-auto gap-2 pb-2 -mx-2 px-2 no-scrollbar">
+                  {visibleColors.map((c: string) => (
                     <button
                       key={c}
                       onClick={() => updateFilter("color", c)}
-                      className={`px-3 py-1.5 text-xs font-medium border rounded-full transition-colors ${
+                      className={`whitespace-nowrap px-4 py-2 text-xs font-bold border rounded-full transition-colors flex-shrink-0 ${
                         isActive("color", c)
                           ? "bg-industrial-900 text-white border-industrial-900"
-                          : "bg-white text-industrial-600 border-industrial-200 hover:border-industrial-400"
+                          : "bg-white text-industrial-600 border-industrial-200 hover:border-berlin-blue"
                       }`}
                     >
                       {c}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Neck Finish */}
+              <div className="space-y-3">
+                <h3 className="text-xs font-bold uppercase tracking-widest text-industrial-500">
+                  Neck Finish
+                </h3>
+                <div className="flex overflow-x-auto gap-2 pb-2 -mx-2 px-2 no-scrollbar">
+                  {visibleNeck.map((n: string) => (
+                    <button
+                      key={n}
+                      onClick={() => updateFilter("neck", n)}
+                      className={`whitespace-nowrap px-4 py-2 text-xs font-bold border rounded-full transition-colors flex-shrink-0 ${
+                        isActive("neck", n)
+                          ? "bg-industrial-900 text-white border-industrial-900"
+                          : "bg-white text-industrial-600 border-industrial-200 hover:border-berlin-blue"
+                      }`}
+                    >
+                      {n}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Industry */}
+              <div className="space-y-3">
+                <h3 className="text-xs font-bold uppercase tracking-widest text-industrial-500">
+                  Industry
+                </h3>
+                <div className="flex overflow-x-auto gap-2 pb-2 -mx-2 px-2 no-scrollbar">
+                  {visibleIndustries.map((ind: string) => (
+                    <button
+                      key={ind}
+                      onClick={() => updateFilter("industry", ind)}
+                      className={`whitespace-nowrap px-4 py-2 text-xs font-bold border rounded-full transition-colors flex-shrink-0 ${
+                        isActive("industry", ind)
+                          ? "bg-industrial-900 text-white border-industrial-900"
+                          : "bg-white text-industrial-600 border-industrial-200 hover:border-berlin-blue"
+                      }`}
+                    >
+                      {ind}
                     </button>
                   ))}
                 </div>

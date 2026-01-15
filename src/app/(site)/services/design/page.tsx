@@ -115,6 +115,142 @@ export default function DesignPage() {
         </div>
       </section>
 
+      {/* NEW SECTION: The Manufacturing Advantage (Dark Mode / Premium) */}
+      <section className="py-32 bg-neutral-950 text-white relative overflow-hidden">
+        {/* Background Grid & Glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(#4f46e5_1px,transparent_1px)] [background-size:16px_16px] opacity-[0.05]" />
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-500/10 rounded-full blur-[128px] pointer-events-none" />
+
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center gap-20">
+            {/* Left Content */}
+            <div className="lg:w-1/2">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 font-mono text-xs uppercase tracking-widest mb-8">
+                <Zap className="w-4 h-4" />
+                <span>Direct-to-Mold Workflow</span>
+              </div>
+              <h2 className="text-5xl md:text-6xl font-black mb-8 leading-tight tracking-tighter">
+                We don't just draw it. <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+                  We engineer it.
+                </span>
+              </h2>
+              <p className="text-xl text-neutral-400 mb-10 leading-relaxed max-w-lg">
+                Stop handing pretty sketches to factories only to hear "it can't
+                be done." Our designers work in <strong>SolidWorks</strong>, not
+                Photoshop. Every curve is verified for draft angles, wall
+                thickness, and volume displacement before you ever see a render.
+              </p>
+
+              <div className="grid grid-cols-2 gap-8">
+                <div>
+                  <div className="text-4xl font-bold text-white mb-2">100%</div>
+                  <div className="text-sm text-neutral-500 uppercase tracking-widest font-medium">
+                    Moldable Geometries
+                  </div>
+                </div>
+                <div>
+                  <div className="text-4xl font-bold text-white mb-2">-30%</div>
+                  <div className="text-sm text-neutral-500 uppercase tracking-widest font-medium">
+                    Time to Market
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Image (Engineering Schematic) */}
+            <div className="lg:w-1/2 relative">
+              <div className="relative aspect-[4/5] w-full rounded-none overflow-hidden border border-white/10 bg-neutral-900 group">
+                <Image
+                  src="/images/steel_injection_mold_closeup.png"
+                  alt="Steel Injection Mold Tooling"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-1000"
+                />
+
+                {/* Floating UI Element */}
+                <div className="absolute bottom-8 left-8 right-8 bg-neutral-900/90 backdrop-blur-xl p-6 border border-white/10">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-xs font-mono text-indigo-400 uppercase">
+                      Tooling Verification
+                    </span>
+                    <div className="flex gap-1">
+                      <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+                      <div className="w-2 h-2 rounded-full bg-indigo-500/30" />
+                      <div className="w-2 h-2 rounded-full bg-indigo-500/30" />
+                    </div>
+                  </div>
+                  <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+                    <div className="h-full w-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sustainable Innovation (Brand) */}
+      <section className="py-0 relative">
+        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[800px]">
+          {/* Image Half */}
+          <div className="relative min-h-[500px] lg:min-h-auto group overflow-hidden">
+            <Image
+              src="/images/pcr_plastic_bottle_render.png"
+              alt="Sustainable PCR Packaging"
+              fill
+              className="object-cover transition-transform duration-1000 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-neutral-900/20 group-hover:bg-transparent transition-colors duration-500" />
+          </div>
+
+          {/* Content Half */}
+          <div className="bg-amber-400 flex flex-col justify-center p-12 lg:p-24 relative overflow-hidden">
+            {/* Abstract Texture */}
+            <div className="absolute top-0 right-0 w-full h-full opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent pointer-events-none" />
+
+            <h2 className="text-5xl md:text-7xl font-black text-neutral-900 mb-8 tracking-tighter relative z-10">
+              Green is <br />
+              <span className="text-white">Gold.</span>
+            </h2>
+            <p className="text-xl text-neutral-800 font-medium mb-12 max-w-md leading-relaxed relative z-10">
+              Sustainability isn't a badge; it's a competitive advantage. We
+              design for the circular economy using 100% PCR (Post-Consumer
+              Recycled) plastics and monomaterial closures.
+            </p>
+
+            <ul className="space-y-6 relative z-10">
+              <li className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-full bg-white text-amber-500 flex items-center justify-center font-bold text-xl shadow-lg shrink-0">
+                  01
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-neutral-900">
+                    Lightweighting
+                  </h4>
+                  <p className="text-neutral-800/80">
+                    Reduce shipping costs and carbon footprint.
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-full bg-white text-amber-500 flex items-center justify-center font-bold text-xl shadow-lg shrink-0">
+                  02
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-neutral-900">
+                    PCR Integration
+                  </h4>
+                  <p className="text-neutral-800/80">
+                    FDA-approved recycled resins that look virgin.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-32 bg-white relative">
         {/* Abstract Background Decoration */}

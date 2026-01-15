@@ -27,6 +27,7 @@ export default function TopUtilityBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
@@ -82,7 +83,7 @@ export default function TopUtilityBar() {
           {/* Spacer to push utility to right */}
           <div className="flex-grow md:hidden" />
 
-          {/* Search Bar (Predictive) */}
+          {/* Search Bar (Predictive) - Desktop */}
           <div className="hidden md:flex flex-grow justify-end md:justify-start">
             <PredictiveSearch />
           </div>
@@ -106,7 +107,12 @@ export default function TopUtilityBar() {
             </div>
 
             {/* 2. Search Icon (Mobile Only - Desktop has input) */}
-            <button className="md:hidden text-industrial-700">
+            <button
+              className={`md:hidden transition-colors ${
+                isMobileSearchOpen ? "text-berlin-red" : "text-industrial-700"
+              }`}
+              onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
+            >
               <Search className="w-6 h-6" />
             </button>
 
@@ -214,6 +220,13 @@ export default function TopUtilityBar() {
             </button>
           </div>
         </div>
+
+        {/* MOBILE SEARCH BAR EXPANSION */}
+        {isMobileSearchOpen && (
+          <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-industrial-200 p-4 shadow-xl z-50 animate-in slide-in-from-top-2 duration-200">
+            <PredictiveSearch />
+          </div>
+        )}
       </div>
 
       <ContactModal

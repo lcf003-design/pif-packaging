@@ -56,6 +56,37 @@ export default async function ProductsPage({
     capacity,
   });
 
+  // Calculate Facets (Counts for each attribute) to drive Dynamic Filters
+  const facets = {
+    materials: new Set<string>(),
+    categories: new Set<string>(),
+    industries: new Set<string>(),
+    colors: new Set<string>(),
+    shapes: new Set<string>(),
+    neckFinishes: new Set<string>(),
+    capacities: new Set<string>(),
+  };
+
+  filteredProducts.forEach((p: any) => {
+    if (p.material) facets.materials.add(p.material);
+    if (p.category) facets.categories.add(p.category);
+    if (p.industry) facets.industries.add(p.industry);
+    if (p.color) facets.colors.add(p.color);
+    if (p.shape) facets.shapes.add(p.shape);
+    if (p.neckFinish) facets.neckFinishes.add(p.neckFinish);
+    if (p.capacity?.value) facets.capacities.add(p.capacity.value.toString());
+  });
+
+  const availableFacets = {
+    materials: Array.from(facets.materials),
+    categories: Array.from(facets.categories),
+    industries: Array.from(facets.industries),
+    colors: Array.from(facets.colors),
+    shapes: Array.from(facets.shapes),
+    neckFinishes: Array.from(facets.neckFinishes),
+    capacities: Array.from(facets.capacities),
+  };
+
   // Calculate Display Title
   let displayTitle = "Inventory Vault";
   if (category) displayTitle = category;
@@ -122,7 +153,7 @@ export default async function ProductsPage({
               <div className="h-12 bg-gray-50 rounded animate-pulse"></div>
             }
           >
-            <FilterBar />
+            <FilterBar facets={availableFacets} />
           </Suspense>
         </div>
 

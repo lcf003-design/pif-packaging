@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function ProductDetailClient({
   product,
@@ -29,7 +30,8 @@ export default function ProductDetailClient({
   const { addItem } = useInquiry();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
-  const [isZoomed, setIsZoomed] = useState(false);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false); // Used inside lightbox for zoom state
   const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -39,6 +41,16 @@ export default function ProductDetailClient({
       e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - left) / width) * 100;
     const y = ((e.clientY - top) / height) * 100;
+    setZoomPos({ x, y });
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isZoomed) return;
+    const { left, top, width, height } =
+      e.currentTarget.getBoundingClientRect();
+    const touch = e.touches[0];
+    const x = ((touch.clientX - left) / width) * 100;
+    const y = ((touch.clientY - top) / height) * 100;
     setZoomPos({ x, y });
   };
 
@@ -81,6 +93,264 @@ export default function ProductDetailClient({
   const quantityHelpText = product.caseQty
     ? `${product.caseQty} pieces per case`
     : "Sold individually";
+
+  // --- REFACTORED COMPONENTS (Safety Extraction) ---
+  const ProductHeader = () => (
+    <div className="pb-6 border-b border-gray-100">
+      <div className="mb-4 flex items-center gap-2">
+        <span className="px-2 py-1 bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-wider rounded-sm">
+          Industrial Grade
+        </span>
+        {product.material && (
+          <span className="px-2 py-1 bg-gray-50 text-gray-600 text-[10px] font-bold uppercase tracking-wider rounded-sm border border-gray-100">
+            {product.material}
+          </span>
+        )}
+      </div>
+
+      <h1 className="text-2xl lg:text-3xl xl:text-4xl font-black text-slate-900 leading-none mb-6 tracking-tighter">
+        {product.name}
+      </h1>
+
+      <div className="flex items-center gap-4 text-sm text-gray-500">
+        <span className="font-bold text-gray-400">
+          Item # <span className="text-slate-900">{product.sku || "N/A"}</span>
+        </span>
+      </div>
+    </div>
+  );
+
+  const QuoteCard = () => (
+    <div className="bg-white border border-gray-100 rounded-2xl shadow-xl shadow-slate-200/50 p-6 space-y-5 relative overflow-hidden">
+      {/* Decorative Top Line */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-berlin-blue to-berlin-red opacity-10"></div>
+
+      <div className="text-center pb-4 border-b border-gray-50">
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-green-600 text-[10px] uppercase tracking-widest font-bold flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            Volume Pricing
+          </p>
+          <span className="text-xs text-gray-400 font-medium">
+            Bulk Discounts
+          </span>
+        </div>
+
+        {/* Compact Header */}
+        <div className="text-center relative">
+          <div className="text-2xl font-black text-slate-900 tracking-tight drop-shadow-sm decoration-berlin-blue/30 underline decoration-4 underline-offset-4">
+            Request Quote
+          </div>
+        </div>
+      </div>
+
+      {/* Size / Capacity Variants */}
+      {variants.length > 0 && (
+        <div className="space-y-3 pt-4 border-t border-gray-100">
+          <label className="text-xs font-bold text-gray-900 uppercase tracking-wider pl-1 block">
+            Select Capacity
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {/* Current Product */}
+            <button
+              disabled
+              className="px-4 py-2 bg-berlin-blue text-white text-sm font-bold rounded-lg shadow-md ring-2 ring-berlin-blue ring-offset-1 cursor-default"
+            >
+              {capacityDisplay}
+            </button>
+
+            {/* Variant Products */}
+            {variants.map((v) => {
+              let vDisplay = "N/A";
+              if (v.capacity) {
+                const { value, unit } = v.capacity;
+                if (unit === "oz") {
+                  vDisplay = `${value} oz`;
+                } else {
+                  vDisplay = `${value} ${unit}`;
+                }
+              }
+              return (
+                <Link
+                  key={v.id}
+                  href={`/product/${v.slug || v.id}`}
+                  className="px-4 py-2 bg-white text-industrial-600 border border-gray-200 hover:border-berlin-blue hover:text-berlin-blue text-sm font-bold rounded-lg transition-all shadow-sm hover:shadow"
+                >
+                  {vDisplay}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Quantity Input */}
+      <div className="space-y-3 pt-0">
+        <label className="text-xs font-bold text-gray-900 uppercase tracking-wider pl-1 block">
+          Start an order
+        </label>
+        <div className="flex items-center gap-2">
+          <div className="flex-1 flex border border-gray-200 rounded-xl overflow-hidden focus-within:ring-4 focus-within:ring-berlin-blue/10 focus-within:border-berlin-blue transition-all h-14 bg-gray-50/50">
+            <input
+              type="number"
+              min="1"
+              value={qty}
+              onChange={(e) =>
+                setQty(Math.max(1, parseInt(e.target.value) || 1))
+              }
+              placeholder="Qty"
+              className="flex-1 px-4 font-mono font-bold text-xl text-slate-900 focus:outline-none bg-transparent placeholder-gray-300"
+            />
+            <div className="bg-white border-l border-gray-200 px-6 flex items-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+              {quantityUnitLabel}
+            </div>
+          </div>
+        </div>
+        <p className="text-xs text-gray-400 pl-1 font-medium">
+          {quantityHelpText}
+        </p>
+      </div>
+
+      {/* Action Buttons Row */}
+      <div className="flex gap-3">
+        {/* Add to Inquiry (Primary) */}
+        <button
+          onClick={handleAddToInquiry}
+          className={`flex-1 py-5 rounded-xl font-bold text-sm uppercase tracking-widest flex items-center justify-center gap-3 transition-all duration-300 transform active:scale-[0.98] ${
+            added
+              ? "bg-green-600 text-white shadow-lg shadow-green-600/30 ring-2 ring-green-600 ring-offset-2"
+              : "bg-berlin-red hover:bg-red-700 text-white shadow-xl shadow-red-600/20 hover:shadow-2xl hover:shadow-red-600/30 hover:-translate-y-1"
+          }`}
+        >
+          {added ? (
+            <>
+              <Check className="w-5 h-5" /> Added to Quote
+            </>
+          ) : (
+            <>
+              Add to Inquiry <ArrowRight className="w-5 h-5" />
+            </>
+          )}
+        </button>
+
+        {/* Wishlist Heart (Secondary) */}
+        <button
+          onClick={() => setIsFavorite(!isFavorite)}
+          className={`aspect-square h-auto rounded-xl flex items-center justify-center border-2 transition-all duration-200 active:scale-90 ${
+            isFavorite
+              ? "border-berlin-red bg-red-50 text-berlin-red shadow-inner"
+              : "border-gray-200 hover:border-berlin-red hover:text-berlin-red text-gray-400 bg-white shadow-sm hover:shadow-md"
+          }`}
+          title={isFavorite ? "Remove from Wishlist" : "Add to Wishlist"}
+        >
+          <Heart
+            className={`w-6 h-6 transition-all duration-300 ${
+              isFavorite ? "fill-current scale-110" : "scale-100"
+            }`}
+          />
+        </button>
+      </div>
+
+      {/* Pricing Tiers - Moved to Bottom & Compacted */}
+      <div className="pt-4 border-t border-gray-100">
+        <div className="grid grid-cols-3 gap-2 text-center text-[10px] uppercase tracking-wide font-medium text-gray-500">
+          <div className="p-2 bg-gray-50 rounded">
+            <div className="block text-gray-900 font-bold mb-0.5">1-4</div>
+            Cases
+          </div>
+          <div className="p-2 bg-blue-50 text-blue-700 rounded border border-blue-100">
+            <div className="block font-bold mb-0.5">5-49</div>
+            15% Off
+          </div>
+          <div className="p-2 bg-green-50 text-green-700 rounded border border-green-100">
+            <div className="block font-bold mb-0.5">50+</div>
+            Quote
+          </div>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-center gap-2 text-[10px] text-gray-400 font-medium pt-2 opacity-80">
+        <ShieldCheck className="w-3 h-3 text-green-500" />
+        <span>Secure SSL Inquiry</span>
+        <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+        <span>No Payment Info Required</span>
+      </div>
+    </div>
+  );
+
+  /* --- LIGHTBOX (FRAMER MOTION PHYSICS) --- */
+  const Lightbox = () => (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center backdrop-blur-md"
+      >
+        {/* Close Button */}
+        <button
+          onClick={() => {
+            setIsLightboxOpen(false);
+            setIsZoomed(false);
+          }}
+          className="absolute top-6 right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all z-50 backdrop-blur-md active:scale-95 px-4"
+        >
+          Close
+        </button>
+
+        {/* Image Container */}
+        <div
+          className="relative w-full h-full flex items-center justify-center p-0 overflow-hidden"
+          onClick={() => setIsZoomed(!isZoomed)}
+        >
+          <motion.div
+            className={`relative w-full h-full flex items-center justify-center ${
+              isZoomed ? "cursor-grab active:cursor-grabbing" : "cursor-zoom-in"
+            }`}
+            animate={{
+              scale: isZoomed ? 2 : 1,
+            }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            drag={isZoomed}
+            dragConstraints={{
+              top: -600,
+              left: -600,
+              right: 600,
+              bottom: 600,
+            }}
+            dragElastic={0.1}
+          >
+            <div className="relative w-full h-full md:w-[90vw] md:h-[90vh]">
+              <Image
+                src={selectedImage}
+                alt={product.name}
+                fill
+                className="object-contain pointer-events-none select-none"
+                draggable={false}
+                quality={100}
+                priority
+              />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Hint Badge at Bottom */}
+        <AnimatePresence>
+          {!isZoomed && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="absolute bottom-10 left-1/2 -translate-x-1/2 bg-white/10 border border-white/20 text-white px-6 py-2.5 rounded-full text-sm font-medium backdrop-blur-md pointer-events-none"
+            >
+              Tap to Zoom
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </AnimatePresence>
+  );
 
   return (
     <div className="bg-white min-h-screen font-sans">
@@ -147,6 +417,11 @@ export default function ProductDetailClient({
           {/* LEFT COLUMN: Gallery (Sticky on Desktop) */}
           <div className="lg:col-span-6 xl:col-span-7 h-full">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+              {/* MOBILE: Product Title (Top of Page on Mobile) */}
+              <div className="md:col-span-12 lg:hidden mb-4">
+                <ProductHeader />
+              </div>
+
               {/* Gallery Rail - Sticky */}
               <div className="md:col-span-12 lg:col-span-12 xl:col-span-12 relative">
                 {/* Mobile/Tablet: Gallery is just normal flow. Desktop: We want it sticky IF the content on right is long? 
@@ -167,12 +442,8 @@ export default function ProductDetailClient({
                 {/* PRODUCT GALLERY */}
                 <div className="space-y-4 mb-16">
                   <div
-                    className={`bg-white border border-industrial-200 rounded-lg overflow-hidden aspect-[4/3] flex items-center justify-center p-8 relative group shadow-sm transition-all duration-300 ${
-                      isZoomed ? "cursor-zoom-out" : "cursor-zoom-in"
-                    }`}
-                    onClick={() => setIsZoomed(!isZoomed)}
-                    onMouseMove={handleMouseMove}
-                    onMouseLeave={() => setIsZoomed(false)}
+                    className="bg-white border border-industrial-200 rounded-lg overflow-hidden aspect-[4/3] flex items-center justify-center p-8 relative group shadow-sm cursor-zoom-in"
+                    onClick={() => setIsLightboxOpen(true)}
                   >
                     <div className="absolute top-4 left-4 z-10 flex gap-2">
                       {product.material && (
@@ -182,23 +453,17 @@ export default function ProductDetailClient({
                       )}
                     </div>
 
-                    {/* Zoom Hint */}
-                    {!isZoomed && (
-                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur text-gray-400 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-sm border border-gray-200 pointer-events-none">
-                        <ZoomIn className="w-5 h-5" />
-                      </div>
-                    )}
+                    {/* Hint */}
+                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur text-gray-400 p-2 rounded-full opacity-100 transition-opacity z-10 shadow-sm border border-gray-200 pointer-events-none">
+                      <ZoomIn className="w-5 h-5" />
+                    </div>
 
                     <div className="relative w-full h-full overflow-hidden">
                       <Image
                         src={selectedImage}
                         alt={product.name}
                         fill
-                        className="object-contain mix-blend-multiply transition-transform duration-200 ease-out will-change-transform"
-                        style={{
-                          transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
-                          transform: isZoomed ? "scale(2.5)" : "scale(1)",
-                        }}
+                        className="object-contain mix-blend-multiply transition-transform duration-300 group-hover:scale-105"
                       />
                     </div>
                   </div>
@@ -225,6 +490,11 @@ export default function ProductDetailClient({
                       ))}
                     </div>
                   )}
+                </div>
+
+                {/* MOBILE: Quote Card (Below Images on Mobile) */}
+                <div className="lg:hidden mb-12">
+                  <QuoteCard />
                 </div>
 
                 {/* PRODUCT DETAILS (About & Specs) - formerly on the right, now stacked below gallery to make this column tall */}
@@ -417,204 +687,17 @@ export default function ProductDetailClient({
           </div>
 
           {/* RIGHT COLUMN: Header & Quote Card (Sticky) */}
-          <div className="lg:col-span-6 xl:col-span-5 relative h-full">
+          <div className="hidden lg:block lg:col-span-6 xl:col-span-5 relative h-full">
             <div className="sticky top-32 space-y-8">
-              {/* 1. Header Section (Title & SKU) - Moved here to be part of the right rail or sticky context? 
-                   Actually, typically Header is top of page.
-                   BUT for "Industrial Luxury", having the Title next to the Image (on Desktop) is very standard.
-                   So we place it here at the top of the Right Column.
-               */}
-              <div className="pb-6 border-b border-gray-100">
-                <div className="mb-4 flex items-center gap-2">
-                  <span className="px-2 py-1 bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-wider rounded-sm">
-                    Industrial Grade
-                  </span>
-                  {product.material && (
-                    <span className="px-2 py-1 bg-gray-50 text-gray-600 text-[10px] font-bold uppercase tracking-wider rounded-sm border border-gray-100">
-                      {product.material}
-                    </span>
-                  )}
-                </div>
-
-                {/* Upgrade: text-2xl to 4xl (Scaled Down Further) */}
-                <h1 className="text-2xl lg:text-3xl xl:text-4xl font-black text-slate-900 leading-none mb-6 tracking-tighter">
-                  {product.name}
-                </h1>
-
-                <div className="flex items-center gap-4 text-sm text-gray-500">
-                  <span className="font-bold text-gray-400">
-                    Item #{" "}
-                    <span className="text-slate-900">
-                      {product.sku || "N/A"}
-                    </span>
-                  </span>
-                </div>
-              </div>
-
-              {/* 2. Quote Card - Compacted & Reordered */}
-              <div className="bg-white border border-gray-100 rounded-2xl shadow-xl shadow-slate-200/50 p-6 space-y-5 relative overflow-hidden">
-                {/* Decorative Top Line */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-berlin-blue to-berlin-red opacity-10"></div>
-
-                <div className="text-center pb-4 border-b border-gray-50">
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-green-600 text-[10px] uppercase tracking-widest font-bold flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                      Volume Pricing
-                    </p>
-                    <span className="text-xs text-gray-400 font-medium">
-                      Bulk Discounts
-                    </span>
-                  </div>
-
-                  {/* Compact Header */}
-                  <div className="text-center relative">
-                    <div className="text-2xl font-black text-slate-900 tracking-tight drop-shadow-sm decoration-berlin-blue/30 underline decoration-4 underline-offset-4">
-                      Request Quote
-                    </div>
-                  </div>
-                </div>
-
-                {/* Size / Capacity Variants */}
-                {variants.length > 0 && (
-                  <div className="space-y-3 pt-4 border-t border-gray-100">
-                    <label className="text-xs font-bold text-gray-900 uppercase tracking-wider pl-1 block">
-                      Select Capacity
-                    </label>
-                    <div className="flex flex-wrap gap-2">
-                      {/* Current Product */}
-                      <button
-                        disabled
-                        className="px-4 py-2 bg-berlin-blue text-white text-sm font-bold rounded-lg shadow-md ring-2 ring-berlin-blue ring-offset-1 cursor-default"
-                      >
-                        {capacityDisplay}
-                      </button>
-
-                      {/* Variant Products */}
-                      {variants.map((v) => {
-                        let vDisplay = "N/A";
-                        if (v.capacity) {
-                          const { value, unit } = v.capacity;
-                          if (unit === "oz") {
-                            vDisplay = `${value} oz`;
-                          } else {
-                            vDisplay = `${value} ${unit}`;
-                          }
-                        }
-                        return (
-                          <Link
-                            key={v.id}
-                            href={`/product/${v.slug || v.id}`}
-                            className="px-4 py-2 bg-white text-industrial-600 border border-gray-200 hover:border-berlin-blue hover:text-berlin-blue text-sm font-bold rounded-lg transition-all shadow-sm hover:shadow"
-                          >
-                            {vDisplay}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-
-                {/* Quantity Input */}
-                <div className="space-y-3 pt-0">
-                  <label className="text-xs font-bold text-gray-900 uppercase tracking-wider pl-1 block">
-                    Start an order
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <div className="flex-1 flex border border-gray-200 rounded-xl overflow-hidden focus-within:ring-4 focus-within:ring-berlin-blue/10 focus-within:border-berlin-blue transition-all h-14 bg-gray-50/50">
-                      <input
-                        type="number"
-                        min="1"
-                        value={qty}
-                        onChange={(e) =>
-                          setQty(Math.max(1, parseInt(e.target.value) || 1))
-                        }
-                        placeholder="Qty"
-                        className="flex-1 px-4 font-mono font-bold text-xl text-slate-900 focus:outline-none bg-transparent placeholder-gray-300"
-                      />
-                      <div className="bg-white border-l border-gray-200 px-6 flex items-center text-xs font-bold text-gray-500 uppercase tracking-wider">
-                        {quantityUnitLabel}
-                      </div>
-                    </div>
-                  </div>
-                  <p className="text-xs text-gray-400 pl-1 font-medium">
-                    {quantityHelpText}
-                  </p>
-                </div>
-
-                {/* Action Buttons Row */}
-                <div className="flex gap-3">
-                  {/* Add to Inquiry (Primary) */}
-                  <button
-                    onClick={handleAddToInquiry}
-                    className={`flex-1 py-5 rounded-xl font-bold text-sm uppercase tracking-widest flex items-center justify-center gap-3 transition-all duration-300 transform active:scale-[0.98] ${
-                      added
-                        ? "bg-green-600 text-white shadow-lg shadow-green-600/30 ring-2 ring-green-600 ring-offset-2"
-                        : "bg-berlin-red hover:bg-red-700 text-white shadow-xl shadow-red-600/20 hover:shadow-2xl hover:shadow-red-600/30 hover:-translate-y-1"
-                    }`}
-                  >
-                    {added ? (
-                      <>
-                        <Check className="w-5 h-5" /> Added to Quote
-                      </>
-                    ) : (
-                      <>
-                        Add to Inquiry <ArrowRight className="w-5 h-5" />
-                      </>
-                    )}
-                  </button>
-
-                  {/* Wishlist Heart (Secondary) */}
-                  <button
-                    onClick={() => setIsFavorite(!isFavorite)}
-                    className={`aspect-square h-auto rounded-xl flex items-center justify-center border-2 transition-all duration-200 active:scale-90 ${
-                      isFavorite
-                        ? "border-berlin-red bg-red-50 text-berlin-red shadow-inner"
-                        : "border-gray-200 hover:border-berlin-red hover:text-berlin-red text-gray-400 bg-white shadow-sm hover:shadow-md"
-                    }`}
-                    title={
-                      isFavorite ? "Remove from Wishlist" : "Add to Wishlist"
-                    }
-                  >
-                    <Heart
-                      className={`w-6 h-6 transition-all duration-300 ${
-                        isFavorite ? "fill-current scale-110" : "scale-100"
-                      }`}
-                    />
-                  </button>
-                </div>
-
-                {/* Pricing Tiers - Moved to Bottom & Compacted */}
-                <div className="pt-4 border-t border-gray-100">
-                  <div className="grid grid-cols-3 gap-2 text-center text-[10px] uppercase tracking-wide font-medium text-gray-500">
-                    <div className="p-2 bg-gray-50 rounded">
-                      <div className="block text-gray-900 font-bold mb-0.5">
-                        1-4
-                      </div>
-                      Cases
-                    </div>
-                    <div className="p-2 bg-blue-50 text-blue-700 rounded border border-blue-100">
-                      <div className="block font-bold mb-0.5">5-49</div>
-                      15% Off
-                    </div>
-                    <div className="p-2 bg-green-50 text-green-700 rounded border border-green-100">
-                      <div className="block font-bold mb-0.5">50+</div>
-                      Quote
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-center gap-2 text-[10px] text-gray-400 font-medium pt-2 opacity-80">
-                  <ShieldCheck className="w-3 h-3 text-green-500" />
-                  <span>Secure SSL Inquiry</span>
-                  <span className="w-1 h-1 rounded-full bg-gray-300"></span>
-                  <span>No Payment Info Required</span>
-                </div>
-              </div>
+              <ProductHeader />
+              <QuoteCard />
             </div>
           </div>
         </div>
       </div>
+
+      {/* Lightbox Overlay */}
+      {isLightboxOpen && <Lightbox />}
     </div>
   );
 }

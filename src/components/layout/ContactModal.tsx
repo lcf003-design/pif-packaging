@@ -55,39 +55,64 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
             <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-4xl mx-auto">
               {/* Column 1: Chat */}
-              <div className="flex flex-col items-center text-center group">
-                <div className="mb-6 p-4 rounded-full bg-red-50 text-berlin-red group-hover:scale-110 transition-transform duration-300">
-                  <MessageSquare className="w-10 h-10 stroke-[1.5]" />
+              {/* Column 1: WhatsApp */}
+              <div className="flex flex-col items-center text-center group p-6 rounded-xl border border-transparent hover:border-industrial-100 hover:bg-industrial-50/50 transition-all duration-300">
+                <div className="mb-6 p-4 rounded-full bg-green-50 text-green-600 group-hover:scale-110 transition-transform duration-300 ring-4 ring-green-50/50">
+                  <MessageSquare className="w-8 h-8 stroke-[2px]" />
                 </div>
-                <h3 className="text-xl font-bold text-industrial-900 mb-4">
-                  Chat with Us
+                <h3 className="text-xl font-black text-industrial-900 mb-2 uppercase tracking-tight">
+                  WhatsApp Business
                 </h3>
-                <p className="text-industrial-500 text-sm mb-6 max-w-xs mx-auto">
-                  Chat with a Customer Care Advocate during business hours for
-                  product and order information.
+                <p className="text-industrial-500 text-sm mb-6 max-w-xs mx-auto leading-relaxed">
+                  Chat directly with our packaging specialists for immediate
+                  assistance.
                 </p>
-                <div className="mt-auto text-xs text-industrial-400 flex items-center gap-1.5 bg-industrial-50 px-3 py-1.5 rounded-sm">
-                  <Clock className="w-3 h-3" />
-                  <span>Mon-Fri 8:00 AM - 5:00 PM CT</span>
+
+                <div className="mb-6">
+                  <div className="text-2xl font-black text-industrial-900 tracking-tight">
+                    +44 (0) 7553 479 040
+                  </div>
+                  <div className="text-xs font-bold text-green-600 uppercase tracking-wider mt-1">
+                    Available Now
+                  </div>
                 </div>
+
+                <a
+                  href="https://wa.me/447553479040"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-auto px-8 py-3 rounded-sm font-bold uppercase tracking-wide border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white transition-all w-full max-w-[200px]"
+                >
+                  Chat Now
+                </a>
               </div>
 
               {/* Column 2: Email */}
-              <div className="flex flex-col items-center text-center group">
-                <div className="mb-6 p-4 rounded-full bg-red-50 text-berlin-red group-hover:scale-110 transition-transform duration-300">
-                  <Mail className="w-10 h-10 stroke-[1.5]" />
+              <div className="flex flex-col items-center text-center group p-6 rounded-xl border border-transparent hover:border-industrial-100 hover:bg-industrial-50/50 transition-all duration-300">
+                <div className="mb-6 p-4 rounded-full bg-red-50 text-berlin-red group-hover:scale-110 transition-transform duration-300 ring-4 ring-red-50/50">
+                  <Mail className="w-8 h-8 stroke-[2px]" />
                 </div>
-                <h3 className="text-xl font-bold text-industrial-900 mb-4">
-                  Email Us
+                <h3 className="text-xl font-black text-industrial-900 mb-2 uppercase tracking-tight">
+                  Email Support
                 </h3>
-                <p className="text-industrial-500 text-sm mb-8 max-w-xs mx-auto">
-                  We will get back to you within 2 business days.
+                <p className="text-industrial-500 text-sm mb-6 max-w-xs mx-auto leading-relaxed">
+                  Send us your specifications and we'll respond within 24 hours.
                 </p>
+
+                <div className="mb-6">
+                  <div className="text-xl font-bold text-industrial-900 tracking-tight break-all">
+                    support@pifpackaging.com
+                  </div>
+                  <div className="text-xs font-bold text-berlin-red uppercase tracking-wider mt-1">
+                    24h Response Time
+                  </div>
+                </div>
+
                 <a
                   href="mailto:support@pifpackaging.com"
-                  className="mt-auto bg-berlin-red text-white px-8 py-3 rounded-sm font-bold uppercase tracking-wide hover:bg-red-700 transition-colors shadow-lg shadow-berlin-red/20 w-full max-w-[200px]"
+                  className="mt-auto px-8 py-3 rounded-sm font-bold uppercase tracking-wide border-2 border-berlin-red text-berlin-red hover:bg-berlin-red hover:text-white transition-all w-full max-w-[200px]"
                 >
-                  Email Us
+                  Message Us
                 </a>
               </div>
             </div>

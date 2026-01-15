@@ -13,11 +13,8 @@ export const INDUSTRIES: Industry[] = [
   "Automotive",
   "Beverage",
   "Food",
-  "Personal Care",
-  "Pharmaceutical",
-  "Nutraceuticals",
-  "Home Care",
-  "Industrial",
+  "Personal Health & Beauty",
+  "Pharma, Nutraceuticals & Healthcare",
   "Pet Care & Veterinary",
   "Beer",
   "Spirits",
@@ -37,14 +34,14 @@ export const MATERIAL_GROUPS: Record<string, string> = {
   "PCR HDPE": "Plastic",
   "BPA-Free Plastic": "Plastic",
   Glass: "Glass",
-  "Type III Glass": "Glass",
+  "Glass (Type III)": "Glass",
   Aluminum: "Metal",
   Tinplate: "Metal",
 };
 
 export const MATERIALS: Material[] = [
   "Glass",
-  "Type III Glass",
+  "Glass (Type III)",
   "HDPE",
   "PET",
   "PP",
@@ -109,6 +106,7 @@ export const SHAPES = [
 
 export const COLORS = [
   "Clear (Flint)",
+  "Flint",
   "Amber",
   "Cobalt Blue",
   "Emerald Green",

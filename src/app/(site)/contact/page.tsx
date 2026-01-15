@@ -49,49 +49,67 @@ export default function ContactPage() {
       <section className="pb-32 bg-white">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="grid md:grid-cols-2 gap-8">
-            {/* CARD 1: CHAT */}
-            <div className="bg-neutral-50 border border-neutral-200 p-12 text-center rounded-sm hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-              <div className="w-16 h-16 mb-8 text-berlin-red">
-                <MessageSquare className="w-full h-full stroke-[1.5]" />
+            {/* CARD 1: WHATSAPP */}
+            <div className="bg-neutral-50 border border-neutral-200 p-12 text-center rounded-sm hover:shadow-lg transition-shadow duration-300 flex flex-col items-center group">
+              <div className="w-16 h-16 mb-8 p-4 rounded-full bg-green-50 text-green-600 group-hover:scale-110 transition-transform duration-300 ring-4 ring-green-50/50">
+                <MessageSquare className="w-full h-full stroke-[2px]" />
               </div>
 
               <h3 className="text-2xl font-black text-industrial-900 uppercase tracking-tight mb-4">
-                Chat with Us
+                WhatsApp Business
               </h3>
-              <p className="text-industrial-500 mb-10 max-w-xs mx-auto">
-                Chat with a Customer Care Advocate during business hours for
-                product and order information.
+              <p className="text-industrial-500 mb-8 max-w-xs mx-auto">
+                Chat directly with our packaging specialists for immediate
+                assistance.
               </p>
 
-              <button
-                className="mt-auto px-8 py-3 bg-neutral-200 text-industrial-500 font-bold uppercase tracking-widest rounded-sm cursor-not-allowed"
-                disabled
-                title="Chat is currently offline"
+              <div className="mb-8">
+                <div className="text-2xl font-black text-industrial-900 tracking-tight">
+                  +44 (0) 7553 479 040
+                </div>
+                <div className="text-sm font-bold text-green-600 uppercase tracking-wider mt-2">
+                  Available Now
+                </div>
+              </div>
+
+              <a
+                href="https://wa.me/447553479040"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-auto px-10 py-4 border-2 border-green-600 text-green-600 font-bold uppercase tracking-widest rounded-sm hover:bg-green-600 hover:text-white transition-all w-full max-w-xs"
               >
-                Launch Chat
-              </button>
+                Chat Now
+              </a>
             </div>
 
             {/* CARD 2: EMAIL */}
-            <div className="bg-neutral-50 border border-neutral-200 p-12 text-center rounded-sm hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
-              <div className="w-16 h-16 mb-8 text-berlin-red">
-                <Mail className="w-full h-full stroke-[1.5]" />
+            <div className="bg-neutral-50 border border-neutral-200 p-12 text-center rounded-sm hover:shadow-lg transition-shadow duration-300 flex flex-col items-center group">
+              <div className="w-16 h-16 mb-8 p-4 rounded-full bg-red-50 text-berlin-red group-hover:scale-110 transition-transform duration-300 ring-4 ring-red-50/50">
+                <Mail className="w-full h-full stroke-[2px]" />
               </div>
 
               <h3 className="text-2xl font-black text-industrial-900 uppercase tracking-tight mb-4">
-                Email Us
+                Email Support
               </h3>
-              <p className="text-industrial-500 mb-10 max-w-xs mx-auto">
-                We will get back to you within 2 business days regarding your
-                inquiry.
+              <p className="text-industrial-500 mb-8 max-w-xs mx-auto">
+                Send us your specifications and we'll respond within 24 hours.
               </p>
 
-              <button
-                onClick={() => setContactModalOpen(true)}
-                className="mt-auto px-8 py-3 bg-berlin-red text-white font-bold uppercase tracking-widest rounded-sm hover:bg-red-700 transition-colors shadow-lg hover:shadow-xl"
+              <div className="mb-8">
+                <div className="text-xl font-black text-industrial-900 tracking-tight break-all">
+                  support@pifpackaging.com
+                </div>
+                <div className="text-sm font-bold text-berlin-red uppercase tracking-wider mt-2">
+                  24h Response Time
+                </div>
+              </div>
+
+              <a
+                href="mailto:support@pifpackaging.com"
+                className="mt-auto px-10 py-4 border-2 border-berlin-red text-berlin-red font-bold uppercase tracking-widest rounded-sm hover:bg-berlin-red hover:text-white transition-all w-full max-w-xs"
               >
-                Contact Us
-              </button>
+                Message Us
+              </a>
             </div>
           </div>
         </div>

@@ -4,6 +4,9 @@ import Footer from "@/components/layout/Footer";
 import { InquiryProvider } from "@/context/InquiryContext";
 import { InquirySidebar } from "@/components/layout/InquirySidebar";
 import ScrollToTop from "@/components/layout/ScrollToTop";
+import WhatsAppBubble from "@/components/ui/WhatsAppBubble";
+
+import { Suspense } from "react";
 
 export default function SiteLayout({
   children,
@@ -31,13 +34,16 @@ export default function SiteLayout({
 
         {/* RIGHT COLUMN: Utility + Nav */}
         <div className="flex flex-col flex-1 min-w-0">
-          <TopUtilityBar />
+          <Suspense fallback={<div className="h-16 bg-white animate-pulse" />}>
+            <TopUtilityBar />
+          </Suspense>
           <MainNavBar />
         </div>
       </div>
       <main className="flex-grow">{children}</main>
       <InquirySidebar />
       <ScrollToTop />
+      <WhatsAppBubble />
       <Footer />
     </InquiryProvider>
   );

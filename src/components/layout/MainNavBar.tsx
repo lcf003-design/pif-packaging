@@ -194,6 +194,7 @@ const NAV_LINKS: NavItem[] = [
       },
     ],
   },
+  { label: "PPE Division", href: "/ppe" },
   { label: "Markets Served", href: "/markets" },
 ];
 
@@ -208,6 +209,7 @@ import ContactModal from "./ContactModal";
 export default function MainNavBar() {
   const router = useRouter();
   const [isShopOpen, setIsShopOpen] = useState(false);
+  const [isMobileShopOpen, setIsMobileShopOpen] = useState(false);
   const { isMobileMenuOpen, closeMobileMenu, toggleMobileMenu } = useInquiry(); // Use Context State
   const [expandedMobileItems, setExpandedMobileItems] = useState<string[]>([]);
 
@@ -306,10 +308,24 @@ export default function MainNavBar() {
   // Prevent scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
+      // Robust scroll lock for iOS
       document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
+      document.body.style.height = "100%";
     } else {
       document.body.style.overflow = "unset";
+      document.body.style.position = "static";
+      document.body.style.width = "auto";
+      document.body.style.height = "auto";
     }
+    return () => {
+      // Cleanup on unmount
+      document.body.style.overflow = "unset";
+      document.body.style.position = "static";
+      document.body.style.width = "auto";
+      document.body.style.height = "auto";
+    };
   }, [isMobileMenuOpen]);
 
   return (
@@ -535,7 +551,7 @@ export default function MainNavBar() {
             {/* 2. Shop Now Bar (Blue Gradient) */}
             <div className="px-6 pb-6 flex-shrink-0">
               <button
-                onClick={() => setIsShopOpen(!isShopOpen)}
+                onClick={() => setIsMobileShopOpen(!isMobileShopOpen)}
                 className="w-full bg-gradient-to-r from-berlin-blue to-blue-600 text-white py-4 px-6 font-bold flex items-center justify-between rounded-lg shadow-lg shadow-blue-900/20 active:scale-95 transition-all"
               >
                 <span className="flex-1 text-left text-lg tracking-wide">
@@ -543,14 +559,14 @@ export default function MainNavBar() {
                 </span>
                 <ChevronDown
                   className={`w-5 h-5 transition-transform duration-300 ${
-                    isShopOpen ? "rotate-180" : "-rotate-90"
+                    isMobileShopOpen ? "rotate-180" : "-rotate-90"
                   }`}
                 />
               </button>
             </div>
 
             {/* Shop Now Expanded Content */}
-            {isShopOpen && (
+            {isMobileShopOpen && (
               <div className="mx-6 mb-6 bg-neutral-900/50 rounded-lg border border-white/5 overflow-hidden flex-shrink-0 animate-in slide-in-from-top-4 duration-200">
                 <div className="p-4">
                   {SHOP_NAVIGATION.map((category) => (
@@ -699,18 +715,15 @@ export default function MainNavBar() {
               </Link>
 
               <div>
-                <button
-                  onClick={() => {
-                    closeMobileMenu();
-                    setIsContactOpen(true);
-                  }}
+                <a
+                  href="tel:+447553479040"
                   className="block font-medium text-gray-300 mb-1 hover:text-white text-left w-full transition-colors group"
                 >
-                  Contact Us <span className="text-white/40 mx-2">|</span>{" "}
+                  Call Us <span className="text-white/40 mx-2">|</span>{" "}
                   <span className="italic text-white group-hover:text-berlin-red transition-colors">
-                    800.363.9855
+                    +44 (0) 7553 479 040
                   </span>
-                </button>
+                </a>
               </div>
 
               {!user && (

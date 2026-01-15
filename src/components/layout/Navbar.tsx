@@ -163,6 +163,14 @@ export default function Navbar() {
             </div>
 
             <Link
+              href="/ppe"
+              className="text-sm font-medium text-industrial-600 hover:text-industrial-900 transition-colors flex items-center gap-2"
+            >
+              <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
+              PPE Division
+            </Link>
+
+            <Link
               href="/services"
               className="text-sm font-medium text-industrial-600 hover:text-industrial-900"
             >
@@ -325,6 +333,14 @@ export default function Navbar() {
             </div>
 
             {/* Direct Links */}
+            <Link
+              href="/ppe"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block py-2 text-base font-bold text-industrial-900 border-b border-industrial-50 flex items-center gap-2"
+            >
+              <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
+              PPE Division
+            </Link>
             <Link
               href="/services"
               onClick={() => setMobileMenuOpen(false)}

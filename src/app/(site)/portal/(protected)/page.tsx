@@ -1,11 +1,7 @@
 "use client";
 
 import { useAuth } from "@/services/authService";
-import {
-  getUserInquiries,
-  getProjects,
-  getRecentlyViewed,
-} from "@/services/userService";
+import { getProjects, getRecentlyViewed } from "@/services/userService";
 import { getUserInquiries as fetchUserInquiries } from "@/services/inquiryService";
 import { useEffect, useState } from "react";
 import Link from "next/link";
