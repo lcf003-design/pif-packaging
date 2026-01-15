@@ -1,0 +1,16 @@
+<svg width="96" height="68" viewBox="0 0 96 68" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background: Berlin Red #d92128 -->
+  <rect width="96" height="68" fill="#d92128"/>
+  
+  <!-- PIF Text: Black Font Weight, Tight Tracking -->
+  <text x="48" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="34" fill="white" letter-spacing="-2">PIF</text>
+  
+  <!-- TM: Small, transparent, superscript -->
+  <text x="80" y="24" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="6" fill="white" fill-opacity="0.8">TM</text>
+  
+  <!-- Separator Line: White 20% opacity -->
+  <line x1="12" y1="50" x2="84" y2="50" stroke="white" stroke-opacity="0.2" stroke-width="1"/>
+  
+  <!-- PACKAGING: Wide tracking, uppercase -->
+  <text x="48" y="62" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="9" fill="white" letter-spacing="2">PACKAGING</text>
+</svg>
