@@ -1,0 +1,10 @@
+runConfig:
+  cpu: 1
+  memoryMiB: 2048
+  concurrency: 80
+  minInstances: 0
+  maxInstances: 10
+
+env:
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: "placeholder_will_be_replaced_by_console_env"
