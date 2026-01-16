@@ -15,7 +15,6 @@ const INDUSTRIES = [
   { name: "Pet Care", image: "/grid_petcare.png" },
   { name: "Industrial Chemical", image: "/grid_industrial.png" },
   { name: "Automotive", image: "/grid_automotive.png" },
-  { name: "Cannabis & CBD", image: "/grid_cannabis.png" },
 ];
 
 export default function IndustryGrid() {

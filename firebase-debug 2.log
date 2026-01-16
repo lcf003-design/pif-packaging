@@ -1,0 +1,182 @@
+[debug] [2026-01-16T13:32:19.189Z] ----------------------------------------------------------------------
+[debug] [2026-01-16T13:32:19.190Z] Command:       /usr/local/bin/node /Users/9lives/Documents/GitHub/packaging-catalog/node_modules/.bin/firebase deploy --only hosting --project packaging-catalog
+[debug] [2026-01-16T13:32:19.191Z] CLI Version:   15.3.1
+[debug] [2026-01-16T13:32:19.191Z] Platform:      darwin
+[debug] [2026-01-16T13:32:19.191Z] Node Version:  v24.11.1
+[debug] [2026-01-16T13:32:19.191Z] Time:          Fri Jan 16 2026 13:32:19 GMT+0000 (Greenwich Mean Time)
+[debug] [2026-01-16T13:32:19.191Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-01-16T13:32:19.628Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-16T13:32:19.629Z] > authorizing via signed-in user (larryfields110392@gmail.com)
+[debug] [2026-01-16T13:32:19.629Z] [iam] checking project packaging-catalog for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-01-16T13:32:19.629Z] Checked if tokens are valid: true, expires at: 1768573459162
+[debug] [2026-01-16T13:32:19.629Z] Checked if tokens are valid: true, expires at: 1768573459162
+[debug] [2026-01-16T13:32:19.629Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/packaging-catalog:testIamPermissions [none]
+[debug] [2026-01-16T13:32:19.629Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/packaging-catalog:testIamPermissions x-goog-quota-user=projects/packaging-catalog
+[debug] [2026-01-16T13:32:19.629Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/packaging-catalog:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-01-16T13:32:20.172Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/packaging-catalog:testIamPermissions 200
+[debug] [2026-01-16T13:32:20.173Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/packaging-catalog:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-01-16T13:32:20.173Z] Checked if tokens are valid: true, expires at: 1768573459162
+[debug] [2026-01-16T13:32:20.173Z] Checked if tokens are valid: true, expires at: 1768573459162
+[debug] [2026-01-16T13:32:20.173Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/packaging-catalog [none]
+[debug] [2026-01-16T13:32:20.695Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/packaging-catalog 200
+[debug] [2026-01-16T13:32:20.695Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/packaging-catalog {"projectId":"packaging-catalog","projectNumber":"389299167982","displayName":"Packaging Catalog","name":"projects/packaging-catalog","resources":{"hostingSite":"packaging-catalog"},"state":"ACTIVE","etag":"1_86b83bfc-adf9-4b1c-bcd1-698e81e98be6"}
+[debug] [2026-01-16T13:32:21.702Z] Checked if tokens are valid: true, expires at: 1768573459162
+[debug] [2026-01-16T13:32:21.702Z] Checked if tokens are valid: true, expires at: 1768573459162
+[debug] [2026-01-16T13:32:21.702Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/packaging-catalog/sites pageToken=&pageSize=10
+[debug] [2026-01-16T13:32:22.405Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/packaging-catalog/sites 200
+[debug] [2026-01-16T13:32:22.405Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/packaging-catalog/sites {"sites":[{"name":"projects/packaging-catalog/sites/packaging-catalog","defaultUrl":"https://packaging-catalog.web.app","type":"DEFAULT_SITE"},{"name":"projects/packaging-catalog/sites/packaging-catalog-edbf7","defaultUrl":"https://packaging-catalog-edbf7.web.app","appId":"1:389299167982:web:1182d448604d0eaa3f89ff","type":"USER_SITE"}]}
+[debug] [2026-01-16T13:32:22.405Z] Checked if tokens are valid: true, expires at: 1768573459162
+[debug] [2026-01-16T13:32:22.405Z] Checked if tokens are valid: true, expires at: 1768573459162
+[debug] [2026-01-16T13:32:22.405Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/packaging-catalog/sites 
+[debug] [2026-01-16T13:32:22.632Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/packaging-catalog/sites 200
+[debug] [2026-01-16T13:32:22.632Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/packaging-catalog/sites {"sites":[{"name":"projects/packaging-catalog/sites/packaging-catalog","defaultUrl":"https://packaging-catalog.web.app","type":"DEFAULT_SITE"},{"name":"projects/packaging-catalog/sites/packaging-catalog-edbf7","defaultUrl":"https://packaging-catalog-edbf7.web.app","appId":"1:389299167982:web:1182d448604d0eaa3f89ff","type":"USER_SITE"}]}
+[debug] [2026-01-16T13:32:22.633Z] Checked if tokens are valid: true, expires at: 1768573459162
+[debug] [2026-01-16T13:32:22.633Z] Checked if tokens are valid: true, expires at: 1768573459162
+[debug] [2026-01-16T13:32:22.633Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/packaging-catalog/webApps/-/config [none]
+[debug] [2026-01-16T13:32:23.000Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/packaging-catalog/webApps/-/config 200
+[debug] [2026-01-16T13:32:23.000Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/packaging-catalog/webApps/-/config {"projectId":"packaging-catalog","appId":"1:389299167982:web:1182d448604d0eaa3f89ff","storageBucket":"packaging-catalog.firebasestorage.app","apiKey":"AIzaSyBbGcoVFuDsaOEqLFXFAW_SSleOYOhT7Uc","authDomain":"packaging-catalog.firebaseapp.com","messagingSenderId":"389299167982","measurementId":"G-1Q1G594FX4","projectNumber":"389299167982","version":"2"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 15.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2026-01-16T13:32:25.729Z] Checked if tokens are valid: true, expires at: 1768573459162
+[debug] [2026-01-16T13:32:25.729Z] Checked if tokens are valid: true, expires at: 1768573459162
+[debug] [2026-01-16T13:32:25.729Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/packaging-catalog/sites/packaging-catalog [none]
+[debug] [2026-01-16T13:32:25.939Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/packaging-catalog/sites/packaging-catalog 200
+[debug] [2026-01-16T13:32:25.939Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/packaging-catalog/sites/packaging-catalog {"name":"projects/packaging-catalog/sites/packaging-catalog","defaultUrl":"https://packaging-catalog.web.app","type":"DEFAULT_SITE"}
+[info] ▲ Next.js 16.1.1 (Turbopack)
+
+[info] - Environments: .env.local
+
+
+[info]   Creating an optimized production build ...
+
+[info] ✓ Compiled successfully in 4.4s
+
+[info]   Running TypeScript ...
+
+[info]   Collecting page data using 11 workers ...
+
+[info]   Generating static pages using 11 workers (0/70) ...
+
+[info] ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+
+[info] ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+
+[info] ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+
+[info]   Generating static pages using 11 workers (17/70) 
+
+[info]   Generating static pages using 11 workers (34/70) 
+
+[info]   Generating static pages using 11 workers (52/70) 
+
+[info] ✓ Generating static pages using 11 workers (70/70) in 906.8ms
+
+[info]   Finalizing page optimization ...
+
+[info] 
+
+[info] Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ○ /admin
+├ ○ /admin/inquiries
+├ ○ /admin/ppe
+├ ƒ /admin/ppe/[id]
+├ ○ /admin/ppe/bulk
+├ ○ /admin/ppe/new
+├ ○ /admin/products
+├ ƒ /admin/products/[id]
+├ ○ /admin/products/new
+├ ○ /admin/users
+├ ○ /capabilities
+├ ○ /case-studies/dual-chamber-precision
+├ ○ /contact
+├ ○ /forgot-password
+├ ○ /icon.png
+├ ○ /inquiry
+├ ○ /manufacturing
+├ ○ /markets
+├ ○ /markets/automotive
+├ ○ /markets/beer
+├ ○ /markets/beverage
+├ ○ /markets/cannabis
+├ ○ /markets/food
+├ ○ /markets/home-care
+├ ○ /markets/industrial
+├ ○ /markets/personal-care
+├ ○ /markets/pet-care
+├ ○ /markets/pharmaceutical
+├ ○ /markets/spirits
+├ ○ /markets/wine
+├ ○ /opengraph-image.png
+├ ○ /portal
+├ ○ /portal/faq
+├ ○ /portal/history
+├ ○ /portal/inquiries
+├ ○ /portal/login
+├ ○ /portal/profile
+├ ○ /portal/projects
+├ ○ /ppe
+├ ○ /ppe/products
+├ ƒ /ppe/products/[id]
+├ ○ /privacy
+├ ƒ /product/[slug]
+├ ƒ /products
+├ ƒ /products/[category]
+├ ○ /quote
+├ ○ /results/delivery
+├ ○ /results/testimonials
+├ ○ /results/value
+├ ○ /seed
+├ ○ /services/consulting
+├ ○ /services/decorating
+├ ○ /services/design
+├ ○ /services/portal
+├ ○ /services/quality
+├ ○ /services/sourcing
+├ ○ /services/supply-chain
+├ ○ /shipping
+├ ○ /shop-all
+├ ○ /signup
+├ ○ /sitemap.xml
+├ ○ /terms
+├ ○ /why-us
+├ ○ /why-us/community
+├ ○ /why-us/divisions
+├ ○ /why-us/global-reach
+├ ○ /why-us/mission
+├ ○ /why-us/model
+├ ○ /why-us/operations
+└ ○ /why-us/story
+
+
+[info] 
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+[info] Building a Cloud Function to run this application. This is needed due to:
+[info]  • non-static component /(admin)/admin/ppe/[id]/page
+[info]  • non-static component /(admin)/admin/products/[id]/page
+[info]  • non-static component /(site)/ppe/products/[id]/page
+[info]  • non-static component /(site)/product/[slug]/page
+[info]  • non-static component /(site)/products/[category]/page
+[debug] [2026-01-16T13:32:37.644Z]  • non-static component /(site)/products/page
+[info]  • and 1 other reasons, use --debug to see more
+[info] 
+[debug] [2026-01-16T13:32:40.600Z] Checked if tokens are valid: true, expires at: 1768573459162
+[debug] [2026-01-16T13:32:40.600Z] Checked if tokens are valid: true, expires at: 1768573459162
+[debug] [2026-01-16T13:32:40.600Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/packaging-catalog/sites/packaging-catalog [none]
+[debug] [2026-01-16T13:32:41.170Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/packaging-catalog/sites/packaging-catalog 200
+[debug] [2026-01-16T13:32:41.170Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/packaging-catalog/sites/packaging-catalog {"name":"projects/packaging-catalog/sites/packaging-catalog","defaultUrl":"https://packaging-catalog.web.app","type":"DEFAULT_SITE"}

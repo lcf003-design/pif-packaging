@@ -21,9 +21,10 @@ const ValuePropBanner = () => {
                   Unique Small Business Partner
                 </strong>{" "}
                 means we bring together the best elements of packaging
-                manufacturing, distribution, and income-boosting services. We
-                offer a comprehensive array of products and solutions to
-                streamline packaging supply chains and grow your profits.
+                manufacturing, distribution, and income-boosting services with a
+                personalized, hands-on approach. We offer a comprehensive array
+                of products and solutions to streamline packaging supply chains
+                and grow your profits.
               </p>
               <p className="font-bold text-berlin-blue text-lg">
                 With PIF Packaging, one call brings it all!
@@ -33,7 +34,7 @@ const ValuePropBanner = () => {
 
           {/* Right: Venn Diagram Graphic */}
           {/* Right: Venn Diagram Graphic */}
-          <div className="relative flex justify-center items-center h-[400px] w-full select-none transition-all duration-500 ease-out transform hover:scale-110 hover:drop-shadow-2xl cursor-pointer">
+          <div className="relative flex justify-center items-center h-[300px] md:h-[400px] w-full select-none transition-all duration-500 ease-out transform hover:scale-110 hover:drop-shadow-2xl cursor-pointer">
             {/* Circle 1: Manufacturing (Top) */}
             {/* Circle 1: Manufacturing (Top) */}
             <div className="absolute top-0 transform translate-y-4">

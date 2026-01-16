@@ -1,13 +1,5 @@
 import Link from "next/link";
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-  Twitter,
-  ShieldCheck,
-  Award,
-  Leaf,
-} from "lucide-react";
+import { ShieldCheck, Award, Leaf } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -28,22 +20,22 @@ export default function Footer() {
               <div className="flex items-center gap-1.5">
                 <Award className="w-5 h-5 text-berlin-red" />
                 <span className="text-xs font-bold uppercase tracking-wider">
-                  ISO 9001 Certified
+                  ISO 9001 Standards
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Leaf className="w-5 h-5 text-action" />
                 <span className="text-xs font-bold uppercase tracking-wider">
-                  Sustainable
+                  Sustainable Practices
                 </span>
               </div>
             </div>
           </div>
 
           <div className="w-full lg:w-auto p-6 bg-industrial-800 rounded-lg border border-industrial-700">
-            <h3 className="text-lg font-bold mb-2">Join Industry Insights</h3>
+            <h3 className="text-lg font-bold mb-2">Join the PIF Network</h3>
             <p className="text-industrial-400 text-sm mb-4">
-              Get the latest market trends and packaging innovations.
+              Get packaging news and company updates.
             </p>
             <div className="flex gap-2">
               <input
@@ -65,7 +57,7 @@ export default function Footer() {
             <ul className="space-y-3 text-industrial-400 text-sm">
               <li>
                 <Link
-                  href="/services"
+                  href="/services/design"
                   className="hover:text-white transition-colors"
                 >
                   Custom Design
@@ -73,7 +65,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/services"
+                  href="/services/supply-chain"
                   className="hover:text-white transition-colors"
                 >
                   Supply Chain Services
@@ -81,18 +73,10 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/services"
+                  href="/services/quality"
                   className="hover:text-white transition-colors"
                 >
                   Quality Assurance
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/sustainability"
-                  className="hover:text-white transition-colors"
-                >
-                  Sustainability
                 </Link>
               </li>
             </ul>
@@ -102,7 +86,7 @@ export default function Footer() {
             <ul className="space-y-3 text-industrial-400 text-sm">
               <li>
                 <Link
-                  href="/markets"
+                  href="/markets/food"
                   className="hover:text-white transition-colors"
                 >
                   Food & Beverage
@@ -110,7 +94,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/markets"
+                  href="/markets/personal-care"
                   className="hover:text-white transition-colors"
                 >
                   Personal Care
@@ -118,7 +102,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/markets"
+                  href="/markets/pharmaceutical"
                   className="hover:text-white transition-colors"
                 >
                   Pharmaceutical
@@ -126,7 +110,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/markets"
+                  href="/markets/industrial"
                   className="hover:text-white transition-colors"
                 >
                   Industrial
@@ -145,30 +129,6 @@ export default function Footer() {
                   About Us
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/careers"
-                  className="hover:text-white transition-colors"
-                >
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/locations"
-                  className="hover:text-white transition-colors"
-                >
-                  Locations
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/news"
-                  className="hover:text-white transition-colors"
-                >
-                  News & Events
-                </Link>
-              </li>
             </ul>
           </div>
           <div>
@@ -182,14 +142,7 @@ export default function Footer() {
                   Contact Us
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/faqs"
-                  className="hover:text-white transition-colors"
-                >
-                  FAQs
-                </Link>
-              </li>
+
               <li>
                 <Link
                   href="/shipping"
@@ -200,10 +153,18 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/returns"
+                  href="/terms"
                   className="hover:text-white transition-colors"
                 >
-                  T&C
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/privacy"
+                  className="hover:text-white transition-colors"
+                >
+                  Privacy Policy
                 </Link>
               </li>
             </ul>
@@ -216,20 +177,6 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} PIF Packaging. All rights
             reserved.
           </p>
-          <div className="flex items-center gap-6">
-            <Link href="#" className="hover:text-white transition-colors">
-              <Linkedin className="w-5 h-5" />
-            </Link>
-            <Link href="#" className="hover:text-white transition-colors">
-              <Twitter className="w-5 h-5" />
-            </Link>
-            <Link href="#" className="hover:text-white transition-colors">
-              <Instagram className="w-5 h-5" />
-            </Link>
-            <Link href="#" className="hover:text-white transition-colors">
-              <Facebook className="w-5 h-5" />
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

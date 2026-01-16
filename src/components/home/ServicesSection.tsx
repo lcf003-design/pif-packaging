@@ -5,30 +5,30 @@ const SERVICES = [
   {
     title: "Design",
     desc: "Creating Innovative Packaging Solutions Daily",
-    image:
-      "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=800",
-    action: "Learn About Studio One Eleven",
+    image: "/services_design_studio.png",
+    action: "Explore PIF Design Studio",
+    href: "/services/design",
   },
   {
     title: "Sourcing",
     desc: "Sourcing Products From a Vast Network of Manufacturers Globally",
-    image:
-      "https://images.unsplash.com/photo-1566576912906-600aceeb7aef?q=80&w=800",
+    image: "/services_global_sourcing.png",
     action: "View Sourcing Network",
+    href: "/why-us/global-reach",
   },
   {
     title: "Quality",
     desc: "Embracing the Highest Standards of Products Quality",
-    image:
-      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800",
+    image: "/services_quality_check.png",
     action: "See Quality Standards",
+    href: "/why-us/operations",
   },
   {
     title: "Decorating & Labeling",
     desc: "Custom Professional Label Creation",
-    image:
-      "https://images.unsplash.com/photo-1616401784845-180882ba9ba8?q=80&w=800",
+    image: "/services_decorating_labeling.png",
     action: "Explore Decorating",
+    href: "/services/decorating",
   },
 ];
 
@@ -50,9 +50,10 @@ export default function ServicesSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {SERVICES.map((service, i) => (
-            <div
+            <Link
               key={i}
-              className="bg-white border border-industrial-200 group hover:shadow-lg transition-shadow"
+              href={service.href}
+              className="bg-white border border-industrial-200 group hover:shadow-lg transition-shadow block"
             >
               <div className="h-48 overflow-hidden relative">
                 <div
@@ -67,11 +68,11 @@ export default function ServicesSection() {
                 <p className="text-industrial-600 text-sm mb-6 min-h-[40px]">
                   {service.desc}
                 </p>
-                <span className="text-berlin-blue font-bold text-sm group-hover:underline cursor-pointer">
+                <span className="text-berlin-blue font-bold text-sm group-hover:underline cursor-pointer flex items-center gap-1">
                   {service.action} →
                 </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

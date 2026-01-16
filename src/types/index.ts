@@ -2,10 +2,16 @@ export type Industry =
   | "Automotive"
   | "Beverage"
   | "Food"
-  | "Personal Care"
-  | "Pharmaceutical"
+  | "Personal Health & Beauty"
+  | "Pharma, Nutraceuticals & Healthcare"
   | "Home Care"
-  | "Industrial";
+  | "Pet Care & Veterinary"
+  | "Beer"
+  | "Spirits"
+  | "Industrial Chemical"
+  | "Wine"
+  | "Cosmetics"
+  | "Cannabis & CBD";
 
 export type Category =
   | "Bottles"
@@ -17,22 +23,42 @@ export type Category =
 
 export type Material =
   | "Glass"
+  | "Glass (Type III)"
   | "HDPE"
   | "PET"
   | "PP"
+  | "LDPE"
+  | "PVC"
   | "Aluminum"
-  | "Tinplate";
+  | "Tinplate"
+  | "PCR PET"
+  | "PCR HDPE"
+  | "BPA-Free Plastic";
+
+export type MaterialGroup = "Plastic" | "Glass" | "Metal" | "Other";
 
 export interface Product {
   id: string;
+  slug?: string;
   sku: string;
   name: string;
   brand: string;
   category: Category;
   industry: Industry[];
-  material: Material;
+  material: string | Material;
+  materialGroup?: MaterialGroup;
   shape?: string;
   color?: string;
+  closure?: {
+    type: string;
+    color: string;
+    material?: string;
+    liner?: string;
+  };
+  labelPanel?: {
+    dimensions: string;
+    shape: string;
+  };
   capacity?: {
     value: number;
     unit: "oz" | "ml" | "gal";
@@ -45,9 +71,15 @@ export interface Product {
   weight?: string;
   caseQty?: number;
   imageUrl: string;
+  images?: string[];
   description: string;
   recommendedClosureIds?: string[];
   isClosure?: boolean;
+  features?: string[];
+  palletQty?: number;
+  capSize?: string;
+  downloads?: { label: string; url: string }[];
+  specifications?: Record<string, string>;
 }
 
 export interface InquiryItem {
@@ -57,6 +89,7 @@ export interface InquiryItem {
 }
 
 export interface Inquiry {
+  id?: string;
   items: InquiryItem[];
   customer: {
     name: string;
@@ -64,5 +97,15 @@ export interface Inquiry {
     email: string;
     phone: string;
   };
-  submittedAt?: Date;
+  status?: "new" | "contacted" | "quoted" | "closed";
+  submittedAt?: any;
+}
+
+export interface ContactMessage {
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  message: string;
+  submittedAt?: any; // Firestore serverTimestamp
 }
