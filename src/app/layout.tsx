@@ -14,11 +14,22 @@ export const metadata: Metadata = {
     default: "CatalogPrime | Industrial Packaging Solutions",
   },
   description: "High-end B2B packaging showroom.",
+  icons: {
+    icon: "/icon.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://catalogprime.web.app/", // Placeholder until custom domain
-    siteName: "CatalogPrime",
+    url: "https://catalogprime.web.app/",
+    siteName: "PIF Packaging",
+    images: [
+      {
+        url: "/pif-og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "PIF Packaging Global Network",
+      },
+    ],
   },
 };
 

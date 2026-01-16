@@ -19,6 +19,12 @@ service firebase.storage {
       // For now, any logged in user can upload for simplicity during setup
       allow write: if isAuthenticated();
     }
+
+    match /ppe-products/{allPaths=**} {
+      // Allow read access to everyone (PPE Catalog Images)
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
     
     // Default deny for everything else
     match /{allPaths=**} {

@@ -1,70 +1,153 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchPPEProducts, deletePPEProduct } from "@/services/ppeService";
-import { PPEProduct } from "@/types/ppe";
+import {
+  Plus,
+  Search,
+  Settings,
+  Filter,
+  Package,
+  ShieldCheck,
+  AlertOctagon,
+  MoreVertical,
+  Loader2,
+  Trash2,
+  ChevronRight,
+  Upload,
+  Edit,
+  ShieldAlert,
+  ExternalLink,
+} from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
-import { Edit, Trash2, Plus, Search, ShieldAlert } from "lucide-react";
+import { deletePPEProduct, fetchPPEProducts } from "@/services/ppeService";
+import { PPEProduct } from "@/types/ppe";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import dynamic from "next/dynamic";
 
-export default function AdminPPEPage() {
+const CatalogDownloadButton = dynamic(
+  () => import("@/components/admin/CatalogDownloadButton"),
+  { ssr: false }
+);
+
+export default function PPEAdminPage() {
+  const router = useRouter();
   const [products, setProducts] = useState<PPEProduct[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
-  const router = useRouter();
-
-  const loadProducts = async () => {
-    setLoading(true);
-    // Fetch products (Can add filters later)
-    const data = await fetchPPEProducts();
-    setProducts(data);
-    setLoading(false);
-  };
+  const [search, setSearch] = useState(""); // Renamed searchTerm to search
+  const [categoryFilter, setCategoryFilter] = useState("All"); // Added categoryFilter state
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     loadProducts();
   }, []);
 
+  async function loadProducts() {
+    // Changed to async function syntax
+    setLoading(true);
+    const data = await fetchPPEProducts();
+    setProducts(data);
+    setLoading(false);
+  }
+
   const handleDelete = async (id: string) => {
-    if (!window.confirm("Are you sure you want to delete this PPE product?"))
-      return;
-    try {
-      await deletePPEProduct(id);
-      setProducts((prev) => prev.filter((p) => p.id !== id));
-    } catch (error) {
-      alert("Failed to delete product");
+    if (!confirm("Are you sure you want to delete this product?")) return; // Changed confirmation message
+    await deletePPEProduct(id);
+    loadProducts(); // Reload products after deletion
+  };
+
+  const filteredProducts = products.filter((p) => {
+    const matchesSearch =
+      p.name.toLowerCase().includes(search.toLowerCase()) ||
+      p.sku.toLowerCase().includes(search.toLowerCase()); // Updated search logic to match original
+    const matchesCategory =
+      categoryFilter === "All" || p.category === categoryFilter;
+    return matchesSearch && matchesCategory;
+  });
+
+  const toggleSelect = (id: string) => {
+    const newSet = new Set(selectedIds);
+    if (newSet.has(id)) {
+      newSet.delete(id);
+    } else {
+      newSet.add(id);
+    }
+    setSelectedIds(newSet);
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedIds.size === filteredProducts.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(filteredProducts.map((p) => p.id)));
     }
   };
 
-  const filteredProducts = products.filter(
-    (p) =>
-      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.sku.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleBulkDelete = async () => {
+    if (
+      !window.confirm(
+        `Are you sure you want to delete ${selectedIds.size} PPE Items? This cannot be undone.`
+      )
+    )
+      return;
+
+    try {
+      setLoading(true);
+      await Promise.all(
+        Array.from(selectedIds).map((id) => deletePPEProduct(id))
+      );
+
+      // Reload
+      await loadProducts();
+      setSelectedIds(new Set());
+      alert("PPE Items deleted successfully");
+    } catch (error) {
+      console.error("Bulk delete failed:", error);
+      alert("Failed to delete some items");
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="space-y-6 max-w-6xl mx-auto">
-      <div className="flex items-center justify-between">
+    <div className="p-8 max-w-[1600px] mx-auto">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-8">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <ShieldAlert className="w-5 h-5 text-blue-500" />
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-500">
-              Medical Division
-            </span>
-          </div>
-          <h1 className="text-2xl font-bold text-slate-900">PPE Inventory</h1>
-          <p className="text-slate-500">
-            Manage medical-grade equipment and supplies
+          <h1 className="text-3xl font-black text-slate-900 tracking-tight">
+            PPE Product Manager
+          </h1>
+          <p className="text-slate-500 mt-1">
+            Manage your medical inventory and specifications.
           </p>
         </div>
-        <Link
-          href="/admin/ppe/new"
-          className="bg-blue-600 text-white px-4 py-2 rounded-md font-bold flex items-center gap-2 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/20"
-        >
-          <Plus className="w-5 h-5" />
-          Add PPE Item
-        </Link>
+        <div className="flex gap-3">
+          {/* BULK ACTIONS */}
+          {selectedIds.size > 0 && (
+            <button
+              onClick={handleBulkDelete}
+              className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-lg font-bold hover:bg-red-100 transition-colors border border-red-200"
+            >
+              <Trash2 className="w-4 h-4" />
+              Delete ({selectedIds.size})
+            </button>
+          )}
+
+          <CatalogDownloadButton />
+          <Link
+            href="/admin/ppe/bulk"
+            className="flex items-center gap-2 px-4 py-2 bg-white text-slate-700 border border-slate-300 rounded-lg font-bold hover:bg-slate-50 transition-colors shadow-sm"
+          >
+            <Upload className="w-4 h-4" />
+            Bulk Upload
+          </Link>
+          <Link
+            href="/admin/ppe/new"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30"
+          >
+            <Plus className="w-4 h-4" />
+            Add New Item
+          </Link>
+        </div>
       </div>
 
       {/* Toolbar */}
@@ -75,8 +158,8 @@ export default function AdminPPEPage() {
             type="text"
             placeholder="Search PPE inventory..."
             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
         </div>
       </div>
@@ -107,6 +190,18 @@ export default function AdminPPEPage() {
             <table className="w-full text-left border-collapse">
               <thead className="bg-slate-50 border-b border-gray-200">
                 <tr>
+                  {/* CHECKBOX HEADER */}
+                  <th className="px-6 py-4 w-10">
+                    <input
+                      type="checkbox"
+                      className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                      checked={
+                        filteredProducts.length > 0 &&
+                        selectedIds.size === filteredProducts.length
+                      }
+                      onChange={toggleSelectAll}
+                    />
+                  </th>
                   <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">
                     Item
                   </th>
@@ -125,91 +220,117 @@ export default function AdminPPEPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {filteredProducts.map((product) => (
-                  <tr
-                    key={product.id}
-                    className="group hover:bg-blue-50/50 transition-colors"
-                  >
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-4">
-                        <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm">
-                          {product.imageUrl ? (
-                            <Image
-                              src={product.imageUrl}
-                              alt={product.name}
-                              fill
-                              className="object-contain"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-gray-50 text-gray-300">
-                              <span className="text-xs">No Img</span>
+                {filteredProducts.map((product) => {
+                  const isSelected = selectedIds.has(product.id);
+                  return (
+                    <tr
+                      key={product.id}
+                      className={`group transition-colors ${
+                        isSelected
+                          ? "bg-blue-50/80 hover:bg-blue-50"
+                          : "hover:bg-blue-50/30"
+                      }`}
+                    >
+                      {/* CHECKBOX CELL */}
+                      <td className="px-6 py-4">
+                        <input
+                          type="checkbox"
+                          className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                          checked={isSelected}
+                          onChange={() => toggleSelect(product.id)}
+                        />
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-4">
+                          <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm">
+                            {product.imageUrl ? (
+                              <Image
+                                src={product.imageUrl}
+                                alt={product.name}
+                                fill
+                                className="object-contain"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center bg-gray-50 text-gray-300">
+                                <span className="text-xs">No Img</span>
+                              </div>
+                            )}
+                          </div>
+                          <div>
+                            <div className="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                              {product.name}
                             </div>
-                          )}
-                        </div>
-                        <div>
-                          <div className="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                            {product.name}
-                          </div>
-                          <div className="text-xs font-mono text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded w-fit mt-1">
-                            {product.sku}
+                            <div className="text-xs font-mono text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded w-fit mt-1">
+                              {product.sku}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide bg-blue-100 text-blue-800">
-                        {product.category}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`text-xs font-bold px-2 py-1 rounded border ${
-                          product.sterility === "Sterile"
-                            ? "bg-green-50 text-green-700 border-green-200"
-                            : "bg-gray-50 text-gray-600 border-gray-200"
-                        }`}
-                      >
-                        {product.sterility}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex flex-wrap gap-1">
-                        {product.certifications?.slice(0, 2).map((cert, i) => (
-                          <span
-                            key={i}
-                            className="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200 font-mono"
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide bg-blue-100 text-blue-800">
+                          {product.category}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span
+                          className={`text-xs font-bold px-2 py-1 rounded border ${
+                            product.sterility === "Sterile"
+                              ? "bg-green-50 text-green-700 border-green-200"
+                              : "bg-gray-50 text-gray-600 border-gray-200"
+                          }`}
+                        >
+                          {product.sterility}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex flex-wrap gap-1">
+                          {product.certifications
+                            ?.slice(0, 2)
+                            .map((cert, i) => (
+                              <span
+                                key={i}
+                                className="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200 font-mono"
+                              >
+                                {cert}
+                              </span>
+                            ))}
+                          {product.certifications &&
+                            product.certifications.length > 2 && (
+                              <span className="text-[10px] text-gray-400 pl-1">
+                                +{product.certifications.length - 2}
+                              </span>
+                            )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <Link
+                            href={`/ppe/products/${product.id}`}
+                            target="_blank"
+                            className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-full transition-all"
+                            title="View Live"
                           >
-                            {cert}
-                          </span>
-                        ))}
-                        {product.certifications &&
-                          product.certifications.length > 2 && (
-                            <span className="text-[10px] text-gray-400 pl-1">
-                              +{product.certifications.length - 2}
-                            </span>
-                          )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <Link
-                          href={`/admin/ppe/${product.id}`}
-                          className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all"
-                          title="Edit"
-                        >
-                          <Edit className="w-5 h-5" />
-                        </Link>
-                        <button
-                          onClick={() => handleDelete(product.id)}
-                          className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-all"
-                          title="Delete"
-                        >
-                          <Trash2 className="w-5 h-5" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                            <ExternalLink className="w-5 h-5" />
+                          </Link>
+                          <Link
+                            href={`/admin/ppe/${product.id}`}
+                            className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all"
+                            title="Edit"
+                          >
+                            <Edit className="w-5 h-5" />
+                          </Link>
+                          <button
+                            onClick={() => handleDelete(product.id)}
+                            className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-all"
+                            title="Delete"
+                          >
+                            <Trash2 className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

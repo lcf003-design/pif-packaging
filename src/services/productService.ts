@@ -11,6 +11,7 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  limit,
 } from "firebase/firestore";
 
 // Feature Flag: Set to false to attempt real Firestore connections
@@ -24,6 +25,7 @@ export async function fetchProducts(filters?: {
   color?: string;
   shape?: string;
   capacity?: string;
+  limit?: number;
 }): Promise<Product[]> {
   if (USE_MOCK_DATA) {
     // Simulate network delay
@@ -104,10 +106,26 @@ export async function fetchProducts(filters?: {
     if (filters?.industry)
       q = query(q, where("industry", "array-contains", filters.industry));
 
+    // SAFETY LIMIT: Prevent crashing on large categories (Food/Beverage)
+    // In production, this prevents 504 Timeouts if a category has thousands of items.
+    const queryLimit = filters?.limit || 100;
+    q = query(q, limit(queryLimit));
+
     const snapshot = await getDocs(q);
-    let results = snapshot.docs.map(
-      (doc) => ({ id: doc.id, ...doc.data() } as Product)
-    );
+    // Data Sanitizer: Ensure all fields are JSON-serializable for Next.js
+    // This fixes issues where 'Food'/'Beverage' items might have Timestamps/Refs that crash the UI
+    const sanitizeProduct = (doc: any): Product => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        // Convert Firestore Timestamps to strings if they exist
+        createdAt: data.createdAt?.toDate?.().toISOString() || data.createdAt,
+        updatedAt: data.updatedAt?.toDate?.().toISOString() || data.updatedAt,
+      } as Product;
+    };
+
+    let results = snapshot.docs.map(sanitizeProduct);
 
     // Smart Capacity Filter (Client Side Memory)
     if (filters?.capacity) {

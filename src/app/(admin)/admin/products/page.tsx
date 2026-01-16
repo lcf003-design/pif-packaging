@@ -7,6 +7,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { Edit, Trash2, Plus, Search, ExternalLink } from "lucide-react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const StandardCatalogDownloadButton = dynamic(
+  () => import("@/components/admin/StandardCatalogDownloadButton"),
+  { ssr: false }
+);
 
 import { CATEGORIES, INDUSTRIES } from "@/data/constants";
 
@@ -16,6 +22,7 @@ export default function AdminProductsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedIndustry, setSelectedIndustry] = useState("");
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const router = useRouter();
 
   const loadProducts = async () => {
@@ -44,8 +51,62 @@ export default function AdminProductsPage() {
       await deleteProduct(id);
       // Optimistic update or reload
       setProducts((prev) => prev.filter((p) => p.id !== id));
+      // Also remove from selection if present
+      const newSet = new Set(selectedIds);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+        setSelectedIds(newSet);
+      }
     } catch (error) {
       alert("Failed to delete product");
+    }
+  };
+
+  const toggleSelect = (id: string) => {
+    const newSet = new Set(selectedIds);
+    if (newSet.has(id)) {
+      newSet.delete(id);
+    } else {
+      newSet.add(id);
+    }
+    setSelectedIds(newSet);
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedIds.size === products.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(products.map((p) => p.id)));
+    }
+  };
+
+  // Export Logic: If selection exists, export those. Else, export all.
+  const productsToExport =
+    selectedIds.size > 0
+      ? products.filter((p) => selectedIds.has(p.id))
+      : products;
+
+  const handleBulkDelete = async () => {
+    if (
+      !window.confirm(
+        `Are you sure you want to delete ${selectedIds.size} products? This cannot be undone.`
+      )
+    )
+      return;
+
+    try {
+      setLoading(true);
+      await Promise.all(Array.from(selectedIds).map((id) => deleteProduct(id)));
+
+      // Update local state
+      setProducts((prev) => prev.filter((p) => !selectedIds.has(p.id)));
+      setSelectedIds(new Set());
+      setLoading(false);
+      alert("Products deleted successfully");
+    } catch (error) {
+      console.error("Bulk delete failed:", error);
+      alert("Failed to delete some products");
+      setLoading(false);
     }
   };
 
@@ -56,16 +117,32 @@ export default function AdminProductsPage() {
           <h1 className="text-2xl font-bold text-slate-900">Products</h1>
           <p className="text-slate-500">Manage your catalog inventory</p>
         </div>
-        <Link
-          href="/admin/products/new"
-          className="bg-berlin-blue text-white px-4 py-2 rounded-md font-bold flex items-center gap-2 hover:bg-slate-800 transition-colors shadow-lg shadow-blue-900/10"
-        >
-          <Plus className="w-5 h-5" />
-          Add Product
-        </Link>
+        <div className="flex gap-2">
+          {/* BULK ACTIONS */}
+          {selectedIds.size > 0 && (
+            <button
+              onClick={handleBulkDelete}
+              className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-lg font-bold hover:bg-red-100 transition-colors border border-red-200"
+            >
+              <Trash2 className="w-4 h-4" />
+              Delete ({selectedIds.size})
+            </button>
+          )}
+
+          {/* EXPORT BUTTON - Now accepts products prop */}
+          <StandardCatalogDownloadButton products={productsToExport} />
+
+          <Link
+            href="/admin/products/new"
+            className="bg-berlin-blue text-white px-4 py-2 rounded-md font-bold flex items-center gap-2 hover:bg-slate-800 transition-colors shadow-lg shadow-blue-900/10"
+          >
+            <Plus className="w-5 h-5" />
+            Add Product
+          </Link>
+        </div>
       </div>
 
-      {/* Filters Bar */}
+      {/* Filters Bar... (No change needed) */}
       <div className="flex flex-col md:flex-row gap-4 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
         {/* Search */}
         <div className="relative flex-1">
@@ -152,6 +229,18 @@ export default function AdminProductsPage() {
             <table className="w-full text-left border-collapse">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
+                  {/* CHECKBOX HEADER */}
+                  <th className="px-6 py-4 w-10">
+                    <input
+                      type="checkbox"
+                      className="w-4 h-4 rounded border-gray-300 text-berlin-blue focus:ring-berlin-blue cursor-pointer"
+                      checked={
+                        products.length > 0 &&
+                        selectedIds.size === products.length
+                      }
+                      onChange={toggleSelectAll}
+                    />
+                  </th>
                   <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">
                     Product
                   </th>
@@ -167,101 +256,117 @@ export default function AdminProductsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {products.map((product) => (
-                  <tr
-                    key={product.id}
-                    className="group hover:bg-blue-50/50 transition-colors"
-                  >
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-4">
-                        <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm">
-                          {product.imageUrl ? (
-                            <Image
-                              src={product.imageUrl}
-                              alt={product.name}
-                              fill
-                              className="object-contain"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-gray-50 text-gray-300">
-                              <span className="text-xs">No Img</span>
+                {products.map((product) => {
+                  const isSelected = selectedIds.has(product.id);
+                  return (
+                    <tr
+                      key={product.id}
+                      className={`group transition-colors ${
+                        isSelected
+                          ? "bg-blue-50/80 hover:bg-blue-50"
+                          : "hover:bg-blue-50/30"
+                      }`}
+                    >
+                      {/* CHECKBOX CELL */}
+                      <td className="px-6 py-4">
+                        <input
+                          type="checkbox"
+                          className="w-4 h-4 rounded border-gray-300 text-berlin-blue focus:ring-berlin-blue cursor-pointer"
+                          checked={isSelected}
+                          onChange={() => toggleSelect(product.id)}
+                        />
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-4">
+                          <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm">
+                            {product.imageUrl ? (
+                              <Image
+                                src={product.imageUrl}
+                                alt={product.name}
+                                fill
+                                className="object-contain"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center bg-gray-50 text-gray-300">
+                                <span className="text-xs">No Img</span>
+                              </div>
+                            )}
+                          </div>
+                          <div>
+                            <div className="font-bold text-slate-900 group-hover:text-berlin-blue transition-colors">
+                              {product.name}
                             </div>
+                            <div className="text-xs font-mono text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded w-fit mt-1">
+                              {product.sku}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          {product.category}
+                        </span>
+                        <div className="mt-2 flex flex-wrap gap-1">
+                          {product.industry.slice(0, 2).map((ind, i) => (
+                            <span
+                              key={i}
+                              className="text-[10px] uppercase tracking-wide text-gray-500 border border-gray-200 px-1.5 rounded"
+                            >
+                              {ind}
+                            </span>
+                          ))}
+                          {product.industry.length > 2 && (
+                            <span className="text-[10px] text-gray-400 ml-1">
+                              +{product.industry.length - 2}
+                            </span>
                           )}
                         </div>
-                        <div>
-                          <div className="font-bold text-slate-900 group-hover:text-berlin-blue transition-colors">
-                            {product.name}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-600 align-top">
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                          <div>
+                            <span className="text-gray-400 text-xs">Mat:</span>{" "}
+                            {product.material}
                           </div>
-                          <div className="text-xs font-mono text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded w-fit mt-1">
-                            {product.sku}
+                          <div>
+                            <span className="text-gray-400 text-xs">Col:</span>{" "}
+                            {product.color}
+                          </div>
+                          <div>
+                            <span className="text-gray-400 text-xs">Vol:</span>{" "}
+                            {product.capacity?.value} {product.capacity?.unit}
                           </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 align-top">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        {product.category}
-                      </span>
-                      <div className="mt-2 flex flex-wrap gap-1">
-                        {product.industry.slice(0, 2).map((ind, i) => (
-                          <span
-                            key={i}
-                            className="text-[10px] uppercase tracking-wide text-gray-500 border border-gray-200 px-1.5 rounded"
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <Link
+                            href={`/admin/products/${product.id}`}
+                            className="p-2 text-gray-400 hover:text-berlin-blue hover:bg-blue-50 rounded-full transition-all"
+                            title="Edit"
                           >
-                            {ind}
-                          </span>
-                        ))}
-                        {product.industry.length > 2 && (
-                          <span className="text-[10px] text-gray-400 ml-1">
-                            +{product.industry.length - 2}
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-600 align-top">
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-                        <div>
-                          <span className="text-gray-400 text-xs">Mat:</span>{" "}
-                          {product.material}
+                            <Edit className="w-5 h-5" />
+                          </Link>
+                          <Link
+                            href={`/product/${product.slug || product.id}`}
+                            target="_blank"
+                            className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-full transition-all"
+                            title="View Live"
+                          >
+                            <ExternalLink className="w-5 h-5" />
+                          </Link>
+                          <button
+                            onClick={() => handleDelete(product.id)}
+                            className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-all"
+                            title="Delete"
+                          >
+                            <Trash2 className="w-5 h-5" />
+                          </button>
                         </div>
-                        <div>
-                          <span className="text-gray-400 text-xs">Col:</span>{" "}
-                          {product.color}
-                        </div>
-                        <div>
-                          <span className="text-gray-400 text-xs">Vol:</span>{" "}
-                          {product.capacity?.value} {product.capacity?.unit}
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <Link
-                          href={`/admin/products/${product.id}`}
-                          className="p-2 text-gray-400 hover:text-berlin-blue hover:bg-blue-50 rounded-full transition-all"
-                          title="Edit"
-                        >
-                          <Edit className="w-5 h-5" />
-                        </Link>
-                        <Link
-                          href={`/product/${product.slug || product.id}`}
-                          target="_blank"
-                          className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-full transition-all"
-                          title="View Live"
-                        >
-                          <ExternalLink className="w-5 h-5" />
-                        </Link>
-                        <button
-                          onClick={() => handleDelete(product.id)}
-                          className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-all"
-                          title="Delete"
-                        >
-                          <Trash2 className="w-5 h-5" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

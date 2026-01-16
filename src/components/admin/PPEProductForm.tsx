@@ -12,9 +12,27 @@ import {
   X,
   Upload,
   Sparkles,
+  Trash2,
+  Camera,
 } from "lucide-react";
 import Link from "next/link";
-import ImageUpload from "@/components/admin/ImageUpload";
+import ImageUpload from "./ImageUpload";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable";
+import { SortableImage } from "./SortableImage";
 
 const CATEGORIES: PPECategory[] = [
   "Gloves",
@@ -88,8 +106,11 @@ const COLORS = [
   "Green",
   "Orange",
   "Pink",
+  "Pink",
   "Clear",
 ];
+
+const SIZES = ["Small", "Medium", "Large", "XL", "XXL", "3XL", "4XL"];
 
 interface PPEProductFormProps {
   initialData?: PPEProduct;
@@ -102,7 +123,7 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
     initialData || {
       name: "",
       sku: "",
-      brand: "Berlin Health",
+      brand: "PIF Medical", // Updated default brand
       category: "Gloves",
       description: "",
       upc: "",
@@ -112,6 +133,7 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
       material: "Nitrile",
       thickness: "4 mil",
       stockStatus: "In Stock",
+      slug: "",
       features: [], // Reuse features array for specific attributes like color/texture
       specifications: {}, // Store things like Color/Texture here
       caseQty: 1000,
@@ -120,6 +142,45 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
       images: [],
     }
   );
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+
+    if (active.id !== over?.id) {
+      const oldIndex = formData.images?.indexOf(active.id as string) ?? -1;
+      const newIndex = formData.images?.indexOf(over?.id as string) ?? -1;
+
+      if (oldIndex !== -1 && newIndex !== -1 && formData.images) {
+        const newImages = arrayMove(formData.images, oldIndex, newIndex);
+        setFormData({
+          ...formData,
+          images: newImages,
+          imageUrl: newImages[0] || "",
+        });
+      }
+    }
+  }
+
+  const handleImageRemove = (urlToRemove: string) => {
+    const newImages =
+      formData.images?.filter((url) => url !== urlToRemove) || [];
+    setFormData({
+      ...formData,
+      images: newImages,
+      imageUrl: newImages[0] || "",
+    });
+  };
 
   // Helper getters for specs stored in loose objects
   const getColor = () => formData.specifications?.color || "Blue";
@@ -140,6 +201,7 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
     const mat = formData.material || "";
     const cat = formData.category || "";
     const color = getColor();
+    const sizes = formData.sizes || [];
     let specDetail = "";
 
     if (cat === "Gloves") {
@@ -182,6 +244,8 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
 
     // Spec Code
     let specCode = "GEN";
+    let sizeCode = sizes.length > 0 ? "VAR" : "GEN"; // VAR = Varied/Master
+
     if (cat === "Gloves" && formData.thickness) {
       specCode = formData.thickness.replace(" mil", "MIL").replace(".", "");
     } else if (cat === "Masks & Respirators") {
@@ -201,9 +265,17 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
     };
     const colCode = colMap[color] || color.substring(0, 3).toUpperCase();
 
-    const sku = `PPE-${catCode}-${matCode}-${specCode}-${colCode}`;
+    // SKU: PPE-[CAT]-[MAT]-[SPEC]-[VAR]-[COL]
+    // Example: PPE-GLV-NIT-4MIL-VAR-BLU
+    const sku = `PPE-${catCode}-${matCode}-${specCode}-${sizeCode}-${colCode}`;
 
-    setFormData({ ...formData, name: title, sku: sku });
+    // Slug Generation
+    const slug = title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+
+    setFormData({ ...formData, name: title, sku: sku, slug: slug });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -239,6 +311,15 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
       });
     } else {
       setFormData({ ...formData, certifications: [...current, cert] });
+    }
+  };
+
+  const toggleSize = (size: string) => {
+    const current = formData.sizes || [];
+    if (current.includes(size)) {
+      setFormData({ ...formData, sizes: current.filter((s) => s !== size) });
+    } else {
+      setFormData({ ...formData, sizes: [...current, size] });
     }
   };
 
@@ -351,6 +432,33 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
                     </option>
                   ))}
                 </select>
+              </div>
+
+              {/* Sizes Multi-Select */}
+              <div className="space-y-2 col-span-2">
+                <label className="text-sm font-bold text-slate-700 block mb-2">
+                  Available Sizes
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {SIZES.map((size) => (
+                    <label
+                      key={size}
+                      className={`px-3 py-1.5 rounded-lg border text-sm font-bold cursor-pointer transition-all ${
+                        formData.sizes?.includes(size)
+                          ? "bg-slate-800 text-white border-slate-800"
+                          : "bg-white text-slate-600 border-gray-200 hover:border-slate-400"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        className="hidden"
+                        checked={formData.sizes?.includes(size)}
+                        onChange={() => toggleSize(size)}
+                      />
+                      {size}
+                    </label>
+                  ))}
+                </div>
               </div>
 
               {/* Dynamic Fields based on Category */}
@@ -475,6 +583,30 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
                   readOnly={false} // Allow manual edit if needed
                 />
               </div>
+
+              {/* Slug Field */}
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
+                  URL Slug
+                  <span className="text-xs font-normal text-gray-400 bg-gray-50 px-2 py-0.5 rounded">
+                    visible-link-preview
+                  </span>
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
+                    /
+                  </span>
+                  <input
+                    type="text"
+                    value={formData.slug || ""}
+                    onChange={(e) =>
+                      setFormData({ ...formData, slug: e.target.value })
+                    }
+                    className="w-full pl-6 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm font-mono text-blue-600"
+                    placeholder="auto-generated-slug"
+                  />
+                </div>
+              </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-slate-700">SKU</label>
                 <input
@@ -585,35 +717,32 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
             </h3>
             <ImageUpload onUploadComplete={handleImageUpload} />
 
-            <div className="grid grid-cols-3 gap-2">
-              {formData.images?.map((url, i) => (
-                <div
-                  key={i}
-                  className="relative aspect-square rounded border border-gray-200 overflow-hidden group"
-                >
-                  <img
-                    src={url}
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const newImages =
-                        formData.images?.filter((_, idx) => idx !== i) || [];
-                      setFormData({
-                        ...formData,
-                        images: newImages,
-                        imageUrl: newImages[0] || "",
-                      });
-                    }}
-                    className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <X className="w-3 h-3" />
-                  </button>
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <SortableContext
+                items={formData.images || []}
+                strategy={rectSortingStrategy}
+              >
+                <div className="grid grid-cols-3 gap-2">
+                  {formData.images?.map((url) => (
+                    <SortableImage
+                      key={url}
+                      id={url}
+                      url={url}
+                      onRemove={handleImageRemove}
+                    />
+                  ))}
+                  {(!formData.images || formData.images.length === 0) && (
+                    <div className="col-span-3 text-center py-8 text-gray-400 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+                      No images uploaded
+                    </div>
+                  )}
                 </div>
-              ))}
-            </div>
+              </SortableContext>
+            </DndContext>
           </section>
 
           <section className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
