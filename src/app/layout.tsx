@@ -9,6 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://pifpackaging.com"),
   title: {
     template: "%s | CatalogPrime",
     default: "CatalogPrime | Industrial Packaging Solutions",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://catalogprime.web.app/",
+    url: "https://pifpackaging.com/",
     siteName: "PIF Packaging",
     images: [
       {
