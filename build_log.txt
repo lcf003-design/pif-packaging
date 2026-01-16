@@ -1,0 +1,101 @@
+
+> packaging-catalog@0.1.0 build
+> next build
+
+▲ Next.js 16.1.1 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.0s
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/70) ...
+⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+  Generating static pages using 11 workers (17/70) 
+  Generating static pages using 11 workers (34/70) 
+  Generating static pages using 11 workers (52/70) 
+✓ Generating static pages using 11 workers (70/70) in 1145.8ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ○ /admin
+├ ○ /admin/inquiries
+├ ○ /admin/ppe
+├ ƒ /admin/ppe/[id]
+├ ○ /admin/ppe/bulk
+├ ○ /admin/ppe/new
+├ ○ /admin/products
+├ ƒ /admin/products/[id]
+├ ○ /admin/products/new
+├ ○ /admin/users
+├ ○ /capabilities
+├ ○ /case-studies/dual-chamber-precision
+├ ○ /contact
+├ ○ /forgot-password
+├ ○ /icon.png
+├ ○ /inquiry
+├ ○ /manufacturing
+├ ○ /markets
+├ ○ /markets/automotive
+├ ○ /markets/beer
+├ ○ /markets/beverage
+├ ○ /markets/cannabis
+├ ○ /markets/food
+├ ○ /markets/home-care
+├ ○ /markets/industrial
+├ ○ /markets/personal-care
+├ ○ /markets/pet-care
+├ ○ /markets/pharmaceutical
+├ ○ /markets/spirits
+├ ○ /markets/wine
+├ ○ /opengraph-image.png
+├ ○ /portal
+├ ○ /portal/faq
+├ ○ /portal/history
+├ ○ /portal/inquiries
+├ ○ /portal/login
+├ ○ /portal/profile
+├ ○ /portal/projects
+├ ○ /ppe
+├ ○ /ppe/products
+├ ƒ /ppe/products/[id]
+├ ○ /privacy
+├ ƒ /product/[slug]
+├ ƒ /products
+├ ƒ /products/[category]
+├ ○ /quote
+├ ○ /results/delivery
+├ ○ /results/testimonials
+├ ○ /results/value
+├ ○ /seed
+├ ○ /services
+├ ○ /services/consulting
+├ ○ /services/decorating
+├ ○ /services/design
+├ ○ /services/portal
+├ ○ /services/quality
+├ ○ /services/sourcing
+├ ○ /services/supply-chain
+├ ○ /shipping
+├ ○ /shop-all
+├ ○ /signup
+├ ○ /sitemap.xml
+├ ○ /terms
+├ ○ /why-us
+├ ○ /why-us/community
+├ ○ /why-us/divisions
+├ ○ /why-us/global-reach
+├ ○ /why-us/mission
+├ ○ /why-us/model
+├ ○ /why-us/operations
+└ ○ /why-us/story
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
