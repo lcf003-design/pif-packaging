@@ -20,6 +20,7 @@ export interface PPEProduct {
   description: string;
   upc?: string; // GTIN-12 / Universal Product Code
   mpn?: string; // Manufacturer Part Number
+  unspsc?: string; // United Nations Standard Products and Services Code
 
   // Specific PPE Attributes
   sterility: Sterility;

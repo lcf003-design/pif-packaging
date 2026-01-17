@@ -68,6 +68,7 @@ const PPE_MATERIALS = [
   "Chloroprene",
   "Polyethylene",
   "Polypropylene (SMS)",
+  "Polyisoprene",
   "Polycarbonate",
 ];
 
@@ -128,6 +129,7 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
       description: "",
       upc: "",
       mpn: "",
+      unspsc: "",
       sterility: "Non-Sterile",
       certifications: [],
       material: "Nitrile",
@@ -193,6 +195,12 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
       ...formData,
       specifications: { ...formData.specifications, [key]: value },
     });
+  };
+
+  const removeSpec = (key: string) => {
+    const newSpecs = { ...formData.specifications };
+    delete newSpecs[key];
+    setFormData({ ...formData, specifications: newSpecs });
   };
 
   const generateIdentity = () => {
@@ -567,6 +575,21 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
                 />
               </div>
 
+              <div className="space-y-2 col-span-2 md:col-span-1">
+                <label className="text-sm font-bold text-slate-700">
+                  UNSPSC
+                </label>
+                <input
+                  type="text"
+                  value={formData.unspsc || ""}
+                  onChange={(e) =>
+                    setFormData({ ...formData, unspsc: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border border-blue-100 bg-blue-50/10 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-mono text-sm"
+                  placeholder="e.g. 42132203"
+                />
+              </div>
+
               <div className="space-y-2">
                 <label className="text-sm font-bold text-slate-700">
                   Product Name
@@ -703,6 +726,101 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
                       </label>
                     )
                   )}
+                </div>
+              </div>
+
+              {/* Dynamic Additional Specs */}
+              <div>
+                <label className="text-sm font-bold text-slate-700 block mb-2">
+                  Additional Specifications
+                </label>
+                <div className="bg-gray-50 rounded-lg p-3 space-y-3">
+                  {/* List Existing Specs */}
+                  {Object.entries(formData.specifications || {})
+                    .filter(([k]) => !["color", "texture", "style"].includes(k)) // Hide internal mapped specs
+                    .map(([key, val]) => (
+                      <div
+                        key={key}
+                        className="flex items-center gap-2 text-sm group"
+                      >
+                        <span className="font-semibold text-slate-600 min-w-[120px]">
+                          {key}:
+                        </span>
+                        <span className="flex-1 text-slate-800">{val}</span>
+                        <button
+                          type="button"
+                          onClick={() => removeSpec(key)}
+                          className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+
+                  {/* Add New Spec */}
+                  <div className="flex items-center gap-2 pt-2 border-t border-gray-200">
+                    <input
+                      type="text"
+                      id="new-spec-key"
+                      placeholder="Name (e.g. Shelf Life)"
+                      className="flex-1 px-3 py-1.5 border border-gray-300 rounded text-sm outline-none focus:border-blue-500"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          const keyInput = e.currentTarget;
+                          const valInput = document.getElementById(
+                            "new-spec-val"
+                          ) as HTMLInputElement;
+                          if (keyInput.value && valInput.value) {
+                            updateSpec(keyInput.value, valInput.value);
+                            keyInput.value = "";
+                            valInput.value = "";
+                            keyInput.focus();
+                          }
+                        }
+                      }}
+                    />
+                    <input
+                      type="text"
+                      id="new-spec-val"
+                      placeholder="Value"
+                      className="flex-1 px-3 py-1.5 border border-gray-300 rounded text-sm outline-none focus:border-blue-500"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          const valInput = e.currentTarget;
+                          const keyInput = document.getElementById(
+                            "new-spec-key"
+                          ) as HTMLInputElement;
+                          if (keyInput.value && valInput.value) {
+                            updateSpec(keyInput.value, valInput.value);
+                            keyInput.value = "";
+                            valInput.value = "";
+                            keyInput.focus();
+                          }
+                        }
+                      }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const keyInput = document.getElementById(
+                          "new-spec-key"
+                        ) as HTMLInputElement;
+                        const valInput = document.getElementById(
+                          "new-spec-val"
+                        ) as HTMLInputElement;
+                        if (keyInput.value && valInput.value) {
+                          updateSpec(keyInput.value, valInput.value);
+                          keyInput.value = "";
+                          valInput.value = "";
+                        }
+                      }}
+                      className="p-1.5 bg-blue-100 text-blue-600 rounded hover:bg-blue-200"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
