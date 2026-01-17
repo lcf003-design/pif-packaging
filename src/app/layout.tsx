@@ -15,6 +15,9 @@ export const metadata: Metadata = {
     default: "CatalogPrime | Industrial Packaging Solutions",
   },
   description: "High-end B2B packaging showroom.",
+  icons: {
+    icon: "/icon.png?v=2", // Cache buster
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
