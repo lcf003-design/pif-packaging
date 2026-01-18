@@ -7,11 +7,9 @@ import { notFound } from "next/navigation";
 import {
   ArrowLeft,
   ArrowRight,
-  Droplets,
   Waves,
   Zap,
   ShieldCheck,
-  ThermometerSnowflake,
   FileText,
 } from "lucide-react";
 
@@ -136,9 +134,9 @@ export default function BeverageMarketPage() {
                   But 87,000 PSI is{" "}
                   <strong className="text-white">six times the pressure</strong>{" "}
                   found at the bottom of the Mariana Trench. Standard bottles
-                  collapse instantly. Our "Flex-Bottom" architecture is
-                  engineered to compress by volume and then rebound to perfect
-                  shape, ensuring your brand survives the chamber.
+                  collapse instantly. Our &quot;Flex-Bottom&quot; architecture
+                  is engineered to compress by volume and then rebound to
+                  perfect shape, ensuring your brand survives the chamber.
                 </p>
               </div>
 
@@ -171,10 +169,10 @@ export default function BeverageMarketPage() {
                 Hydro-Shield <br /> Architecture.
               </h2>
               <p className="text-xl text-neutral-400 leading-relaxed mb-8">
-                We don't fight the pressure; we work with it. Our heavy-wall PET
-                preforms feature a specialized petaloid base that absorbs the
-                15% volume reduction during HPP pasteurization and rebounds
-                instantly.
+                We don&apos;t fight the pressure; we work with it. Our
+                heavy-wall PET preforms feature a specialized petaloid base that
+                absorbs the 15% volume reduction during HPP pasteurization and
+                rebounds instantly.
               </p>
 
               <div className="space-y-4">
@@ -182,7 +180,7 @@ export default function BeverageMarketPage() {
                   {
                     title: "5.0 Volumes CO2 Rated",
                     subtitle: "Pressure Vessel Certification",
-                    desc: "Our bases are reinforced to withstand 5.0 volumes of carbonation at 130°F without stress cracking or 'creep' (base expansion). Essential for high-carb energy drinks and sparkling waters.",
+                    desc: "Our bases are reinforced to withstand 5.0 volumes of carbonation at 130°F without stress cracking or &apos;creep&apos; (base expansion). Essential for high-carb energy drinks and sparkling waters.",
                   },
                   {
                     title: "HPP Elasticity Rebound",

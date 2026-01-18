@@ -2,15 +2,7 @@ import { MARKETS_DATA } from "@/data/markets";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  ArrowLeft,
-  ArrowRight,
-  ShieldCheck,
-  Zap,
-  Droplets,
-  Box,
-  Factory,
-} from "lucide-react";
+import { ArrowLeft, Zap, Droplets, Box, Factory } from "lucide-react";
 
 export default function WineMarketPage() {
   const market = MARKETS_DATA.find((m) => m.slug === "wine") || {
@@ -183,8 +175,8 @@ export default function WineMarketPage() {
               </h3>
               <p className="text-neutral-500 leading-relaxed group-hover:text-neutral-400 transition-colors">
                 Antique Green and Dead Leaf Green glass block harmful light
-                spectrums, preventing oxidation and "light strike" faults in
-                delicate wines.
+                spectrums, preventing oxidation and &quot;light strike&quot;
+                faults in delicate wines.
               </p>
             </div>
 

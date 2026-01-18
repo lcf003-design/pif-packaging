@@ -1,17 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { fetchProducts, deleteProduct } from "@/services/productService";
+import { useEffect, useState, useCallback } from "react";
+import {
+  fetchProducts,
+  deleteProduct,
+  bulkDeleteProducts,
+} from "@/services/productService";
 import { Product } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
 import { Edit, Trash2, Plus, Search, ExternalLink } from "lucide-react";
-import { useRouter } from "next/navigation";
+import BulkEditModal from "@/components/admin/BulkEditModal";
 import dynamic from "next/dynamic";
 
 const StandardCatalogDownloadButton = dynamic(
   () => import("@/components/admin/StandardCatalogDownloadButton"),
-  { ssr: false }
+  { ssr: false },
 );
 
 import { CATEGORIES, INDUSTRIES } from "@/data/constants";
@@ -23,26 +27,31 @@ export default function AdminProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedIndustry, setSelectedIndustry] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
-  const router = useRouter();
+  const [isBulkEditOpen, setIsBulkEditOpen] = useState(false);
 
-  const loadProducts = async () => {
+  const loadProducts = useCallback(async () => {
     setLoading(true);
-    // Fetch products with filters
-    const data = await fetchProducts({
-      search: searchTerm,
-      category: selectedCategory || undefined,
-      industry: selectedIndustry || undefined,
-    });
-    setProducts(data);
-    setLoading(false);
-  };
+    try {
+      // Fetch products with filters
+      const data = await fetchProducts({
+        search: searchTerm || undefined,
+        category: selectedCategory !== "" ? selectedCategory : undefined, // Assuming categoryFilter refers to selectedCategory
+        industry: selectedIndustry || undefined, // Keeping industry filter as it was in the original code
+      });
+      setProducts(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [searchTerm, selectedCategory, selectedIndustry]); // Added selectedIndustry to dependencies
 
   useEffect(() => {
     const timer = setTimeout(() => {
       loadProducts();
     }, 300); // Debounce search & filters
     return () => clearTimeout(timer);
-  }, [searchTerm, selectedCategory, selectedIndustry]);
+  }, [searchTerm, selectedCategory, selectedIndustry, loadProducts]); // Added loadProducts to useEffect dependencies
 
   const handleDelete = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this product?"))
@@ -89,14 +98,14 @@ export default function AdminProductsPage() {
   const handleBulkDelete = async () => {
     if (
       !window.confirm(
-        `Are you sure you want to delete ${selectedIds.size} products? This cannot be undone.`
+        `Are you sure you want to delete ${selectedIds.size} products? This cannot be undone.`,
       )
     )
       return;
 
     try {
       setLoading(true);
-      await Promise.all(Array.from(selectedIds).map((id) => deleteProduct(id)));
+      await bulkDeleteProducts(Array.from(selectedIds));
 
       // Update local state
       setProducts((prev) => prev.filter((p) => !selectedIds.has(p.id)));
@@ -112,6 +121,17 @@ export default function AdminProductsPage() {
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto">
+      {isBulkEditOpen && (
+        <BulkEditModal
+          selectedIds={selectedIds}
+          onClose={() => setIsBulkEditOpen(false)}
+          onSuccess={() => {
+            loadProducts(); // Reload to see changes
+            setSelectedIds(new Set()); // Clear selection
+          }}
+        />
+      )}
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Products</h1>
@@ -120,13 +140,22 @@ export default function AdminProductsPage() {
         <div className="flex gap-2">
           {/* BULK ACTIONS */}
           {selectedIds.size > 0 && (
-            <button
-              onClick={handleBulkDelete}
-              className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-lg font-bold hover:bg-red-100 transition-colors border border-red-200"
-            >
-              <Trash2 className="w-4 h-4" />
-              Delete ({selectedIds.size})
-            </button>
+            <>
+              <button
+                onClick={() => setIsBulkEditOpen(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg font-bold hover:bg-blue-100 transition-colors border border-blue-200"
+              >
+                <Edit className="w-4 h-4" />
+                Edit ({selectedIds.size})
+              </button>
+              <button
+                onClick={handleBulkDelete}
+                className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-lg font-bold hover:bg-red-100 transition-colors border border-red-200"
+              >
+                <Trash2 className="w-4 h-4" />
+                Delete ({selectedIds.size})
+              </button>
+            </>
           )}
 
           {/* EXPORT BUTTON - Now accepts products prop */}

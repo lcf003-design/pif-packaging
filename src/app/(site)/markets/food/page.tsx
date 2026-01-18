@@ -12,14 +12,11 @@ import {
   ShieldCheck,
   ThermometerSun,
   Utensils,
-  Leaf,
   Scale,
 } from "lucide-react";
-import { useState } from "react";
 
 export default function FoodMarketPage() {
   const market = MARKETS_DATA.find((m) => m.slug === "food");
-  const [sliderValue, setSliderValue] = useState(50); // 0 = Standard, 100 = Heat-Set
 
   if (!market) {
     notFound();
@@ -117,13 +114,13 @@ export default function FoodMarketPage() {
                 </span>
               </div>
               <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8 tracking-tight">
-                Don't Let The <br /> Package Spoil The Sauce.
+                Don&apos;t Let The <br /> Package Spoil The Sauce.
               </h2>
               <p className="text-lg text-neutral-600 leading-relaxed mb-6">
                 In a professional kitchen, speed is everything. Waiting for
                 sauces to cool before bottling kills efficiency. But standard
-                plastic ("Cold Fill" PET) begins to warp and deform at just{" "}
-                <strong>140°F</strong>.
+                plastic (&quot;Cold Fill&quot; PET) begins to warp and deform at
+                just <strong>140°F</strong>.
               </p>
               <p className="text-lg text-neutral-600 leading-relaxed mb-8">
                 Worse, once on the shelf, standard plastic breathes. Oxygen
@@ -448,8 +445,8 @@ export default function FoodMarketPage() {
               <p className="text-neutral-500 leading-relaxed mb-6">
                 Your pantry should never run dry. Our{" "}
                 <strong>Wholesale Logistics</strong> network operates like a
-                master commissary, ensuring your "mise en place" is stocked and
-                ready for service, globally.
+                master commissary, ensuring your &quot;mise en place&quot; is
+                stocked and ready for service, globally.
               </p>
               <ul className="space-y-2 text-sm text-neutral-600 font-mono">
                 <li className="flex items-center gap-2">

@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
+import AuthProvider from "@/context/AuthContext";
+import { InquiryProvider } from "@/context/InquiryContext";
+import Analytics from "@/components/Analytics";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -11,10 +15,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://pifpackaging.com"),
   title: {
-    template: "%s | CatalogPrime",
-    default: "CatalogPrime | Industrial Packaging Solutions",
+    template: "%s | PIF Packaging",
+    default: "PIF Packaging | Industrial Manufacturing & Supply",
   },
-  description: "High-end B2B packaging showroom.",
+  description:
+    "Global manufacturer and distributor of industrial packaging and PPE.",
   icons: {
     icon: "/icon.png?v=2", // Cache buster
   },
@@ -47,7 +52,13 @@ export default function RootLayout({
         className={`antialiased min-h-screen flex flex-col font-sans`}
         suppressHydrationWarning={true}
       >
-        {children}
+        <InquiryProvider>
+          <AuthProvider>
+            <Analytics />
+            {children}
+            <Toaster position="bottom-right" />
+          </AuthProvider>
+        </InquiryProvider>
       </body>
     </html>
   );

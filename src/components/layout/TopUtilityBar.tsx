@@ -14,7 +14,8 @@ import {
   LayoutDashboard,
   LogOut,
 } from "lucide-react";
-import { useAuth, logOut } from "@/services/authService";
+import { logOut } from "@/services/authService";
+import { useAuth } from "@/context/AuthContext";
 import { getUserProfile } from "@/services/userService";
 import { useInquiry } from "@/context/InquiryContext";
 import ContactModal from "./ContactModal";

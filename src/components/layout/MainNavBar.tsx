@@ -35,7 +35,8 @@ import {
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import ShopNowDrawer from "./ShopNowDrawer";
-import { useAuth, logOut } from "@/services/authService"; // Added
+import { logOut } from "@/services/authService"; // Added
+import { useAuth } from "@/context/AuthContext";
 import { getUserProfile } from "@/services/userService"; // Added
 
 interface NavItem {
@@ -238,7 +239,7 @@ export default function MainNavBar() {
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [activeDesktopMenu, setActiveDesktopMenu] = useState<string | null>(
-    null
+    null,
   );
 
   const shopMenuRef = useRef<HTMLDivElement>(null);
@@ -287,13 +288,13 @@ export default function MainNavBar() {
     setExpandedMobileItems((prev) =>
       prev.includes(label)
         ? prev.filter((item) => item !== label)
-        : [...prev, label]
+        : [...prev, label],
     );
   };
 
   const toggleShopCategory = (id: string) => {
     setExpandedShopCategories((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     );
   };
 
@@ -301,7 +302,7 @@ export default function MainNavBar() {
     setExpandedShopSubCategories((prev) =>
       prev.includes(label)
         ? prev.filter((item) => item !== label)
-        : [...prev, label]
+        : [...prev, label],
     );
   };
 
@@ -619,7 +620,7 @@ export default function MainNavBar() {
                                 <ChevronDown
                                   className={`w-3 h-3 text-berlin-blue transition-transform duration-200 ${
                                     expandedShopSubCategories.includes(
-                                      subSection.label
+                                      subSection.label,
                                     )
                                       ? "rotate-180"
                                       : ""
@@ -627,7 +628,7 @@ export default function MainNavBar() {
                                 />
                               </button>
                               {expandedShopSubCategories.includes(
-                                subSection.label
+                                subSection.label,
                               ) && (
                                 <div className="pl-3 mt-1 space-y-2 border-l border-white/10 ml-1">
                                   {subSection.items.map((item) => (

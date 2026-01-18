@@ -46,7 +46,7 @@ export default function IndustryGrid() {
               {/* Image Container */}
               <div className="absolute inset-0">
                 <div
-                  className="w-full h-full bg-cover bg-center transition-all duration-700 ease-out group-hover:scale-110 grayscale group-hover:grayscale-0 contrast-[1.1] brightness-[0.95] group-hover:brightness-100"
+                  className="w-full h-full bg-cover bg-center transition-all duration-700 ease-out group-hover:scale-110 contrast-[1.1] brightness-[0.95] group-hover:brightness-100"
                   style={{ backgroundImage: `url('${industry.image}')` }}
                 />
               </div>

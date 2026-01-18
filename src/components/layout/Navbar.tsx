@@ -12,7 +12,8 @@ import {
   X,
 } from "lucide-react";
 import { useInquiry } from "@/context/InquiryContext";
-import { useAuth, logOut } from "@/services/authService";
+import { logOut } from "@/services/authService";
+import { useAuth } from "@/context/AuthContext";
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
 
@@ -35,7 +36,7 @@ export default function Navbar() {
 
   /* Desktop Menu State */
   const [activeDesktopMenu, setActiveDesktopMenu] = useState<string | null>(
-    null
+    null,
   );
   let menuTimeout: NodeJS.Timeout;
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getUserInquiries } from "@/services/inquiryService";
-import { useAuth } from "@/services/authService";
+import { useAuth } from "@/context/AuthContext";
 import { Inquiry } from "@/types";
 import { Package, Clock, CalendarDays, ExternalLink } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
@@ -94,7 +94,7 @@ export default function MyInquiriesPage() {
                     {inq.submittedAt?.seconds
                       ? formatDistanceToNow(
                           new Date(inq.submittedAt.seconds * 1000),
-                          { addSuffix: true }
+                          { addSuffix: true },
                         )
                       : "Just now"}
                   </div>

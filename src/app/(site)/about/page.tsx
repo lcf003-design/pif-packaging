@@ -3,16 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowRight,
-  Target,
-  Users,
-  Briefcase,
-  Globe,
-  Award,
-  BookOpen,
-  ChevronDown,
-} from "lucide-react";
+import { Users, Briefcase, Award, BookOpen, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function AboutUsPage() {
@@ -52,7 +43,7 @@ export default function AboutUsPage() {
             <p className="text-xl md:text-2xl text-industrial-600 max-w-2xl mx-auto font-medium leading-relaxed">
               We are not brokers. We are the engineering layer between{" "}
               <br className="hidden md:block" />
-              your brand's vision and the factory floor.
+              your brand&apos;s vision and the factory floor.
             </p>
           </motion.div>
         </div>
@@ -103,9 +94,9 @@ export default function AboutUsPage() {
                   to talk to a real human being.
                 </p>
                 <p className="mb-6">
-                  That’s why, rather than generic online quotes, we will liaise
-                  with you via email, on the phone, or in person to create the
-                  perfect solution for your business.
+                  That&apos;s why, rather than generic online quotes, we will
+                  liaise with you via email, on the phone, or in person to
+                  create the perfect solution for your business.
                 </p>
                 <p>
                   This means we can negotiate competitively, consult with you
@@ -140,8 +131,8 @@ export default function AboutUsPage() {
                       The Giant
                     </div>
                     <p className="text-industrial-400 text-sm">
-                      "You are Account #8492. Minimum order: 5 million units.
-                      Lead time: 18 months."
+                      &quot;You are Account #8492. Minimum order: 5 million
+                      units. Lead time: 18 months.&quot;
                     </p>
                   </div>
                   <div className="flex-1 bg-white/5 border border-white/10 p-6 rounded-sm text-left">
@@ -149,8 +140,8 @@ export default function AboutUsPage() {
                       The Broker
                     </div>
                     <p className="text-industrial-400 text-sm">
-                      "I know a guy who knows a guy. I can't guarantee quality,
-                      but the price is cheap."
+                      &quot;I know a guy who knows a guy. I can&apos;t guarantee
+                      quality, but the price is cheap.&quot;
                     </p>
                   </div>
                 </div>
@@ -160,8 +151,8 @@ export default function AboutUsPage() {
                     The PIF Hybrid
                   </div>
                   <p className="text-industrial-800 font-bold">
-                    "Boutique attention. Enterprise scale. We own the tooling,
-                    you own the market."
+                    &quot;Boutique attention. Enterprise scale. We own the
+                    tooling, you own the market.&quot;
                   </p>
                 </div>
               </div>
@@ -172,7 +163,7 @@ export default function AboutUsPage() {
                 The Origin
               </h2>
               <h2 className="text-5xl font-black text-industrial-900 mb-8 leading-tight">
-                The "Broker Blackout" <br />
+                The &quot;Broker Blackout&quot; <br />
                 Ends Here.
               </h2>
               <div className="prose prose-lg text-industrial-600 md:pr-12">
@@ -182,7 +173,7 @@ export default function AboutUsPage() {
                 <p className="mb-6">
                   Ten years ago, the packaging landscape was broken. Brands
                   faced a binary choice: the <strong>Global Giant</strong> (who
-                  didn't care about your startup) or the
+                  didn&apos;t care about your startup) or the
                   <strong>Local Broker</strong> (who had no control over the
                   factory).
                 </p>
@@ -192,8 +183,8 @@ export default function AboutUsPage() {
                   with the raw manufacturing muscle of a Fortune 500 supplier.
                 </p>
                 <p>
-                  We don't just "source" packaging. We engineer it. We validate
-                  it. We ship it. And we answer our own phones.
+                  We don&apos;t just &quot;source&quot; packaging. We engineer
+                  it. We validate it. We ship it. And we answer our own phones.
                 </p>
               </div>
             </div>
@@ -214,9 +205,9 @@ export default function AboutUsPage() {
                 Only Partners.
               </h2>
               <p className="text-xl text-industrial-600 mb-8 leading-relaxed">
-                At most agencies, you <em>might</em> meet the "A Team" during
-                the pitch, and then you're handed off to a junior account
-                manager.
+                At most agencies, you <em>might</em> meet the &quot;A Team&quot;
+                during the pitch, and then you&apos;re handed off to a junior
+                account manager.
               </p>
               <p className="text-lg text-industrial-600 mb-8 leading-relaxed">
                 At PIF, your point of contact, throughout, is a senior partner.
@@ -322,10 +313,11 @@ export default function AboutUsPage() {
         <div className="container mx-auto px-6 max-w-4xl">
           <BookOpen className="w-16 h-16 text-berlin-red mx-auto mb-8" />
           <h2 className="text-4xl md:text-6xl font-black mb-12 leading-tight">
-            "Packaging is the last physical touchpoint in a digital world."
+            &quot;Packaging is the last physical touchpoint in a digital
+            world.&quot;
           </h2>
           <p className="text-xl text-industrial-400 mb-12 max-w-2xl mx-auto">
-            Don't let your product fail at the finish line. Partner with
+            Don&apos;t let your product fail at the finish line. Partner with
             architects who care about the details.
           </p>
 

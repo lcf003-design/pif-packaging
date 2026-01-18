@@ -80,6 +80,8 @@ export interface Product {
   capSize?: string;
   downloads?: { label: string; url: string }[];
   specifications?: Record<string, string>;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface InquiryItem {

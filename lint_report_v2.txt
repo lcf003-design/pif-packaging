@@ -1,0 +1,1038 @@
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(admin)/admin/inquiries/page.tsx
+  268:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  271:55  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(admin)/admin/page.tsx
+  134:63  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  135:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(admin)/admin/ppe/bulk/page.tsx
+  20:10  warning  'csvFile' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  21:10  warning  'parsedData' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  21:48  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  54:35  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  83:19  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  93:49  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(admin)/admin/ppe/page.tsx
+  40:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(admin)/admin/ppe/page.tsx:40:5
+  38 |
+  39 |   useEffect(() => {
+> 40 |     loadProducts();
+     |     ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  41 |   }, []);
+  42 |
+  43 |   const handleDelete = async (id: string) => {  react-hooks/set-state-in-effect
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(admin)/admin/products/page.tsx
+  43:6   warning  React Hook useEffect has a missing dependency: 'loadProducts'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  58:14  warning  'error' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/about/page.tsx
+    7:3   warning  'ArrowRight' is defined but never used                           @typescript-eslint/no-unused-vars
+    8:3   warning  'Target' is defined but never used                               @typescript-eslint/no-unused-vars
+   11:3   warning  'Globe' is defined but never used                                @typescript-eslint/no-unused-vars
+   55:25  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  143:23  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  144:44  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  152:23  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  152:59  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  153:46  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  163:21  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  164:40  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  175:21  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  175:37  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  185:23  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  195:25  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  195:33  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  195:40  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  217:63  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  217:70  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  218:40  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  325:13  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  325:75  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  328:16  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/capabilities/page.tsx
+    8:3   warning  'Globe' is defined but never used                                @typescript-eslint/no-unused-vars
+    9:3   warning  'ArrowRight' is defined but never used                           @typescript-eslint/no-unused-vars
+   80:23  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+   84:22  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+   84:42  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+   84:78  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  156:42  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  182:77  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  206:28  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  206:50  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  288:28  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  302:16  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  302:52  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/case-studies/dual-chamber-precision/page.tsx
+   15:3   warning  'ChevronRight' is defined but never used                         @typescript-eslint/no-unused-vars
+   94:35  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  129:17  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  130:48  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/contact/page.tsx
+   4:8   warning  'Link' is defined but never used                                 @typescript-eslint/no-unused-vars
+  95:51  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/inquiry/page.tsx
+  107:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/layout.tsx
+  20:9  error  Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/manufacturing/page.tsx
+    6:3   warning  'Zap' is defined but never used                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+   10:3   warning  'Truck' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   11:3   warning  'ArrowRight' is defined but never used                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+   12:3   warning  'CheckCircle' is defined but never used                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+   32:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+   58:22  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  159:21  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  160:47  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  204:36  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  204:49  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/markets/automotive/page.tsx
+    7:3   warning  'ArrowRight' is defined but never used                                  @typescript-eslint/no-unused-vars
+    9:3   warning  'ShieldCheck' is defined but never used                                 @typescript-eslint/no-unused-vars
+   11:3   warning  'Box' is defined but never used                                         @typescript-eslint/no-unused-vars
+   12:3   warning  'Factory' is defined but never used                                     @typescript-eslint/no-unused-vars
+   72:28  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`         react/no-unescaped-entities
+  137:51  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`         react/no-unescaped-entities
+  137:60  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`         react/no-unescaped-entities
+  172:21  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`         react/no-unescaped-entities
+  222:74  error    Comments inside children section of tag should be placed inside braces  react/jsx-no-comment-textnodes
+  287:28  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`         react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/markets/beer/page.tsx
+  105:67  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  169:28  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  169:37  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  267:29  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  282:21  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  282:31  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  282:52  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  282:78  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  321:21  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  322:67  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  670:56  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/markets/beverage/page.tsx
+   10:3   warning  'Droplets' is defined but never used                             @typescript-eslint/no-unused-vars
+   14:3   warning  'ThermometerSnowflake' is defined but never used                 @typescript-eslint/no-unused-vars
+  139:43  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  139:55  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  174:23  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/markets/cannabis/page.tsx
+   15:3   warning  'Microscope' is defined but never used                           @typescript-eslint/no-unused-vars
+  219:50  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/markets/food/page.tsx
+   15:3   warning  'Leaf' is defined but never used                                 @typescript-eslint/no-unused-vars
+   22:10  warning  'sliderValue' is assigned a value but never used                 @typescript-eslint/no-unused-vars
+   22:23  warning  'setSliderValue' is assigned a value but never used              @typescript-eslint/no-unused-vars
+  120:20  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  125:26  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  125:36  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  451:50  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  451:64  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/markets/home-care/page.tsx
+    8:3   warning  'ShieldAlert' is defined but never used                          @typescript-eslint/no-unused-vars
+  198:21  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  238:20  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/markets/industrial/page.tsx
+  266:63  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  267:26  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  368:43  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/markets/page.tsx
+    3:25  warning  'useState' is defined but never used                             @typescript-eslint/no-unused-vars
+    6:3   warning  'Car' is defined but never used                                  @typescript-eslint/no-unused-vars
+    7:3   warning  'GlassWater' is defined but never used                           @typescript-eslint/no-unused-vars
+    8:3   warning  'Utensils' is defined but never used                             @typescript-eslint/no-unused-vars
+    9:3   warning  'Wine' is defined but never used                                 @typescript-eslint/no-unused-vars
+   10:3   warning  'Beer' is defined but never used                                 @typescript-eslint/no-unused-vars
+   11:3   warning  'Sparkles' is defined but never used                             @typescript-eslint/no-unused-vars
+   12:3   warning  'Home' is defined but never used                                 @typescript-eslint/no-unused-vars
+   13:3   warning  'TestTube2' is defined but never used                            @typescript-eslint/no-unused-vars
+   14:3   warning  'Pill' is defined but never used                                 @typescript-eslint/no-unused-vars
+   15:3   warning  'Leaf' is defined but never used                                 @typescript-eslint/no-unused-vars
+   16:3   warning  'Dog' is defined but never used                                  @typescript-eslint/no-unused-vars
+   17:3   warning  'Container' is defined but never used                            @typescript-eslint/no-unused-vars
+   20:3   warning  'Beaker' is defined but never used                               @typescript-eslint/no-unused-vars
+   21:3   warning  'Droplets' is defined but never used                             @typescript-eslint/no-unused-vars
+   23:3   warning  'Anchor' is defined but never used                               @typescript-eslint/no-unused-vars
+   25:3   warning  'Truck' is defined but never used                                @typescript-eslint/no-unused-vars
+   59:55  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  138:9   warning  'boxScale' is assigned a value but never used                    @typescript-eslint/no-unused-vars
+  139:9   warning  'boxColor' is assigned a value but never used                    @typescript-eslint/no-unused-vars
+  144:9   warning  'boxRotate' is assigned a value but never used                   @typescript-eslint/no-unused-vars
+  157:26  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  157:43  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  174:17  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  174:48  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  203:17  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  203:51  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  234:17  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  234:50  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  309:18  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/markets/personal-care/page.tsx
+   10:3   warning  'CheckCircle2' is defined but never used                         @typescript-eslint/no-unused-vars
+   16:3   warning  'Droplets' is defined but never used                             @typescript-eslint/no-unused-vars
+   19:10  warning  'useState' is defined but never used                             @typescript-eslint/no-unused-vars
+  399:48  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  455:44  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/markets/pet-care/page.tsx
+  118:21  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  118:32  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  118:42  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  204:32  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  204:36  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  204:42  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  204:49  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/markets/pharmaceutical/page.tsx
+    8:3   warning  'ShieldCheck' is defined but never used                          @typescript-eslint/no-unused-vars
+  183:29  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  183:54  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  221:33  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  238:24  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  269:57  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/markets/spirits/page.tsx
+    9:3   warning  'ArrowRight' is defined but never used                           @typescript-eslint/no-unused-vars
+   10:3   warning  'Wine' is defined but never used                                 @typescript-eslint/no-unused-vars
+   15:3   warning  'GlassWater' is defined but never used                           @typescript-eslint/no-unused-vars
+   59:24  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  181:41  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  181:47  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  182:37  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  334:27  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  370:43  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  370:59  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  370:66  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  370:80  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  373:54  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  373:59  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  383:40  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  384:51  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  384:58  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  408:21  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  410:43  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  476:25  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  476:29  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  479:77  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/markets/wine/page.tsx
+    4:10  warning  'notFound' is defined but never used                             @typescript-eslint/no-unused-vars
+    7:3   warning  'ArrowRight' is defined but never used                           @typescript-eslint/no-unused-vars
+    8:3   warning  'ShieldCheck' is defined but never used                          @typescript-eslint/no-unused-vars
+  186:53  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  186:66  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/page.tsx
+  1:8   warning  'Link' is defined but never used     @typescript-eslint/no-unused-vars
+  2:10  warning  'Box' is defined but never used      @typescript-eslint/no-unused-vars
+  2:15  warning  'Hexagon' is defined but never used  @typescript-eslint/no-unused-vars
+  2:24  warning  'Layers' is defined but never used   @typescript-eslint/no-unused-vars
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/portal/(protected)/history/page.tsx
+   8:8  warning  'Image' is defined but never used                                                                               @typescript-eslint/no-unused-vars
+  19:6  warning  React Hook useEffect has a missing dependency: 'loadHistory'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/portal/(protected)/inquiries/page.tsx
+    7:19  warning  'Clock' is defined but never used                                @typescript-eslint/no-unused-vars
+    7:40  warning  'ExternalLink' is defined but never used                         @typescript-eslint/no-unused-vars
+  138:22  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/portal/(protected)/page.tsx
+   9:3  warning  'LayoutDashboard' is defined but never used                                                                   @typescript-eslint/no-unused-vars
+  13:3  warning  'ChevronRight' is defined but never used                                                                      @typescript-eslint/no-unused-vars
+  32:6  warning  React Hook useEffect has a missing dependency: 'loadStats'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/portal/(protected)/projects/page.tsx
+  24:6  warning  React Hook useEffect has a missing dependency: 'loadProjects'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/portal/login/page.tsx
+  232:18  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/ppe/page.tsx
+    8:3   warning  'Truck' is defined but never used                                @typescript-eslint/no-unused-vars
+   15:3   warning  'ShieldCheck' is defined but never used                          @typescript-eslint/no-unused-vars
+   16:3   warning  'Zap' is defined but never used                                  @typescript-eslint/no-unused-vars
+   18:3   warning  'Info' is defined but never used                                 @typescript-eslint/no-unused-vars
+  172:44  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  218:33  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  218:63  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  379:10  warning  'StatCard' is defined but never used                             @typescript-eslint/no-unused-vars
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/ppe/products/page.tsx
+  10:3  warning  'CheckCircle2' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/privacy/page.tsx
+  31:35  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  31:56  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  46:62  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/product/ProductDetailClient.tsx
+   23:3   warning  'recommendedClosures' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+   35:10  warning  'zoomPos' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+   38:9   warning  'handleMouseMove' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+   47:9   warning  'handleTouchMove' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  422:18  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/product/ProductDetailClient.tsx:422:18
+  420 |               {/* MOBILE: Product Title (Top of Page on Mobile) */}
+  421 |               <div className="md:col-span-12 lg:hidden mb-4">
+> 422 |                 <ProductHeader />
+      |                  ^^^^^^^^^^^^^ This component is created during render
+  423 |               </div>
+  424 |
+  425 |               {/* Gallery Rail - Sticky */}
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/product/ProductDetailClient.tsx:98:25
+   96 |
+   97 |   // --- REFACTORED COMPONENTS (Safety Extraction) ---
+>  98 |   const ProductHeader = () => (
+      |                         ^^^^^^^
+>  99 |     <div className="pb-6 border-b border-gray-100">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 100 |       <div className="mb-4 flex items-center gap-2">
+      …
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 120 |     </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 121 |   );
+      | ^^^^ The component is created during render here
+  122 |
+  123 |   const QuoteCard = () => (
+  124 |     <div className="bg-white border border-gray-100 rounded-2xl shadow-xl shadow-slate-200/50 p-6 space-y-5 relative overflow-hidden">                                                                                                                                                                                                                                                     react-hooks/static-components
+  497:20  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/product/ProductDetailClient.tsx:497:20
+  495 |                 {/* MOBILE: Quote Card (Below Images on Mobile) */}
+  496 |                 <div className="lg:hidden mb-12">
+> 497 |                   <QuoteCard />
+      |                    ^^^^^^^^^ This component is created during render
+  498 |                 </div>
+  499 |
+  500 |                 {/* PRODUCT DETAILS (About & Specs) - formerly on the right, now stacked below gallery to make this column tall */}
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/product/ProductDetailClient.tsx:123:21
+  121 |   );
+  122 |
+> 123 |   const QuoteCard = () => (
+      |                     ^^^^^^^
+> 124 |     <div className="bg-white border border-gray-100 rounded-2xl shadow-xl shadow-slate-200/50 p-6 space-y-5 relative overflow-hidden">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 125 |       {/* Decorative Top Line */}
+      …
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 278 |     </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 279 |   );
+      | ^^^^ The component is created during render here
+  280 |
+  281 |   /* --- LIGHTBOX (FRAMER MOTION PHYSICS) --- */
+  282 |   const Lightbox = () => (  react-hooks/static-components
+  692:16  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/product/ProductDetailClient.tsx:692:16
+  690 |           <div className="hidden lg:block lg:col-span-6 xl:col-span-5 relative h-full">
+  691 |             <div className="sticky top-32 space-y-8">
+> 692 |               <ProductHeader />
+      |                ^^^^^^^^^^^^^ This component is created during render
+  693 |               <QuoteCard />
+  694 |             </div>
+  695 |           </div>
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/product/ProductDetailClient.tsx:98:25
+   96 |
+   97 |   // --- REFACTORED COMPONENTS (Safety Extraction) ---
+>  98 |   const ProductHeader = () => (
+      |                         ^^^^^^^
+>  99 |     <div className="pb-6 border-b border-gray-100">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 100 |       <div className="mb-4 flex items-center gap-2">
+      …
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 120 |     </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 121 |   );
+      | ^^^^ The component is created during render here
+  122 |
+  123 |   const QuoteCard = () => (
+  124 |     <div className="bg-white border border-gray-100 rounded-2xl shadow-xl shadow-slate-200/50 p-6 space-y-5 relative overflow-hidden">                                                                                                                                                                                                                                              react-hooks/static-components
+  693:16  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/product/ProductDetailClient.tsx:693:16
+  691 |             <div className="sticky top-32 space-y-8">
+  692 |               <ProductHeader />
+> 693 |               <QuoteCard />
+      |                ^^^^^^^^^ This component is created during render
+  694 |             </div>
+  695 |           </div>
+  696 |         </div>
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/product/ProductDetailClient.tsx:123:21
+  121 |   );
+  122 |
+> 123 |   const QuoteCard = () => (
+      |                     ^^^^^^^
+> 124 |     <div className="bg-white border border-gray-100 rounded-2xl shadow-xl shadow-slate-200/50 p-6 space-y-5 relative overflow-hidden">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 125 |       {/* Decorative Top Line */}
+      …
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 278 |     </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 279 |   );
+      | ^^^^ The component is created during render here
+  280 |
+  281 |   /* --- LIGHTBOX (FRAMER MOTION PHYSICS) --- */
+  282 |   const Lightbox = () => (                                                                                                                                                  react-hooks/static-components
+  700:27  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/product/ProductDetailClient.tsx:700:27
+  698 |
+  699 |       {/* Lightbox Overlay */}
+> 700 |       {isLightboxOpen && <Lightbox />}
+      |                           ^^^^^^^^ This component is created during render
+  701 |     </div>
+  702 |   );
+  703 | }
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/product/ProductDetailClient.tsx:282:20
+  280 |
+  281 |   /* --- LIGHTBOX (FRAMER MOTION PHYSICS) --- */
+> 282 |   const Lightbox = () => (
+      |                    ^^^^^^^
+> 283 |     <AnimatePresence>
+      | ^^^^^^^^^^^^^^^^^^^^^
+> 284 |       <motion.div
+      …
+      | ^^^^^^^^^^^^^^^^^^^^^
+> 352 |     </AnimatePresence>
+      | ^^^^^^^^^^^^^^^^^^^^^
+> 353 |   );
+      | ^^^^ The component is created during render here
+  354 |
+  355 |   return (
+  356 |     <div className="bg-white min-h-screen font-sans">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              react-hooks/static-components
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/products/[category]/page.tsx
+  24:7  error    'category' is never reassigned. Use 'const' instead  prefer-const
+  29:7  error    'industry' is never reassigned. Use 'const' instead  prefer-const
+  45:7  error    'neck' is never reassigned. Use 'const' instead      prefer-const
+  45:7  warning  'neck' is assigned a value but never used            @typescript-eslint/no-unused-vars
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/products/page.tsx
+   6:24  warning  'Grid3X3' is defined but never used                  @typescript-eslint/no-unused-vars
+   7:8   warning  'CategoryDescription' is defined but never used      @typescript-eslint/no-unused-vars
+  17:7   error    'category' is never reassigned. Use 'const' instead  prefer-const
+  23:7   error    'search' is never reassigned. Use 'const' instead    prefer-const
+  24:7   error    'color' is never reassigned. Use 'const' instead     prefer-const
+  25:7   error    'capacity' is never reassigned. Use 'const' instead  prefer-const
+  70:32  error    Unexpected any. Specify a different type             @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/quote/page.tsx
+  124:17  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/quote/page.tsx:124:17
+  122 |             </span>
+  123 |             <span className="font-mono text-industrial-900">
+> 124 |               #{Math.random().toString(36).substr(2, 9).toUpperCase()}
+      |                 ^^^^^^^^^^^^^ Cannot call impure function
+  125 |             </span>
+  126 |           </div>
+  127 |         </div>  react-hooks/purity
+  151:23  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                @next/next/no-img-element
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/results/delivery/page.tsx
+   12:3   warning  'TrendingDown' is defined but never used                         @typescript-eslint/no-unused-vars
+   67:52  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+   85:21  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  267:9   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  330:10  warning  'BenefitRow' is defined but never used                           @typescript-eslint/no-unused-vars
+  335:9   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/results/testimonials/page.tsx
+    9:3   warning  'Factory' is defined but never used                              @typescript-eslint/no-unused-vars
+  103:19  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  227:19  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  227:29  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/results/value/page.tsx
+   9:3   warning  'BarChart3' is defined but never used                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  10:3   warning  'PieChart' is defined but never used                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  21:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  41:19  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  63:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/services/consulting/page.tsx
+    9:3   warning  'Lightbulb' is defined but never used                            @typescript-eslint/no-unused-vars
+   11:3   warning  'FileText' is defined but never used                             @typescript-eslint/no-unused-vars
+   12:3   warning  'Users' is defined but never used                                @typescript-eslint/no-unused-vars
+   13:3   warning  'Presentation' is defined but never used                         @typescript-eslint/no-unused-vars
+   58:23  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+   60:27  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+   60:33  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+   60:52  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  108:25  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  108:43  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  192:41  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  192:64  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  193:35  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  256:16  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/services/decorating/page.tsx
+  129:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  145:22  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  222:93  error    Comments inside children section of tag should be placed inside braces                                                                                                                                                                                                                   react/jsx-no-comment-textnodes
+  304:16  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/services/design/page.tsx
+   58:19  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+   59:23  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  133:23  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  139:72  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  139:79  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  140:25  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  217:33  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  217:47  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  266:16  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  291:9   error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/services/portal/page.tsx
+    4:8   warning  'Image' is defined but never used                                @typescript-eslint/no-unused-vars
+    5:8   warning  'Link' is defined but never used                                 @typescript-eslint/no-unused-vars
+    8:3   warning  'MousePointer2' is defined but never used                        @typescript-eslint/no-unused-vars
+  218:24  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  218:37  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  218:42  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  218:54  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/services/quality/page.tsx
+    3:17  warning  'useState' is defined but never used                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+    5:3   warning  'Play' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   12:18  warning  'AnimatePresence' is defined but never used                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+   72:19  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+   72:73  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+   74:63  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+   99:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  112:39  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  114:61  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  196:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  229:57  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  230:30  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  248:7   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/services/sourcing/page.tsx
+   80:20  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+   80:52  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  112:23  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  157:55  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  216:24  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  279:9   error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  304:9   error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/services/supply-chain/page.tsx
+    3:17  warning  'useRef' is defined but never used                               @typescript-eslint/no-unused-vars
+    3:25  warning  'useState' is defined but never used                             @typescript-eslint/no-unused-vars
+    5:8   warning  'Link' is defined but never used                                 @typescript-eslint/no-unused-vars
+   10:3   warning  'Clock' is defined but never used                                @typescript-eslint/no-unused-vars
+   12:3   warning  'TrendingUp' is defined but never used                           @typescript-eslint/no-unused-vars
+   16:3   warning  'Plane' is defined but never used                                @typescript-eslint/no-unused-vars
+   17:3   warning  'Anchor' is defined but never used                               @typescript-eslint/no-unused-vars
+   27:3   warning  'AnimatePresence' is defined but never used                      @typescript-eslint/no-unused-vars
+   93:79  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  255:38  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  505:4   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  525:57  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/terms/page.tsx
+  28:70  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  28:77  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  40:75  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  53:68  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  77:26  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  88:76  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/why-us/community/page.tsx
+   19:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+   86:66  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+   94:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  114:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  135:48  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  176:24  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/why-us/divisions/page.tsx
+   21:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+   33:28  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+   51:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+   82:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  113:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  144:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  203:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/why-us/global-reach/page.tsx
+    7:3   warning  'TrendingUp' is defined but never used                           @typescript-eslint/no-unused-vars
+    9:3   warning  'Factory' is defined but never used                              @typescript-eslint/no-unused-vars
+   10:3   warning  'MapPin' is defined but never used                               @typescript-eslint/no-unused-vars
+   62:26  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+   65:45  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  119:26  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  135:20  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  155:39  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  157:59  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  214:61  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  228:20  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/why-us/mission/page.tsx
+  129:13  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  131:42  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  147:31  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  168:25  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/why-us/model/page.tsx
+    2:8   warning  'Image' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   50:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+   80:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+   95:39  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  110:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  124:41  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  144:13  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  144:21  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  144:51  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  147:13  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  188:13  error    Do not use an `<a>` element to navigate to `/products/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages                                                                                                                           @next/next/no-html-link-for-pages
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/why-us/operations/page.tsx
+   12:3   warning  'BarChart' is defined but never used                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  177:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  232:38  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  232:58  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  247:20  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  255:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  384:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  404:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  461:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/why-us/page.tsx
+  94:78  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/(site)/why-us/story/page.tsx
+    7:3   warning  'Target' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   27:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+   78:49  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+   86:25  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  113:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  157:31  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  157:38  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  171:61  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  198:29  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/forgot-password/page.tsx
+   5:28  warning  'AlertCircle' is defined but never used                          @typescript-eslint/no-unused-vars
+  49:74  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/app/seed/page.tsx
+   5:15  warning  'setDoc' is defined but never used        @typescript-eslint/no-unused-vars
+  28:21  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/admin/CatalogDownloadButton.tsx
+  57:11  warning  'blob' is defined but never used   @typescript-eslint/no-unused-vars
+  57:17  warning  'url' is defined but never used    @typescript-eslint/no-unused-vars
+  57:31  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/admin/CatalogPDF.tsx
+  194:13  warning  Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images  jsx-a11y/alt-text
+  217:17  warning  Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images  jsx-a11y/alt-text
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/admin/FileUpload.tsx
+   6:10  warning  'Upload' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+  83:34  error    Compilation Skipped: Existing memoization could not be preserved
+
+React Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. The inferred dependencies did not match the manually specified dependencies, which could cause the value to change more or less frequently than expected. The inferred dependency was `uploadFile`, but the source dependencies were []. Inferred dependency not present in source.
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/admin/FileUpload.tsx:83:34
+  81 |   };
+  82 |
+> 83 |   const handleDrop = useCallback((e: React.DragEvent) => {
+     |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 84 |     e.preventDefault();
+     | ^^^^^^^^^^^^^^^^^^^^^^^
+> 85 |     e.stopPropagation();
+     | ^^^^^^^^^^^^^^^^^^^^^^^
+> 86 |     setIsDragging(false);
+     | ^^^^^^^^^^^^^^^^^^^^^^^
+> 87 |     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+     | ^^^^^^^^^^^^^^^^^^^^^^^
+> 88 |       uploadFile(e.dataTransfer.files[0]);
+     | ^^^^^^^^^^^^^^^^^^^^^^^
+> 89 |     }
+     | ^^^^^^^^^^^^^^^^^^^^^^^
+> 90 |   }, []);
+     | ^^^^ Could not preserve existing manual memoization
+  91 |
+  92 |   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  93 |     if (e.target.files && e.target.files[0]) {  react-hooks/preserve-manual-memoization
+  90:6   warning  React Hook useCallback has a missing dependency: 'uploadFile'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    react-hooks/exhaustive-deps
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/admin/ImageUpload.tsx
+    6:21  warning  'Check' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+    6:46  warning  'ImageIcon' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   30:23  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/admin/ImageUpload.tsx:30:23
+  28 |   // Sync prop changes if external source updates (e.g. loading existing product)
+  29 |   useEffect(() => {
+> 30 |     if (currentImage) setPreview(currentImage);
+     |                       ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  31 |   }, [currentImage]);
+  32 |
+  33 |   const handleDrag = useCallback((e: React.DragEvent) => {                                                                                                                                                                                                                                                                                   react-hooks/set-state-in-effect
+  117:34  error    Compilation Skipped: Existing memoization could not be preserved
+
+React Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. The inferred dependencies did not match the manually specified dependencies, which could cause the value to change more or less frequently than expected. The inferred dependency was `uploadFiles`, but the source dependencies were []. Inferred dependency not present in source.
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/admin/ImageUpload.tsx:117:34
+  115 |   };
+  116 |
+> 117 |   const handleDrop = useCallback((e: React.DragEvent) => {
+      |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 118 |     e.preventDefault();
+      | ^^^^^^^^^^^^^^^^^^^^^^^
+> 119 |     e.stopPropagation();
+      | ^^^^^^^^^^^^^^^^^^^^^^^
+> 120 |     setIsDragging(false);
+      | ^^^^^^^^^^^^^^^^^^^^^^^
+> 121 |
+      | ^^^^^^^^^^^^^^^^^^^^^^^
+> 122 |     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      | ^^^^^^^^^^^^^^^^^^^^^^^
+> 123 |       uploadFiles(Array.from(e.dataTransfer.files));
+      | ^^^^^^^^^^^^^^^^^^^^^^^
+> 124 |     }
+      | ^^^^^^^^^^^^^^^^^^^^^^^
+> 125 |   }, []);
+      | ^^^^ Could not preserve existing manual memoization
+  126 |
+  127 |   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  128 |     if (e.target.files && e.target.files.length > 0) {  react-hooks/preserve-manual-memoization
+  125:6   warning  React Hook useCallback has a missing dependency: 'uploadFiles'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             react-hooks/exhaustive-deps
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/admin/PPEProductForm.tsx
+  245:9   error  'sizeCode' is never reassigned. Use 'const' instead  prefer-const
+  292:41  error  Unexpected any. Specify a different type             @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/admin/ProductForm.tsx
+    31:3   warning  'defaultDropAnimationSideEffects' is defined but never used                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+    32:3   warning  'DropAnimation' is defined but never used                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+   247:9   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+   264:7   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+   361:35  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   371:11  error    'finalData' is never reassigned. Use 'const' instead                                                                                                                                                                                                                                     prefer-const
+   392:39  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   552:61  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   583:26  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  1541:49  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/admin/StandardCatalogDownloadButton.tsx
+  43:11  warning  'blob' is defined but never used   @typescript-eslint/no-unused-vars
+  43:17  warning  'url' is defined but never used    @typescript-eslint/no-unused-vars
+  43:31  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/admin/StandardCatalogPDF.tsx
+  105:13  warning  Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images  jsx-a11y/alt-text
+  138:17  warning  Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images  jsx-a11y/alt-text
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/catalog/CategoryDescription.tsx
+  45:34  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  68:38  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/catalog/FilterBar.tsx
+   40:10  warning  'mounted' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+   54:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/catalog/FilterBar.tsx:54:5
+  52 |     }
+  53 |     document.addEventListener("mousedown", handleClickOutside);
+> 54 |     setMounted(true); // Enable portal on mount
+     |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  55 |     return () => {
+  56 |       document.removeEventListener("mousedown", handleClickOutside);
+  57 |     };  react-hooks/set-state-in-effect
+  114:28  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  196:42  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  471:46  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/catalog/ProductCard.tsx
+  77:9  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/home/ForwardThinkingBanner.tsx
+  26:16  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/home/HeroSection.tsx
+    8:3   warning  'useMotionValue' is defined but never used  @typescript-eslint/no-unused-vars
+    9:3   warning  'animate' is defined but never used         @typescript-eslint/no-unused-vars
+  174:3   warning  'setIndex' is defined but never used        @typescript-eslint/no-unused-vars
+  180:18  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+  181:12  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+  217:3   warning  'index' is defined but never used           @typescript-eslint/no-unused-vars
+  219:3   warning  'springX' is defined but never used         @typescript-eslint/no-unused-vars
+  221:10  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+  225:12  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+  288:34  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/home/ManufacturingPreview.tsx
+   5:37  warning  'PenTool' is defined but never used                              @typescript-eslint/no-unused-vars
+   6:10  warning  'motion' is defined but never used                               @typescript-eslint/no-unused-vars
+  23:21  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  33:15  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  33:30  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/home/ServicesSection.tsx
+  1:10  warning  'Layers' is defined but never used       @typescript-eslint/no-unused-vars
+  1:18  warning  'Search' is defined but never used       @typescript-eslint/no-unused-vars
+  1:26  warning  'ShieldCheck' is defined but never used  @typescript-eslint/no-unused-vars
+  1:39  warning  'Tag' is defined but never used          @typescript-eslint/no-unused-vars
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/layout/AccountModal.tsx
+    5:13  warning  'Check' is defined but never used                                @typescript-eslint/no-unused-vars
+  259:22  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  262:52  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/layout/ContactModal.tsx
+   5:34  warning  'Phone' is defined but never used                                @typescript-eslint/no-unused-vars
+   5:41  warning  'Clock' is defined but never used                                @typescript-eslint/no-unused-vars
+  99:53  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/layout/Footer.tsx
+  2:10  warning  'ShieldCheck' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/layout/InquirySidebar.tsx
+  68:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/layout/LoginModal.tsx
+  213:24  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/layout/MainNavBar.tsx
+    7:3   warning  'Leaf' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+   13:3   warning  'Award' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+   17:3   warning  'Search' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+   19:3   warning  'Menu' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+   21:3   warning  'Phone' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+   28:3   warning  'BookOpen' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+   30:3   warning  'Lightbulb' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+   31:3   warning  'Briefcase' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+   33:3   warning  'LogOut' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  213:46  warning  'toggleMobileMenu' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+  225:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/layout/MainNavBar.tsx:225:7
+  223 |       });
+  224 |     } else {
+> 225 |       setIsAdmin(false);
+      |       ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  226 |     }
+  227 |   }, [user]);
+  228 |  react-hooks/set-state-in-effect
+  415:50  warning  'idx' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/layout/Navbar.tsx
+  48:5  error  Error: Cannot reassign variable after render completes
+
+Reassigning `menuTimeout` after render has completed can cause inconsistent behavior on subsequent renders. Consider using state instead.
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/layout/Navbar.tsx:48:5
+  46 |
+  47 |   const handleMouseLeave = () => {
+> 48 |     menuTimeout = setTimeout(() => {
+     |     ^^^^^^^^^^^ Cannot reassign `menuTimeout` after render completes
+  49 |       setActiveDesktopMenu(null);
+  50 |     }, 100);
+  51 |   };  react-hooks/immutability
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/layout/TopUtilityBar.tsx
+  46:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/layout/TopUtilityBar.tsx:46:7
+  44 |       });
+  45 |     } else {
+> 46 |       setIsAdmin(false);
+     |       ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  47 |     }
+  48 |   }, [user]);
+  49 |                                                                                                                   react-hooks/set-state-in-effect
+  53:17  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/layout/TopUtilityBar.tsx:53:17
+  51 |   useEffect(() => {
+  52 |     const search = searchParams.get("search");
+> 53 |     if (search) setQuery(search);
+     |                 ^^^^^^^^ Avoid calling setState() directly within an effect
+  54 |   }, [searchParams]);
+  55 |
+  56 |   const handleSearch = (e: React.FormEvent) => {  react-hooks/set-state-in-effect
+  56:9   warning  'handleSearch' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/portal/PortalSidebar.tsx
+  8:3  warning  'Package' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/ppe/PPEProductDetail.tsx
+   11:3   warning  'FileText' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+   12:3   warning  'ArrowLeft' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   58:19  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/ppe/PPEProductDetail.tsx:58:19
+  56 |
+  57 |   const [isClient, setIsClient] = useState(false);
+> 58 |   useEffect(() => setIsClient(true), []);
+     |                   ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  59 |
+  60 |   // Compute Dynamic SKU based on selection
+  61 |   const getDisplaySku = () => {  react-hooks/set-state-in-effect
+  314:23  warning  'blob' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  314:29  warning  'url' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+  314:43  warning  'error' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+  314:52  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/ppe/SpecSheetPDF.tsx
+  9:3  warning  'Font' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/search/PredictiveSearch.tsx
+  216:39  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  216:47  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  219:54  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  219:60  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  219:65  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  219:72  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/components/ui/InteractiveValueChain.tsx
+  11:3  warning  'Clock' is defined but never used  @typescript-eslint/no-unused-vars
+  15:3  warning  'X' is defined but never used      @typescript-eslint/no-unused-vars
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/context/InquiryContext.tsx
+  33:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/context/InquiryContext.tsx:33:9
+  31 |     if (saved) {
+  32 |       try {
+> 33 |         setItems(JSON.parse(saved));
+     |         ^^^^^^^^ Avoid calling setState() directly within an effect
+  34 |       } catch (e) {
+  35 |         console.error("Failed to parse inquiry cart", e);
+  36 |       }  react-hooks/set-state-in-effect
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/lib/productUtils.ts
+  1:10  warning  'Product' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/services/authService.ts
+   41:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   58:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   88:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  101:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/services/ppeService.ts
+   17:7   warning  'USE_MOCK_DATA' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  117:17  warning  '_' is assigned a value but never used              @typescript-eslint/no-unused-vars
+  117:43  error    Unexpected any. Specify a different type            @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/services/productService.ts
+   54:49  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  117:35  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  308:17  warning  '_' is assigned a value but never used        @typescript-eslint/no-unused-vars
+  308:43  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  362:9   error    'q' is never reassigned. Use 'const' instead  prefer-const
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/services/userService.ts
+  14:3   warning  'Timestamp' is defined but never used     @typescript-eslint/no-unused-vars
+  29:15  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  44:14  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  45:14  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  53:13  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/types/index.ts
+  101:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/9lives/Documents/GitHub/packaging-catalog/src/types/ppe.ts
+  1:10  warning  'Product' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 505 problems (301 errors, 204 warnings)
+  10 errors and 0 warnings potentially fixable with the `--fix` option.
+

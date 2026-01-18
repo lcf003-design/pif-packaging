@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
 import { storage } from "@/lib/firebase";
-import { Upload, X, Loader2, FileText, CheckCircle } from "lucide-react";
+import { X, Loader2, FileText, CheckCircle } from "lucide-react";
 
 interface FileUploadProps {
   onUploadComplete: (url: string, fileName: string) => void;
@@ -36,58 +36,64 @@ export default function FileUpload({
     }
   }, []);
 
-  const uploadFile = async (file: File) => {
-    // Basic validation
-    if (file.size > 10 * 1024 * 1024) {
-      setError("File size must be less than 10MB");
-      return;
-    }
+  const uploadFile = useCallback(
+    async (file: File) => {
+      // Basic validation
+      if (file.size > 10 * 1024 * 1024) {
+        setError("File size must be less than 10MB");
+        return;
+      }
 
-    setError(null);
-    setIsUploading(true);
-    setUploadProgress(0);
+      setError(null);
+      setIsUploading(true);
+      setUploadProgress(0);
 
-    try {
-      // Use raw file name or sanitize it? keeping it simple
-      const storageRef = ref(storage, `${folder}/${Date.now()}_${file.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, file);
+      try {
+        // Use raw file name or sanitize it? keeping it simple
+        const storageRef = ref(storage, `${folder}/${Date.now()}_${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setUploadProgress(progress);
-        },
-        (error) => {
-          console.error("Upload error:", error);
-          setError("Upload failed.");
-          setIsUploading(false);
-        },
-        async () => {
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          onUploadComplete(downloadURL, file.name);
-          setLastUploaded(file.name);
-          setIsUploading(false);
-          // Auto-reset status after 3s? or keep it 'Success' state
-          setTimeout(() => setLastUploaded(null), 3000);
-        }
-      );
-    } catch (err) {
-      console.error("Upload setup error:", err);
-      setError("Something went wrong initializing upload.");
-      setIsUploading(false);
-    }
-  };
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setUploadProgress(progress);
+          },
+          (error) => {
+            console.error("Upload error:", error);
+            setError("Upload failed.");
+            setIsUploading(false);
+          },
+          async () => {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            onUploadComplete(downloadURL, file.name);
+            setLastUploaded(file.name);
+            setIsUploading(false);
+            // Auto-reset status after 3s? or keep it 'Success' state
+            setTimeout(() => setLastUploaded(null), 3000);
+          },
+        );
+      } catch (err) {
+        console.error("Upload setup error:", err);
+        setError("Something went wrong initializing upload.");
+        setIsUploading(false);
+      }
+    },
+    [folder, onUploadComplete],
+  );
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      uploadFile(e.dataTransfer.files[0]);
-    }
-  }, []);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(false);
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        uploadFile(e.dataTransfer.files[0]);
+      }
+    },
+    [uploadFile],
+  );
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {

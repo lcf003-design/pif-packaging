@@ -11,6 +11,8 @@ import {
   updateDoc,
   deleteDoc,
   limit,
+  writeBatch,
+  type QueryDocumentSnapshot,
 } from "firebase/firestore";
 
 const COLLECTION_NAME = "ppe_products";
@@ -55,7 +57,7 @@ export async function fetchPPEProducts(filters?: {
 }
 
 export async function fetchPPEProductById(
-  idOrSlug: string
+  idOrSlug: string,
 ): Promise<PPEProduct | undefined> {
   try {
     // 1. Try fetching by Document ID (efficient)
@@ -75,19 +77,26 @@ export async function fetchPPEProductById(
 }
 
 export async function fetchPPEProductBySlug(
-  slug: string
+  slug: string,
 ): Promise<PPEProduct | undefined> {
   try {
     const q = query(
       collection(db, COLLECTION_NAME),
       where("slug", "==", slug),
-      limit(1)
+      limit(1),
     );
     const snapshot = await getDocs(q);
 
     if (!snapshot.empty) {
-      const doc = snapshot.docs[0];
-      return { id: doc.id, ...doc.data() } as PPEProduct;
+      const products = snapshot.docs.map(
+        (doc: QueryDocumentSnapshot) =>
+          ({
+            id: doc.id,
+            ...doc.data(),
+          }) as unknown as PPEProduct,
+      );
+      // Assuming the intent was to return the first product from the map if found
+      return products[0];
     }
     return undefined;
   } catch (error) {
@@ -97,7 +106,7 @@ export async function fetchPPEProductBySlug(
 }
 
 export async function addPPEProduct(
-  product: Omit<PPEProduct, "id">
+  product: Omit<PPEProduct, "id">,
 ): Promise<string> {
   try {
     const docRef = await addDoc(collection(db, COLLECTION_NAME), product);
@@ -110,7 +119,7 @@ export async function addPPEProduct(
 
 export async function updatePPEProduct(
   id: string,
-  updates: Partial<PPEProduct>
+  updates: Partial<PPEProduct>,
 ): Promise<void> {
   try {
     const docRef = doc(db, COLLECTION_NAME, id);
@@ -131,21 +140,28 @@ export async function deletePPEProduct(id: string): Promise<void> {
   }
 }
 
-export async function batchAddPPEProducts(products: Omit<PPEProduct, "id">[]) {
+export const batchAddPPEProducts = async (
+  products: Omit<PPEProduct, "id">[],
+) => {
   try {
-    // batch limit is 500, we'll assume chunks < 500 for now or chunk it
-    const { writeBatch } = await import("firebase/firestore");
     const batch = writeBatch(db);
+    let count = 0;
 
-    products.forEach((p) => {
+    for (const product of products) {
       const docRef = doc(collection(db, COLLECTION_NAME));
-      batch.set(docRef, p);
-    });
+      batch.set(docRef, {
+        ...product,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      });
+      count++;
+    }
 
     await batch.commit();
-    return products.length;
+    console.log(`Successfully batch added ${count} products.`);
+    return count;
   } catch (error) {
     console.error("Batch write failed", error);
     throw error;
   }
-}
+};

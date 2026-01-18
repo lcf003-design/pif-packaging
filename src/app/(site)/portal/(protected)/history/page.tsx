@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/services/authService";
+import { useAuth } from "@/context/AuthContext";
 import { getRecentlyViewed, RecentlyViewedItem } from "@/services/userService";
 import { useEffect, useState } from "react";
 import { Clock, Eye, ShoppingBag } from "lucide-react";
@@ -13,22 +13,22 @@ export default function HistoryPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    async function loadHistory() {
+      if (!user) return;
+      try {
+        const data = await getRecentlyViewed(user.uid);
+        setItems(data);
+      } catch (err) {
+        console.error("Failed to load history", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
     if (user) {
       loadHistory();
     }
   }, [user]);
-
-  async function loadHistory() {
-    if (!user) return;
-    try {
-      const data = await getRecentlyViewed(user.uid);
-      setItems(data);
-    } catch (err) {
-      console.error("Failed to load history", err);
-    } finally {
-      setLoading(false);
-    }
-  }
 
   if (loading && !items.length) {
     return (
@@ -89,7 +89,7 @@ export default function HistoryPage() {
                   <Clock className="w-3 h-3" />
                   {item.viewedAt?.seconds
                     ? new Date(
-                        item.viewedAt.seconds * 1000
+                        item.viewedAt.seconds * 1000,
                       ).toLocaleDateString()
                     : "Just now"}
                 </p>

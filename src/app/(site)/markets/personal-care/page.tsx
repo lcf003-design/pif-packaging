@@ -7,16 +7,13 @@ import { notFound } from "next/navigation";
 import {
   ArrowLeft,
   ArrowRight,
-  CheckCircle2,
   FlaskConical,
   Sparkles,
   Repeat,
   Palette,
   ScanFace,
-  Droplets,
   Fingerprint,
 } from "lucide-react";
-import { useState } from "react";
 
 export default function PersonalCareMarketPage() {
   const market = MARKETS_DATA.find((m: Market) => m.slug === "personal-care");
@@ -305,7 +302,7 @@ export default function PersonalCareMarketPage() {
                       <ArrowRight className="w-4 h-4 text-rose-500" />
                     </div>
                   </div>
-                )
+                ),
               )}
             </div>
           </div>
@@ -396,8 +393,8 @@ export default function PersonalCareMarketPage() {
                 </h3>
                 <p className="text-neutral-500 text-sm leading-relaxed mb-4">
                   Studio One Eleven comprises industrial designers, engineers,
-                  and brand strategists. We don't just design bottles; we design
-                  user experiences.
+                  and brand strategists. We don&apos;t just design bottles; we
+                  design user experiences.
                 </p>
                 <Link
                   href="/services/design"
@@ -452,8 +449,8 @@ export default function PersonalCareMarketPage() {
             Elevate Your Brand.
           </h2>
           <p className="text-xl text-neutral-600 mb-12 max-w-2xl mx-auto font-light">
-            Ready to disrupt the shelf? Let's engineer a packaging program that
-            performs as beautifully as it looks.
+            Ready to disrupt the shelf? Let&apos;s engineer a packaging program
+            that performs as beautifully as it looks.
           </p>
           <Link
             href="/contact"
