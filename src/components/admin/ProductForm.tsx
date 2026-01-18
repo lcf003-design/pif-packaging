@@ -316,7 +316,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     initialData || {
       name: "",
       sku: "",
-      brand: "Berlin Standard",
+      brand: "",
       category: "Bottles",
       industry: [],
       material: "Glass",
@@ -330,13 +330,15 @@ export default function ProductForm({ initialData }: ProductFormProps) {
       imageUrl: "",
       description: "",
       isClosure: false,
-    }
+    },
   );
 
   // DnD Sensors & State
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
   );
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -381,7 +383,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         };
         const { slug } = generateProductMetadata(
           specs,
-          formData.category || "Container"
+          formData.category || "Container",
         );
         finalData.slug = slug;
       }
@@ -424,7 +426,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
     let { title, slug } = generateProductMetadata(
       specs,
-      formData.category || "Container"
+      formData.category || "Container",
     );
 
     // Append Closure if present (User Request)
@@ -607,7 +609,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     if (formData.material) {
       parts.push(
         matMap[formData.material] ||
-          formData.material.substring(0, 3).toUpperCase()
+          formData.material.substring(0, 3).toUpperCase(),
       );
     }
 
@@ -648,7 +650,8 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     };
     if (formData.shape) {
       parts.push(
-        shapeMap[formData.shape] || formData.shape.substring(0, 3).toUpperCase()
+        shapeMap[formData.shape] ||
+          formData.shape.substring(0, 3).toUpperCase(),
       );
     }
 
@@ -707,12 +710,42 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     }
 
     // 6. Included Closure Context
-    // If it's a Closure product itself, we might want Liner info?
-    // For now, if it's a Container with a Closure, the closure type is usually implied or strictly added.
-    // The User asked "Does this cover everything?".
-    // If formatting as a Container SKU, usually Container details are paramount.
-    // If a closure is attached, maybe append -W-CAP?
-    // Leaving standard logic for now as requested.
+    if (formData.closure?.type || formData.closure?.color) {
+      // Closure Type
+      const closureMap: Record<string, string> = {
+        "Standard Cap": "CAP",
+        "Lotion Pump": "PMP",
+        "Fine Mist Sprayer": "SPR",
+        "Trigger Sprayer": "TRG",
+        "Disc Top Cap": "DSC",
+        "Flip Top Cap": "FLP",
+        Dropper: "DRP",
+        Pump: "PMP",
+        Sprayer: "SPR",
+        Cap: "CAP",
+      };
+
+      // Closure Color
+      if (formData.closure.color) {
+        let capCode = colMap[formData.closure.color];
+        if (!capCode) {
+          capCode = formData.closure.color.substring(0, 3).toUpperCase();
+        }
+        parts.push(capCode);
+      }
+
+      if (formData.closure.type) {
+        let typeCode = closureMap[formData.closure.type];
+        if (!typeCode) {
+          // Fallback: First 3 letters upper
+          typeCode = formData.closure.type
+            .replace(/[^a-zA-Z]/g, "")
+            .substring(0, 3)
+            .toUpperCase();
+        }
+        parts.push(typeCode);
+      }
+    }
 
     if (parts.length > 0) {
       setFormData({ ...formData, sku: parts.join("-") });
@@ -1181,7 +1214,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     alert(
       `Smart Tagged ${
         newIndustries.size
-      } Industries:\n${industryList}\n\nReasoning:\n${reasons.join("\n")}`
+      } Industries:\n${industryList}\n\nReasoning:\n${reasons.join("\n")}`,
     );
   };
 
@@ -1557,16 +1590,17 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                         type="number"
                         step="0.01"
                         className="block w-full rounded-md border-gray-300 border p-2 focus:ring-2 focus:ring-berlin-blue outline-none"
-                        value={formData.capacity?.value}
-                        onChange={(e) =>
+                        value={formData.capacity?.value ?? ""}
+                        onChange={(e) => {
+                          const val = parseFloat(e.target.value);
                           setFormData({
                             ...formData,
                             capacity: {
                               ...formData.capacity!,
-                              value: parseFloat(e.target.value),
+                              value: isNaN(val) ? 0 : val,
                             },
-                          })
-                        }
+                          });
+                        }}
                         placeholder="0.00"
                       />
                       <select
@@ -1598,49 +1632,28 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                           (formData.dimensions?.height || "").split(" ")[0] ||
                           ""
                         }
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          const current = formData.dimensions?.height || " in";
-                          const unit = current.split(" ")[1] || "in";
+                        onChange={(e) =>
                           setFormData({
                             ...formData,
                             dimensions: {
                               ...formData.dimensions!,
-                              height: val ? `${val} ${unit}` : "",
+                              height: e.target.value
+                                ? `${e.target.value} in`
+                                : "",
                             },
-                          });
-                        }}
+                          })
+                        }
                         placeholder="0.00"
                       />
-                      <select
-                        className="w-14 rounded-r-md border-gray-300 border p-2 bg-gray-50 text-xs focus:ring-2 focus:ring-berlin-blue outline-none border-l-0"
-                        value={
-                          (formData.dimensions?.height || "").split(" ")[1] ||
-                          "in"
-                        }
-                        onChange={(e) => {
-                          const unit = e.target.value;
-                          const current = formData.dimensions?.height || " ";
-                          const val = current.split(" ")[0] || "";
-                          setFormData({
-                            ...formData,
-                            dimensions: {
-                              ...formData.dimensions!,
-                              height: `${val} ${unit}`,
-                            },
-                          });
-                        }}
-                      >
-                        <option value="in">in</option>
-                        <option value="mm">mm</option>
-                        <option value="cm">cm</option>
-                      </select>
+                      <span className="bg-gray-100 border-y border-r border-gray-300 rounded-r-md px-3 flex items-center text-xs text-gray-500 font-bold">
+                        in
+                      </span>
                     </div>
                   </div>
-
                   <div className="flex-1">
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Diameter
+                      Diameter{" "}
+                      <span className="text-gray-400 font-normal">(Round)</span>
                     </label>
                     <div className="flex">
                       <input
@@ -1651,44 +1664,123 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                           (formData.dimensions?.diameter || "").split(" ")[0] ||
                           ""
                         }
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          const current =
-                            formData.dimensions?.diameter || " in";
-                          const unit = current.split(" ")[1] || "in";
+                        onChange={(e) =>
                           setFormData({
                             ...formData,
                             dimensions: {
                               ...formData.dimensions!,
-                              diameter: val ? `${val} ${unit}` : "",
+                              diameter: e.target.value
+                                ? `${e.target.value} in`
+                                : "",
                             },
-                          });
-                        }}
+                          })
+                        }
                         placeholder="0.00"
                       />
-                      <select
-                        className="w-14 rounded-r-md border-gray-300 border p-2 bg-gray-50 text-xs focus:ring-2 focus:ring-berlin-blue outline-none border-l-0"
+                      <span className="bg-gray-100 border-y border-r border-gray-300 rounded-r-md px-3 flex items-center text-xs text-gray-500 font-bold">
+                        in
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Extended Dimensions (Non-Round) */}
+                <div className="flex flex-col md:flex-row gap-8 pt-4 border-t border-gray-100 mt-4 w-full">
+                  <div className="flex-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Length
+                    </label>
+                    <div className="flex">
+                      <input
+                        type="number"
+                        step="0.01"
+                        className="flex-1 block w-full min-w-[100px] rounded-l-md border-gray-300 border-y border-l p-2 focus:ring-2 focus:ring-berlin-blue outline-none"
                         value={
-                          (formData.dimensions?.diameter || "").split(" ")[1] ||
-                          "in"
+                          (formData.dimensions?.length || "").split(" ")[0] ||
+                          ""
                         }
-                        onChange={(e) => {
-                          const unit = e.target.value;
-                          const current = formData.dimensions?.diameter || " ";
-                          const val = current.split(" ")[0] || "";
+                        onChange={(e) =>
                           setFormData({
                             ...formData,
                             dimensions: {
                               ...formData.dimensions!,
-                              diameter: `${val} ${unit}`,
+                              height: formData.dimensions?.height || "",
+                              diameter: formData.dimensions?.diameter || "",
+                              length: e.target.value
+                                ? `${e.target.value} in`
+                                : "",
                             },
-                          });
-                        }}
-                      >
-                        <option value="mm">mm</option>
-                        <option value="in">in</option>
-                        <option value="cm">cm</option>
-                      </select>
+                          })
+                        }
+                        placeholder="0.00"
+                      />
+                      <span className="bg-gray-100 border-y border-r border-gray-300 rounded-r-md px-3 flex items-center text-xs text-gray-500 font-bold whitespace-nowrap">
+                        in
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Width
+                    </label>
+                    <div className="flex">
+                      <input
+                        type="number"
+                        step="0.01"
+                        className="flex-1 block w-full min-w-[100px] rounded-l-md border-gray-300 border-y border-l p-2 focus:ring-2 focus:ring-berlin-blue outline-none"
+                        value={
+                          (formData.dimensions?.width || "").split(" ")[0] || ""
+                        }
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            dimensions: {
+                              ...formData.dimensions!,
+                              height: formData.dimensions?.height || "",
+                              diameter: formData.dimensions?.diameter || "",
+                              width: e.target.value
+                                ? `${e.target.value} in`
+                                : "",
+                            },
+                          })
+                        }
+                        placeholder="0.00"
+                      />
+                      <span className="bg-gray-100 border-y border-r border-gray-300 rounded-r-md px-3 flex items-center text-xs text-gray-500 font-bold whitespace-nowrap">
+                        in
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Depth
+                    </label>
+                    <div className="flex">
+                      <input
+                        type="number"
+                        step="0.01"
+                        className="flex-1 block w-full min-w-[100px] rounded-l-md border-gray-300 border-y border-l p-2 focus:ring-2 focus:ring-berlin-blue outline-none"
+                        value={
+                          (formData.dimensions?.depth || "").split(" ")[0] || ""
+                        }
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            dimensions: {
+                              ...formData.dimensions!,
+                              height: formData.dimensions?.height || "",
+                              diameter: formData.dimensions?.diameter || "",
+                              depth: e.target.value
+                                ? `${e.target.value} in`
+                                : "",
+                            },
+                          })
+                        }
+                        placeholder="0.00"
+                      />
+                      <span className="bg-gray-100 border-y border-r border-gray-300 rounded-r-md px-3 flex items-center text-xs text-gray-500 font-bold whitespace-nowrap">
+                        in
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -2020,7 +2112,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                         <X className="w-4 h-4" />
                       </button>
                     </div>
-                  )
+                  ),
                 )}
               {(!formData.specifications ||
                 Object.keys(formData.specifications).length === 0) && (

@@ -66,6 +66,9 @@ export interface Product {
   dimensions?: {
     height: string;
     diameter: string;
+    length?: string;
+    width?: string;
+    depth?: string;
   };
   neckFinish?: string;
   weight?: string;
