@@ -15,10 +15,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://pifpackaging.com"),
   title: {
-    template: "%s | CatalogPrime",
-    default: "CatalogPrime | Industrial Packaging Solutions",
+    template: "%s | PIF Packaging",
+    default: "PIF Packaging | Industrial Manufacturing & Supply",
   },
-  description: "High-end B2B packaging showroom.",
+  description:
+    "Global manufacturer and distributor of industrial packaging and PPE.",
   icons: {
     icon: "/icon.png?v=2", // Cache buster
   },

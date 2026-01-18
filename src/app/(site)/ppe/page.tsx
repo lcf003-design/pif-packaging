@@ -96,7 +96,7 @@ const PPE_PRODUCTS: PPESpecData[] = [
 export default function PPEPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<PPESpecData | null>(
-    null
+    null,
   );
 
   const handleOpenSpecs = (id: string) => {
@@ -112,10 +112,17 @@ export default function PPEPage() {
       {/* HERO SECTION */}
       <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
         {/* Abstract Dark Background */}
+        {/* Hero Background */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-slate-950" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-950 to-slate-950" />
-          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03] mix-blend-overlay" />
+          <Image
+            src="/images/ppe_hero_logistics.png"
+            alt="Global PPE Supply Chain Infrastructure"
+            fill
+            priority
+            className="object-cover opacity-50"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-blue-950/30 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-slate-950/50 to-slate-950" />
         </div>
 
         <div className="relative z-10 container mx-auto px-6 text-center max-w-5xl">

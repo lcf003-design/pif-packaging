@@ -74,7 +74,7 @@ export default function ManufacturingPreview() {
           {/* Right: Visual */}
           <div className="flex-1 w-full relative h-[500px] rounded-sm overflow-hidden group">
             {/* Background Image of Factory/Machine */}
-            <div className="absolute inset-0 bg-[url('/divisions_hero_collage.png')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-[url('/divisions_hero_collage.png')] bg-cover bg-center transition-all duration-700 pointer-events-none" />
             <div className="absolute inset-0 bg-gradient-to-t from-industrial-900/90 via-transparent to-transparent" />
 
             {/* Stat Overlay */}
