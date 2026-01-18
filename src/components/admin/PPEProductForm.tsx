@@ -4,17 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { PPEProduct, PPECategory, Sterility } from "@/types/ppe";
 import { addPPEProduct, updatePPEProduct } from "@/services/ppeService";
-import {
-  Loader2,
-  Save,
-  ArrowLeft,
-  Plus,
-  X,
-  Upload,
-  Sparkles,
-  Trash2,
-  Camera,
-} from "lucide-react";
+import { Loader2, Save, ArrowLeft, Plus, X, Sparkles } from "lucide-react";
 import Link from "next/link";
 import ImageUpload from "./ImageUpload";
 import {
@@ -142,7 +132,7 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
       palletQty: 0,
       imageUrl: "",
       images: [],
-    }
+    },
   );
 
   const sensors = useSensors(
@@ -153,7 +143,7 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
     }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   function handleDragEnd(event: DragEndEvent) {
@@ -704,7 +694,7 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
                 <div className="grid grid-cols-2 gap-2">
                   {CERTIFICATIONS.map(
                     (
-                      cert // Simplified list for rendering, full list in code
+                      cert, // Simplified list for rendering, full list in code
                     ) => (
                       <label
                         key={cert}
@@ -724,7 +714,7 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
                           {cert}
                         </span>
                       </label>
-                    )
+                    ),
                   )}
                 </div>
               </div>
@@ -769,7 +759,7 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
                           e.preventDefault();
                           const keyInput = e.currentTarget;
                           const valInput = document.getElementById(
-                            "new-spec-val"
+                            "new-spec-val",
                           ) as HTMLInputElement;
                           if (keyInput.value && valInput.value) {
                             updateSpec(keyInput.value, valInput.value);
@@ -790,7 +780,7 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
                           e.preventDefault();
                           const valInput = e.currentTarget;
                           const keyInput = document.getElementById(
-                            "new-spec-key"
+                            "new-spec-key",
                           ) as HTMLInputElement;
                           if (keyInput.value && valInput.value) {
                             updateSpec(keyInput.value, valInput.value);
@@ -805,10 +795,10 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
                       type="button"
                       onClick={() => {
                         const keyInput = document.getElementById(
-                          "new-spec-key"
+                          "new-spec-key",
                         ) as HTMLInputElement;
                         const valInput = document.getElementById(
-                          "new-spec-val"
+                          "new-spec-val",
                         ) as HTMLInputElement;
                         if (keyInput.value && valInput.value) {
                           updateSpec(keyInput.value, valInput.value);

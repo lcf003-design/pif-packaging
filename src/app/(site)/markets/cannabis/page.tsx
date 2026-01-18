@@ -12,7 +12,6 @@ import {
   Droplet,
   Sun,
   Lock,
-  Microscope,
 } from "lucide-react";
 
 export default function CannabisMarketPage() {
@@ -216,7 +215,7 @@ export default function CannabisMarketPage() {
               <span className="text-emerald-500">Compliance.</span>
             </h2>
             <p className="text-lg text-neutral-400 leading-relaxed max-w-md mb-8">
-              We navigate the red tape so you don't have to. Our catalog is
+              We navigate the red tape so you don&apos;t have to. Our catalog is
               certified for CPSC 16 CFR 1700.20 Child Resistance, with ASTM test
               data available on demand.
             </p>

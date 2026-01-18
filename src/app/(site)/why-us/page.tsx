@@ -91,8 +91,8 @@ export default function WhyUsPage() {
           Ready to Elevate Your Packaging?
         </h2>
         <p className="text-lg text-industrial-600 mb-8 max-w-2xl mx-auto">
-          Join thousands of satisfied partners who trust PIF with their brand's
-          physical presence.
+          Join thousands of satisfied partners who trust PIF with their
+          brand&apos;s physical presence.
         </p>
         <button className="bg-berlin-blue text-white px-8 py-3 rounded-sm font-bold hover:bg-berlin-dark-blue transition-colors">
           Get Started Today

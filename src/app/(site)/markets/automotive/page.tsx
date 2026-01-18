@@ -4,12 +4,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   ArrowLeft,
-  ArrowRight,
   ShieldAlert,
-  ShieldCheck,
   Zap,
-  Box,
-  Factory,
   Gauge,
   FlaskConical,
   Scale,
@@ -69,9 +65,9 @@ export default function AutomotiveMarketPage() {
             </h1>
             <div className="flex flex-col md:flex-row gap-8 md:items-end">
               <p className="text-lg md:text-xl text-neutral-400 max-w-xl font-light leading-relaxed border-l border-orange-500 pl-6">
-                Whether you're an independent shop blending custom formulations
-                or a global OEM, we engineer packaging that survives the journey
-                from factory floor to engine bay.
+                Whether you&apos;re an independent shop blending custom
+                formulations or a global OEM, we engineer packaging that
+                survives the journey from factory floor to engine bay.
               </p>
             </div>
           </div>
@@ -134,9 +130,9 @@ export default function AutomotiveMarketPage() {
               </h2>
               <p className="text-lg text-neutral-400 leading-relaxed mb-8">
                 Aggressive additives in octane boosters and synthetic oils
-                attack standard HDPE. The result? "Paneling"—where pressure
-                drops cause container walls to collapse. It renders your product
-                unsellable before it even hits the shelf.
+                attack standard HDPE. The result? &quot;Paneling&quot;—where
+                pressure drops cause container walls to collapse. It renders
+                your product unsellable before it even hits the shelf.
               </p>
 
               <div className="space-y-4 font-mono text-sm border-t border-white/10 pt-6">
@@ -169,8 +165,8 @@ export default function AutomotiveMarketPage() {
               Level 5 <br /> Fluorination.
             </h2>
             <p className="text-xl text-neutral-400 font-light leading-relaxed">
-              We don't just coat the plastic. We modify the molecular surface.
-              Post-Mold Fluorination (PMF) replaces hydrogen atoms with
+              We don&apos;t just coat the plastic. We modify the molecular
+              surface. Post-Mold Fluorination (PMF) replaces hydrogen atoms with
               fluorine, creating an impenetrable carbon-fluorine shield.
             </p>
           </div>
@@ -284,7 +280,7 @@ export default function AutomotiveMarketPage() {
           </h2>
           <p className="text-xl font-bold mb-12 max-w-2xl mx-auto opacity-80">
             Ready to upgrade your supply chain? Whether you need 1 pallet or 10
-            truckloads, let's talk specs.
+            truckloads, let&apos;s talk specs.
           </p>
           <Link
             href="/contact"

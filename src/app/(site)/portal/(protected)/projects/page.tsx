@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/services/authService";
+import { useAuth } from "@/context/AuthContext";
 import {
   createProject,
   deleteProject,
@@ -151,7 +151,7 @@ export default function MyProjectsPage() {
               <p className="text-sm text-gray-500 mb-4">
                 Last updated{" "}
                 {new Date(
-                  project.updatedAt?.seconds * 1000 || Date.now()
+                  project.updatedAt?.seconds * 1000 || Date.now(),
                 ).toLocaleDateString()}
               </p>
 

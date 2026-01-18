@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
+import AuthProvider from "@/context/AuthContext";
+import { InquiryProvider } from "@/context/InquiryContext";
+import Analytics from "@/components/Analytics";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -47,7 +51,13 @@ export default function RootLayout({
         className={`antialiased min-h-screen flex flex-col font-sans`}
         suppressHydrationWarning={true}
       >
-        {children}
+        <InquiryProvider>
+          <AuthProvider>
+            <Analytics />
+            {children}
+            <Toaster position="bottom-right" />
+          </AuthProvider>
+        </InquiryProvider>
       </body>
     </html>
   );

@@ -12,6 +12,8 @@ import {
   updateDoc,
   deleteDoc,
   limit,
+  writeBatch,
+  QueryDocumentSnapshot,
 } from "firebase/firestore";
 
 // Feature Flag: Set to false to attempt real Firestore connections
@@ -38,7 +40,7 @@ export async function fetchProducts(filters?: {
         (p) =>
           p.name.toLowerCase().includes(q) ||
           p.category.toLowerCase().includes(q) ||
-          p.description?.toLowerCase().includes(q)
+          p.description?.toLowerCase().includes(q),
       );
     }
     if (filters?.category)
@@ -51,7 +53,7 @@ export async function fetchProducts(filters?: {
       filtered = filtered.filter((p) => p.shape === filters.shape);
     if (filters?.industry)
       filtered = filtered.filter((p) =>
-        p.industry.includes(filters.industry as any)
+        p.industry.includes(filters.industry as any),
       );
     if (filters?.capacity) {
       const val = parseFloat(filters.capacity);
@@ -114,7 +116,7 @@ export async function fetchProducts(filters?: {
     const snapshot = await getDocs(q);
     // Data Sanitizer: Ensure all fields are JSON-serializable for Next.js
     // This fixes issues where 'Food'/'Beverage' items might have Timestamps/Refs that crash the UI
-    const sanitizeProduct = (doc: any): Product => {
+    const sanitizeProduct = (doc: QueryDocumentSnapshot): Product => {
       const data = doc.data();
       return {
         id: doc.id,
@@ -122,7 +124,7 @@ export async function fetchProducts(filters?: {
         // Convert Firestore Timestamps to strings if they exist
         createdAt: data.createdAt?.toDate?.().toISOString() || data.createdAt,
         updatedAt: data.updatedAt?.toDate?.().toISOString() || data.updatedAt,
-      } as Product;
+      } as unknown as Product;
     };
 
     let results = snapshot.docs.map(sanitizeProduct);
@@ -161,7 +163,7 @@ export async function fetchProducts(filters?: {
       results = results.filter(
         (p) =>
           p.name.toLowerCase().includes(queryText) ||
-          p.category.toLowerCase().includes(queryText)
+          p.category.toLowerCase().includes(queryText),
       );
     }
 
@@ -173,7 +175,7 @@ export async function fetchProducts(filters?: {
 }
 
 export async function fetchProductById(
-  id: string
+  id: string,
 ): Promise<Product | undefined> {
   if (USE_MOCK_DATA) {
     return MOCK_PRODUCTS.find((p) => p.id === id);
@@ -196,7 +198,7 @@ export async function fetchProductById(
 }
 
 export async function fetchProductBySlug(
-  slug: string
+  slug: string,
 ): Promise<Product | undefined> {
   if (USE_MOCK_DATA) {
     return MOCK_PRODUCTS.find((p) => p.slug === slug);
@@ -222,7 +224,7 @@ export async function fetchProductBySlug(
 }
 
 export async function fetchRecommendedClosures(
-  product: Product
+  product: Product,
 ): Promise<Product[]> {
   if (
     !product.recommendedClosureIds ||
@@ -232,7 +234,7 @@ export async function fetchRecommendedClosures(
 
   if (USE_MOCK_DATA) {
     return MOCK_PRODUCTS.filter((p) =>
-      product.recommendedClosureIds?.includes(p.id)
+      product.recommendedClosureIds?.includes(p.id),
     );
   }
 
@@ -241,11 +243,11 @@ export async function fetchRecommendedClosures(
     const productsRef = collection(db, "products");
     const q = query(
       productsRef,
-      where("__name__", "in", product.recommendedClosureIds)
+      where("__name__", "in", product.recommendedClosureIds),
     );
     const snapshot = await getDocs(q);
     return snapshot.docs.map(
-      (doc) => ({ id: doc.id, ...doc.data() } as Product)
+      (doc) => ({ id: doc.id, ...doc.data() }) as Product,
     );
   } catch (error) {
     console.error("Error fetching closures:", error);
@@ -254,7 +256,7 @@ export async function fetchRecommendedClosures(
 }
 
 export async function addProduct(
-  product: Omit<Product, "id">
+  product: Omit<Product, "id">,
 ): Promise<string> {
   // If mock mode, just return a fake ID (or handle differently)
   if (USE_MOCK_DATA) {
@@ -273,7 +275,7 @@ export async function addProduct(
           counter === 0 ? uniqueSlug : `${uniqueSlug}-${counter}`;
         const q = query(
           collection(db, "products"),
-          where("slug", "==", candidate)
+          where("slug", "==", candidate),
         );
         const snap = await getDocs(q);
         if (snap.empty) {
@@ -296,7 +298,7 @@ export async function addProduct(
 
 export async function updateProduct(
   id: string,
-  updates: Partial<Product>
+  updates: Partial<Product>,
 ): Promise<void> {
   if (USE_MOCK_DATA) {
     console.warn("Updating product in MOCK MODE - not persisting.");
@@ -305,7 +307,8 @@ export async function updateProduct(
 
   try {
     const docRef = doc(db, "products", id);
-    const { id: _, ...data } = updates as any; // Ensure ID is not in the data
+    // Exclude ID from updates to prevent overwriting document ID with itself
+    const { id: _, ...data } = updates;
     await updateDoc(docRef, data);
   } catch (error) {
     console.error("Error updating product:", error);
@@ -327,8 +330,55 @@ export async function deleteProduct(id: string): Promise<void> {
   }
 }
 
+export async function bulkUpdateProducts(
+  ids: string[],
+  updates: Partial<Product>,
+): Promise<void> {
+  if (USE_MOCK_DATA) {
+    console.warn("Bulk updating products in MOCK MODE - not persisting.");
+    return;
+  }
+
+  try {
+    const batch = writeBatch(db);
+    ids.forEach((id) => {
+      const docRef = doc(db, "products", id);
+      const { id: _, ...data } = updates;
+      // Ensure updatedAt is set
+      const safeUpdates = {
+        ...data,
+        updatedAt: new Date().toISOString(),
+      };
+      batch.update(docRef, safeUpdates);
+    });
+    await batch.commit();
+  } catch (error) {
+    console.error("Error batch updating products:", error);
+    throw error;
+  }
+}
+
+export async function bulkDeleteProducts(ids: string[]): Promise<void> {
+  if (USE_MOCK_DATA) {
+    console.warn("Bulk deleting products in MOCK MODE - not persisting.");
+    return;
+  }
+
+  try {
+    const batch = writeBatch(db);
+    ids.forEach((id) => {
+      const docRef = doc(db, "products", id);
+      batch.delete(docRef);
+    });
+    await batch.commit();
+  } catch (error) {
+    console.error("Error batch deleting products:", error);
+    throw error;
+  }
+}
+
 export async function fetchProductVariants(
-  product: Product
+  product: Product,
 ): Promise<Product[]> {
   if (USE_MOCK_DATA) {
     // Mock logic: simply find products with same Material + Shape logic
@@ -337,7 +387,7 @@ export async function fetchProductVariants(
         p.id !== product.id &&
         p.material === product.material &&
         p.shape === product.shape &&
-        p.color === product.color
+        p.color === product.color,
     );
   }
 
@@ -363,18 +413,19 @@ export async function fetchProductVariants(
       productsRef,
       where("category", "==", product.category || "Bottles"),
       where("material", "==", product.material || "Plastic"),
-      where("shape", "==", product.shape || "Round")
+      where("shape", "==", product.shape || "Round"),
     );
 
     const snapshot = await getDocs(q);
     const candidates = snapshot.docs.map(
-      (doc) => ({ id: doc.id, ...doc.data() } as Product)
+      (doc) => ({ id: doc.id, ...doc.data() }) as Product,
     );
 
     // Client-side Refinement:
     // 1. Exclude self.
     // 2. Match Color (if applicable).
     // 3. Match Closure (if applicable) -> Crucial for "Pump" vs "Cap" variants.
+    // 4. Match Neck Finish (Crucial for identifying true variants, e.g. 24-410 vs 28-410)
     const strictVariants = candidates.filter((p) => {
       if (p.id === product.id) return false;
 
@@ -389,7 +440,14 @@ export async function fetchProductVariants(
         : "NONE";
       const isClosureMatch = pClosure === vClosure;
 
-      return isColorMatch && isClosureMatch;
+      // Strict Neck Finish Match
+      // If the reference product has a neckFinish, the variant MUST match it.
+      // If the reference product has NO neckFinish, the variant should also have none (or we can be lenient, but strict is safer).
+      const pNeck = product.neckFinish || "N/A";
+      const vNeck = p.neckFinish || "N/A";
+      const isNeckMatch = pNeck === vNeck;
+
+      return isColorMatch && isClosureMatch && isNeckMatch;
     });
 
     return strictVariants;

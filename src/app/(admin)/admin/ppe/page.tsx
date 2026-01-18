@@ -4,15 +4,7 @@ import { useEffect, useState } from "react";
 import {
   Plus,
   Search,
-  Settings,
-  Filter,
-  Package,
-  ShieldCheck,
-  AlertOctagon,
-  MoreVertical,
-  Loader2,
   Trash2,
-  ChevronRight,
   Upload,
   Edit,
   ShieldAlert,
@@ -21,26 +13,20 @@ import {
 import Link from "next/link";
 import { deletePPEProduct, fetchPPEProducts } from "@/services/ppeService";
 import { PPEProduct } from "@/types/ppe";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
 const CatalogDownloadButton = dynamic(
   () => import("@/components/admin/CatalogDownloadButton"),
-  { ssr: false }
+  { ssr: false },
 );
 
 export default function PPEAdminPage() {
-  const router = useRouter();
   const [products, setProducts] = useState<PPEProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState(""); // Renamed searchTerm to search
-  const [categoryFilter, setCategoryFilter] = useState("All"); // Added categoryFilter state
+  const [categoryFilter] = useState("All"); // Added categoryFilter state
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
-
-  useEffect(() => {
-    loadProducts();
-  }, []);
 
   async function loadProducts() {
     // Changed to async function syntax
@@ -49,6 +35,10 @@ export default function PPEAdminPage() {
     setProducts(data);
     setLoading(false);
   }
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this product?")) return; // Changed confirmation message
@@ -86,7 +76,7 @@ export default function PPEAdminPage() {
   const handleBulkDelete = async () => {
     if (
       !window.confirm(
-        `Are you sure you want to delete ${selectedIds.size} PPE Items? This cannot be undone.`
+        `Are you sure you want to delete ${selectedIds.size} PPE Items? This cannot be undone.`,
       )
     )
       return;
@@ -94,7 +84,7 @@ export default function PPEAdminPage() {
     try {
       setLoading(true);
       await Promise.all(
-        Array.from(selectedIds).map((id) => deletePPEProduct(id))
+        Array.from(selectedIds).map((id) => deletePPEProduct(id)),
       );
 
       // Reload

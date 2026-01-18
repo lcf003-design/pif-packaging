@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import {
   ArrowLeft,
   ArrowRight,
-  ShieldCheck,
   FlaskConical,
   Activity,
   Lock,
@@ -180,10 +179,10 @@ export default function PharmaceuticalMarketPage() {
               <strong className="font-black text-teal-600">Adherence.</strong>
             </h2>
             <p className="text-xl text-neutral-600 leading-relaxed mb-10">
-              Compliance isn't just about the FDA. It's about the grandmother
-              taking her medicine. We rigorously test our Senior-Friendly and
-              Child-Resistant closures to ensure safety never compromises
-              accessibility.
+              Compliance isn&apos;t just about the FDA. It&apos;s about the
+              grandmother taking her medicine. We rigorously test our
+              Senior-Friendly and Child-Resistant closures to ensure safety
+              never compromises accessibility.
             </p>
             <div className="flex flex-wrap gap-4">
               <div className="flex items-center gap-3 px-6 py-3 bg-white rounded-full border border-neutral-200 shadow-sm">
@@ -218,7 +217,7 @@ export default function PharmaceuticalMarketPage() {
             </h2>
             <p className="text-neutral-500 text-lg leading-relaxed">
               Every polymer and glass type is selected for its specific barrier
-              properties. We don't guess; we engineer for stability.
+              properties. We don&apos;t guess; we engineer for stability.
             </p>
           </div>
 
@@ -235,7 +234,7 @@ export default function PharmaceuticalMarketPage() {
                 Active ingredients degrade under UV. Our amber glass and cobalt
                 blue Packers filter out harmful wavelengths while maintaining
                 shelf appeal, ensuring potency from the pharmacy shelf to the
-                patient's home.
+                patient&apos;s home.
               </p>
             </div>
 
@@ -266,7 +265,8 @@ export default function PharmaceuticalMarketPage() {
               <p className="text-neutral-500 leading-relaxed">
                 Interaction is failure. Our Type III soda-lime glass and
                 medical-grade resins are chemically inert, preventing leaching
-                or adsorption that could alter your drug's chemical profile.
+                or adsorption that could alter your drug&apos;s chemical
+                profile.
               </p>
             </div>
           </div>

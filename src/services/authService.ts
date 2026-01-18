@@ -65,13 +65,13 @@ export const signInWithApple = async () => {
 export const signUpWithEmail = async (
   email: string,
   password: string,
-  name: string
+  name: string,
 ) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
-      password
+      password,
     );
     // Update display name
     await updateProfile(userCredential.user, {
@@ -95,7 +95,7 @@ export const signInWithEmail = async (email: string, password: string) => {
     const userCredential = await signInWithEmailAndPassword(
       auth,
       email,
-      password
+      password,
     );
     return { user: userCredential.user, error: null };
   } catch (error: any) {
@@ -112,20 +112,4 @@ export const logOut = async () => {
   }
 };
 
-// --- Hook ---
-
-export function useAuth() {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  return { user, loading };
-}
+// Hook removed. Use import { useAuth } from "@/context/AuthContext" instead.

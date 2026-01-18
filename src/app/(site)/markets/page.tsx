@@ -1,30 +1,14 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import {
-  Car,
-  GlassWater,
-  Utensils,
-  Wine,
-  Beer,
-  Sparkles,
-  Home,
-  TestTube2,
-  Pill,
-  Leaf,
-  Dog,
-  Container,
-  Flame,
-  FlaskConical,
-  Beaker,
-  Droplets,
   ArrowRight,
-  Anchor,
   Box,
-  Truck,
   Globe,
   Settings,
+  Flame,
+  FlaskConical,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -113,7 +97,7 @@ function MarketBento() {
                   </div>
                 </motion.div>
               </Link>
-            )
+            ),
           )}
         </div>
       </div>
@@ -139,7 +123,7 @@ function GrowthEngine() {
   const boxColor = useTransform(
     smoothProgress,
     [0.2, 0.5, 0.8],
-    ["#3b82f6", "#ffffff", "#3b82f6"]
+    ["#3b82f6", "#ffffff", "#3b82f6"],
   );
   const boxRotate = useTransform(smoothProgress, [0.2, 0.5, 0.8], [0, 180, 0]);
 

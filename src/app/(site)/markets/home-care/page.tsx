@@ -2,13 +2,7 @@ import { MARKETS_DATA, Market } from "@/data/markets";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  ArrowLeft,
-  CheckCircle2,
-  ShieldAlert,
-  ShieldCheck,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowLeft, CheckCircle2, ShieldCheck, ArrowRight } from "lucide-react";
 
 export default function HomeCareMarketPage() {
   const market = MARKETS_DATA.find((m: Market) => m.slug === "home-care");
@@ -195,10 +189,10 @@ export default function HomeCareMarketPage() {
               Industrial <br /> Efficacy.
             </h2>
             <p className="text-lg text-neutral-500 leading-relaxed mb-8">
-              We don't just supply bottles; we engineer deployment systems for
-              the I&I and Household sectors. From caustic chemical resistance to
-              ergonomic fatigue reduction, our hardware is built for the rigors
-              of real-world cleaning.
+              We don&apos;t just supply bottles; we engineer deployment systems
+              for the I&I and Household sectors. From caustic chemical
+              resistance to ergonomic fatigue reduction, our hardware is built
+              for the rigors of real-world cleaning.
             </p>
             <ul className="space-y-4 font-bold text-berlin-blue">
               <li className="flex items-center gap-3">
@@ -235,9 +229,9 @@ export default function HomeCareMarketPage() {
                 integration, and fully recyclable mono-material pumps.
                 <br />
                 <br />
-                Don't navigate the green transition alone. Our engineering team
-                validates PCR supply chains and recyclability standards for your
-                specific SKU.
+                Don&apos;t navigate the green transition alone. Our engineering
+                team validates PCR supply chains and recyclability standards for
+                your specific SKU.
               </p>
               <Link
                 href="/contact"

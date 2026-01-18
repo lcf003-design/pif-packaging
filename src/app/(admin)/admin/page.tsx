@@ -1,14 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  Users,
-  MessageSquare,
-  Package,
-  TrendingUp,
-  Clock,
-  ArrowRight,
-} from "lucide-react";
+import { Users, MessageSquare, Package, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { getAllInquiries } from "@/services/inquiryService";
 import { getAllUsers } from "@/services/userService";

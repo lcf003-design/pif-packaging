@@ -4,16 +4,7 @@ import { MARKETS_DATA } from "@/data/markets";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Wine,
-  Gem,
-  Fingerprint,
-  Sparkles,
-  Search,
-  GlassWater,
-} from "lucide-react";
+import { ArrowLeft, Gem, Fingerprint, Sparkles, Search } from "lucide-react";
 import { useState } from "react";
 
 export default function SpiritsMarketPage() {
@@ -56,7 +47,7 @@ export default function SpiritsMarketPage() {
             </div>
 
             <h1 className="text-6xl md:text-9xl font-medium text-[#f5f5f0] tracking-tight leading-[0.9]">
-              The Angel's <br />
+              The Angel&apos;s <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-500 to-amber-700 font-serif italic pr-4">
                 Share.
               </span>
@@ -95,7 +86,7 @@ export default function SpiritsMarketPage() {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = Math.max(
                   0,
-                  Math.min(e.clientX - rect.left, rect.width)
+                  Math.min(e.clientX - rect.left, rect.width),
                 );
                 const percentage = (x / rect.width) * 100;
                 setSliderValue(percentage);
@@ -104,7 +95,7 @@ export default function SpiritsMarketPage() {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = Math.max(
                   0,
-                  Math.min(e.touches[0].clientX - rect.left, rect.width)
+                  Math.min(e.touches[0].clientX - rect.left, rect.width),
                 );
                 const percentage = (x / rect.width) * 100;
                 setSliderValue(percentage);
@@ -178,10 +169,10 @@ export default function SpiritsMarketPage() {
               </h2>
 
               <p className="text-lg text-[#a8a29e] font-sans leading-relaxed mb-8">
-                Cheap glass has a green "bloom" and wavy uneven walls that
-                distort your product's color. Our <strong>Super Flint</strong>{" "}
-                formulation removes iron impurities, resulting in optical
-                neutrality that rivals crystal.
+                Cheap glass has a green &quot;bloom&quot; and wavy uneven walls
+                that distort your product&apos;s color. Our{" "}
+                <strong>Super Flint</strong> formulation removes iron
+                impurities, resulting in optical neutrality that rivals crystal.
               </p>
 
               <div className="grid grid-cols-2 gap-8 border-t border-white/10 pt-8">
@@ -331,7 +322,7 @@ export default function SpiritsMarketPage() {
               </h3>
               <p className="text-sm text-neutral-400 font-sans mb-6">
                 Wood, Zamac, and Glass stoppers. Laser engraved with your
-                distillery's insignia.
+                distillery&apos;s insignia.
               </p>
               <div className="flex gap-2">
                 <span className="px-2 py-1 bg-white/5 text-[10px] uppercase tracking-wider text-neutral-300">
@@ -367,11 +358,11 @@ export default function SpiritsMarketPage() {
                   </h3>
                   <p className="text-[#a8a29e] font-sans leading-relaxed text-lg">
                     Neuro-marketing studies confirm that consumers
-                    subconsciously equate "physical weight" with "liquid value."
-                    A 100g increase in base weight commands a significant retail
-                    premium, regardless of the juice inside. We engineer paged
-                    bases that provide the requisite "thud" for top-shelf
-                    dominance.
+                    subconsciously equate &quot;physical weight&quot; with
+                    &quot;liquid value.&quot; A 100g increase in base weight
+                    commands a significant retail premium, regardless of the
+                    juice inside. We engineer paged bases that provide the
+                    requisite &quot;thud&quot; for top-shelf dominance.
                   </p>
                 </div>
 
@@ -380,11 +371,12 @@ export default function SpiritsMarketPage() {
                     02. Refractive Integrity
                   </h3>
                   <p className="text-[#a8a29e] font-sans leading-relaxed text-lg">
-                    Color is the spirit's first communication. Standard glass is
-                    a filter that adds a greenish "bloom," distorting the
-                    natural amber of a bourbon or the botanicals of a gin. Our
-                    Super Flint is a window—optically neutral glass that ensures
-                    the true artisanal color is never compromised.
+                    Color is the spirit&apos;s first communication. Standard
+                    glass is a filter that adds a greenish &quot;bloom,&quot;
+                    distorting the natural amber of a bourbon or the botanicals
+                    of a gin. Our Super Flint is a window—optically neutral
+                    glass that ensures the true artisanal color is never
+                    compromised.
                   </p>
                 </div>
               </div>
@@ -405,9 +397,9 @@ export default function SpiritsMarketPage() {
 
                 <div className="p-8 border-l border-amber-700/30 bg-amber-950/5">
                   <p className="italic text-amber-200/60 font-serif text-xl leading-relaxed">
-                    "Packaging is the only marketing medium that follows the
-                    customer home. In spirits, it is the silent sommelier that
-                    speaks from the shelf."
+                    &quot;Packaging is the only marketing medium that follows
+                    the customer home. In spirits, it is the silent sommelier
+                    that speaks from the shelf.&quot;
                   </p>
                   <div className="mt-4 text-xs font-sans uppercase tracking-widest text-amber-500/50">
                     — Director of Spirits Strategy
@@ -473,11 +465,11 @@ export default function SpiritsMarketPage() {
               <p className="text-[#a8a29e] font-sans leading-relaxed">
                 The relationship between bottle and consumer begins at the
                 closure. Whether utilizing bar-top corks for that satisfying
-                audible "pop" of quality or employing tin pilfer-proof (RPP)
-                caps for absolute tamper-evident security, the closure is the
-                final signature of trust. Our ecosystem includes
-                precision-pourers and threaded seals that protect the liquid's
-                integrity from the first crack to the final drop.
+                audible &quot;pop&quot; of quality or employing tin pilfer-proof
+                (RPP) caps for absolute tamper-evident security, the closure is
+                the final signature of trust. Our ecosystem includes
+                precision-pourers and threaded seals that protect the
+                liquid&apos;s integrity from the first crack to the final drop.
               </p>
             </div>
           </div>

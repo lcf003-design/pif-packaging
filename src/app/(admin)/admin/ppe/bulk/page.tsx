@@ -5,7 +5,6 @@ import Papa from "papaparse";
 import {
   ArrowLeft,
   Loader2,
-  Upload,
   AlertCircle,
   CheckCircle,
   FileUp,
@@ -16,10 +15,27 @@ import { PPEProduct } from "@/types/ppe";
 import { batchAddPPEProducts } from "@/services/ppeService";
 import { useRouter } from "next/navigation";
 
+interface PPECSVRow {
+  sku: string;
+  name: string;
+  category?: string;
+  brand?: string;
+  description?: string;
+  upc?: string;
+  mpn?: string;
+  material?: string;
+  thickness?: string;
+  sterility?: string;
+  certifications?: string;
+  imageUrl?: string;
+  caseQty?: string;
+  palletQty?: string;
+}
+
 export default function BulkUploadPage() {
   const router = useRouter();
   const [csvFile, setCsvFile] = useState<File | null>(null);
-  const [parsedData, setParsedData] = useState<any[]>([]);
+  const [parsedData, setParsedData] = useState<PPECSVRow[]>([]);
   const [previewItems, setPreviewItems] = useState<Partial<PPEProduct>[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -35,7 +51,7 @@ export default function BulkUploadPage() {
   };
 
   const parseCSV = (file: File) => {
-    Papa.parse(file, {
+    Papa.parse<PPECSVRow>(file, {
       header: true,
       skipEmptyLines: true,
       complete: (results) => {
@@ -52,7 +68,7 @@ export default function BulkUploadPage() {
     });
   };
 
-  const mapToPPEProducts = (data: any[]) => {
+  const mapToPPEProducts = (data: PPECSVRow[]) => {
     try {
       const items: Partial<PPEProduct>[] = data.map((row, index) => {
         // Basic validation of required fields
@@ -76,13 +92,17 @@ export default function BulkUploadPage() {
             : [],
           imageUrl: row.imageUrl || "",
           stockStatus: "In Stock",
-          caseQty: parseInt(row.caseQty) || 0,
-          palletQty: parseInt(row.palletQty) || 0,
+          caseQty: row.caseQty ? parseInt(row.caseQty) : 0,
+          palletQty: row.palletQty ? parseInt(row.palletQty) : 0,
         } as Partial<PPEProduct>;
       });
       setPreviewItems(items);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred during mapping");
+      }
       setPreviewItems([]);
     }
   };
@@ -91,7 +111,7 @@ export default function BulkUploadPage() {
     if (previewItems.length === 0) return;
     setLoading(true);
     try {
-      await batchAddPPEProducts(previewItems as any);
+      await batchAddPPEProducts(previewItems as any); // Service expects Omit<PPEProduct, "id">, Partial might be unsafe but logic holds
       setSuccessCount(previewItems.length);
       setCsvFile(null);
       setParsedData([]);

@@ -3,7 +3,7 @@ import FilterBar from "@/components/catalog/FilterBar";
 import ProductCard from "@/components/catalog/ProductCard";
 import { fetchProducts } from "@/services/productService";
 import Link from "next/link";
-import { ChevronRight, Grid3X3, Search } from "lucide-react";
+import { ChevronRight, Search } from "lucide-react";
 import CategoryDescription from "@/components/catalog/CategoryDescription";
 
 export default async function ProductsPage({
