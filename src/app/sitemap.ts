@@ -46,7 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   const ppeRoutes = ppeProducts.map((product) => ({
-    url: `${baseUrl}/ppe/products/${product.id}`,
+    url: `${baseUrl}/medical/products/${product.id}`,
     lastModified: new Date(product.updatedAt || new Date()),
     changeFrequency: "weekly" as const,
     priority: 0.9,

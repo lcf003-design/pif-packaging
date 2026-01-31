@@ -195,7 +195,7 @@ const NAV_LINKS: NavItem[] = [
       },
     ],
   },
-  { label: "PPE Division", href: "/ppe" },
+  { label: "Medical", href: "/medical" },
   { label: "Markets Served", href: "/markets" },
 ];
 

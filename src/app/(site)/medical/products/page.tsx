@@ -33,6 +33,11 @@ export default function PPEProductsPage() {
     "Gloves",
     "Masks & Respirators",
     "Gowns & Apparel",
+    "Syringes & Sharps",
+    "Wound Care",
+    "Specimen Collection",
+    "Sterilization",
+    "Diagnostic",
     "Sanitization",
   ];
 
@@ -46,6 +51,10 @@ export default function PPEProductsPage() {
     "Vinyl",
     "SMS",
     "Polycarbonate",
+    "Stainless Steel",
+    "Medical Grade Plastic",
+    "Cotton",
+    "Glass",
   ];
 
   const filtered = products.filter((p) => {
@@ -72,8 +81,8 @@ export default function PPEProductsPage() {
               Home
             </Link>
             <ChevronRight className="w-3 h-3" />
-            <Link href="/ppe" className="hover:text-blue-400">
-              PPE Division
+            <Link href="/medical" className="hover:text-blue-400">
+              Medical Division
             </Link>
             <ChevronRight className="w-3 h-3" />
             <span className="text-white">Catalog</span>
@@ -232,7 +241,7 @@ export default function PPEProductsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filtered.map((product) => (
                 <Link
-                  href={`/ppe/products/${product.id}`}
+                  href={`/medical/products/${product.id}`}
                   key={product.id}
                   className="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:shadow-blue-900/5 hover:border-blue-200 transition-all duration-300 hover:-translate-y-1 block h-full flex flex-col"
                 >
