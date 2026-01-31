@@ -110,8 +110,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "bottles",
     label: "Bottles",
-    image:
-      "https://images.unsplash.com/photo-1602143407151-11115cd20ad4?q=80&w=2670&auto=format&fit=crop",
+    image: "/images/shop-all/cat_bottles.png",
     subSections: [
       {
         label: "Material",
@@ -303,8 +302,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "jars",
     label: "Jars",
-    image:
-      "https://images.unsplash.com/photo-1622325377508-3165b6a7885b?q=80&w=2670&auto=format&fit=crop",
+    image: "/images/shop-all/cat_jars.png",
     subSections: [
       {
         label: "Material",
@@ -393,8 +391,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "jugs",
     label: "Jugs",
-    image:
-      "https://images.unsplash.com/photo-1615486511484-92e172cc416d?q=80&w=2670&auto=format&fit=crop",
+    image: "/images/shop-all/cat_jugs.png",
     subSections: [
       {
         label: "Material",
@@ -447,8 +444,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "vials",
     label: "Vials",
-    image:
-      "https://images.unsplash.com/photo-1542315832-b7b134d1bc95?q=80&w=2670&auto=format&fit=crop",
+    image: "/images/shop-all/cat_vials.png",
     subSections: [
       {
         label: "Popular Vials",
@@ -502,8 +498,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "cans",
     label: "Cans & Tins",
-    image:
-      "https://images.unsplash.com/photo-1579295325983-4a11b66fe853?q=80&w=2670&auto=format&fit=crop",
+    image: "/images/shop-all/cat_cans.png",
     subSections: [
       {
         label: "Popular Cans",
@@ -564,8 +559,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "tubs",
     label: "Tubs",
-    image:
-      "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=2670&auto=format&fit=crop",
+    image: "/images/shop-all/cat_tubs.png",
     subSections: [
       {
         label: "Popular Tubs",
@@ -595,8 +589,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "buckets",
     label: "Buckets & Drums",
-    image:
-      "https://images.unsplash.com/photo-1563220464-9646452243f7?q=80&w=2574&auto=format&fit=crop",
+    image: "/images/shop-all/cat_buckets.png",
     subSections: [
       {
         label: "Material",
@@ -692,8 +685,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "tubes",
     label: "Tubes",
-    image:
-      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=2574&auto=format&fit=crop",
+    image: "/images/shop-all/cat_tubes.png",
     subSections: [
       {
         label: "Health & Beauty Tubes",
@@ -730,8 +722,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "caps",
     label: "Caps & Closures",
-    image:
-      "https://images.unsplash.com/photo-1602867055041-9aee9cc5ea9e?q=80&w=2670&auto=format&fit=crop",
+    image: "/images/shop-all/cat_caps.png",
     subSections: [
       {
         label: "Popular Caps & Closures",
@@ -807,8 +798,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "bottling-tools",
     label: "Bottling Tools",
-    image:
-      "https://images.unsplash.com/photo-1582806742013-43f657c6d66e?q=80&w=2670&auto=format&fit=crop",
+    image: "/images/shop-all/cat_bottling_tools.png",
     subSections: [
       {
         label: "Popular Bottling Tools",
@@ -840,8 +830,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "boxes",
     label: "Boxes, Bags & Supplies",
-    image:
-      "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?q=80&w=2670&auto=format&fit=crop",
+    image: "/images/shop-all/cat_boxes.png",
     subSections: [
       {
         label: "Popular Boxes",
@@ -878,8 +867,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   {
     id: "hazmat",
     label: "Hazmat Packaging",
-    image:
-      "https://images.unsplash.com/photo-1617953141905-b27fb1f79eb9?q=80&w=2670&auto=format&fit=crop",
+    image: "/images/shop-all/cat_hazmat.png",
     subSections: [
       {
         label: "Popular Hazmat Packaging",

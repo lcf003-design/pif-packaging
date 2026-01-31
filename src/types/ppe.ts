@@ -5,6 +5,11 @@ export type PPECategory =
   | "Masks & Respirators"
   | "Gowns & Apparel"
   | "Face Shields"
+  | "Syringes & Sharps" // Added
+  | "Wound Care" // Added
+  | "Specimen Collection" // Added
+  | "Sterilization" // Added
+  | "Diagnostic" // Added
   | "Sanitization"
   | "Other";
 

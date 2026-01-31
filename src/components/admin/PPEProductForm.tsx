@@ -29,6 +29,11 @@ const CATEGORIES: PPECategory[] = [
   "Masks & Respirators",
   "Gowns & Apparel",
   "Face Shields",
+  "Syringes & Sharps",
+  "Wound Care",
+  "Specimen Collection",
+  "Sterilization",
+  "Diagnostic",
   "Sanitization",
   "Other",
 ];
@@ -60,6 +65,11 @@ const PPE_MATERIALS = [
   "Polypropylene (SMS)",
   "Polyisoprene",
   "Polycarbonate",
+  "Stainless Steel", // Added
+  "Medical Grade Plastic", // Added
+  "Cotton", // Added
+  "Glass", // Added
+  "Non-Woven Fabric", // Added
 ];
 
 const GLOVE_THICKNESS = [
@@ -89,6 +99,58 @@ const MASK_STYLES = [
   "Duckbill",
 ];
 
+const QUICK_SPEC_PRESETS: Record<string, { key: string; values: string[] }[]> =
+  {
+    "Syringes & Sharps": [
+      {
+        key: "Gauge",
+        values: ["18G", "20G", "21G", "22G", "23G", "25G", "27G", "30G"],
+      },
+      { key: "Needle Length", values: ['1/2"', '5/8"', '1"', '1.5"'] },
+      { key: "Volume", values: ["1ml", "3ml", "5ml", "10ml", "20ml", "60ml"] },
+      {
+        key: "Tip Type",
+        values: ["Luer-Lock", "Slip Tip", "Catheter Tip", "Eccentric"],
+      },
+      { key: "Wall", values: ["Regular Wall", "Thin Wall", "Ultra-Thin Wall"] },
+    ],
+    "Wound Care": [
+      { key: "Ply", values: ["4-Ply", "8-Ply", "12-Ply"] },
+      { key: "Weave", values: ["Woven", "Non-Woven", "Sterile Mesh"] },
+      { key: "Dimensions", values: ["2x2", "4x4", "2in x 2yds", "4in x 4yds"] },
+      { key: "Adhesive", values: ["Adhesive Border", "Non-Adherent"] },
+    ],
+    "Specimen Collection": [
+      { key: "Closure", values: ["Screw Cap", "Snap Cap", "Press-Seal"] },
+      { key: "Volume", values: ["30ml", "60ml", "90ml", "120ml", "4oz"] },
+      { key: "Additive", values: ["None", "Boric Acid", "Formalin"] },
+      { key: "Graduated", values: ["Yes", "No"] },
+    ],
+    Diagnostic: [
+      { key: "Tip", values: ["Straight", "Curved", "Serrated"] },
+      { key: "Length", values: ["5.5in", "6.25in", "8in"] },
+      { key: "Grade", values: ["OR Grade", "Economy Grade", "Floor Grade"] },
+    ],
+    Sterilization: [
+      { key: "Indicator", values: ["Steam", "EtO", "Steam & EtO"] },
+      { key: "Class", values: ["Class 1", "Class 4", "Class 5", "Class 6"] },
+      { key: "Seal", values: ["Self-Seal", "Heat-Seal"] },
+    ],
+    "Masks & Respirators": [
+      { key: "BFE", values: [">95%", ">98%", ">99%"] },
+      { key: "PFE", values: [">95%", ">98%", ">99%"] },
+      { key: "Fluid Resistance", values: ["80 mmHg", "120 mmHg", "160 mmHg"] },
+    ],
+    gloves: [
+      { key: "Cuff", values: ["Beaded", "Straight"] },
+      { key: "Finish", values: ["Chlorinated", "Polymer Coated"] },
+      {
+        key: "Grade",
+        values: ["Exam Grade", "Chemo Rated", "Industrial Grade"],
+      },
+    ],
+  };
+
 const COLORS = [
   "Blue",
   "Black",
@@ -96,7 +158,6 @@ const COLORS = [
   "Purple",
   "Green",
   "Orange",
-  "Pink",
   "Pink",
   "Clear",
 ];
@@ -114,7 +175,7 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
     initialData || {
       name: "",
       sku: "",
-      brand: "PIF Medical", // Updated default brand
+      brand: "PIF Medical & Clinical", // Updated default brand
       category: "Gloves",
       description: "",
       upc: "",
@@ -195,41 +256,79 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
 
   const generateIdentity = () => {
     // 1. Generate Name
-    // Structure: [Material] [Category] - [Thickness/Level] - [Color]
+    // Structure: [Material] [Category] - [Main Spec] - [Secondary Spec] - [Color]
     const mat = formData.material || "";
     const cat = formData.category || "";
     const color = getColor();
     const sizes = formData.sizes || [];
     let specDetail = "";
 
+    // Helper to get spec value safely
+    const getSpec = (key: string) => formData.specifications?.[key] || "";
+
     if (cat === "Gloves") {
       specDetail = formData.thickness || "";
     } else if (cat === "Masks & Respirators") {
-      // Find highest level cert
       if (formData.certifications?.includes("ASTM F2100 Level 3"))
         specDetail = "ASTM Level 3";
       else if (formData.certifications?.includes("ASTM F2100 Level 2"))
         specDetail = "ASTM Level 2";
-      else if (formData.certifications?.includes("ASTM F2100 Level 1"))
-        specDetail = "ASTM Level 1";
       else if (formData.certifications?.includes("NIOSH Approved"))
         specDetail = "N95";
-
       const style = getMaskStyle();
       if (style) specDetail += `, ${style}`;
+    } else if (cat === "Syringes & Sharps") {
+      const gauge = getSpec("Gauge");
+      const len = getSpec("Needle Length");
+      const vol = getSpec("Volume");
+      const tip = getSpec("Tip Type");
+      // "18G x 1.5" - 3ml Luer-Lock"
+      const needleSpec = gauge && len ? `${gauge} x ${len}` : gauge || "";
+      const syringeSpec = vol && tip ? `${vol} ${tip}` : vol || tip || "";
+      specDetail = [needleSpec, syringeSpec].filter(Boolean).join(" - ");
+    } else if (cat === "Wound Care") {
+      const dim = getSpec("Dimensions");
+      const ply = getSpec("Ply");
+      // "4x4 - 12-Ply"
+      specDetail = [dim, ply].filter(Boolean).join(" ");
+    } else if (cat === "Specimen Collection") {
+      const vol = getSpec("Volume");
+      const closure = getSpec("Closure");
+      specDetail = [vol, closure].filter(Boolean).join(" ");
+    } else if (cat === "Gowns & Apparel") {
+      specDetail = getSpec("AAMI Level");
+    } else if (cat === "Diagnostic") {
+      specDetail = getSpec("Tip") + " " + (getSpec("Length") || "");
+    } else if (cat === "Face Shields") {
+      specDetail = getSpec("Coating");
     }
 
     const title = `${mat} ${cat} ${
       specDetail ? `- ${specDetail}` : ""
     } - ${color}`
       .replace(/\s+/g, " ")
+      .replace(/- -/g, "-") // Cleanup double dashes
       .trim();
 
     // 2. Generate SKU
     // PPE-[CAT]-[MAT]-[SPEC]-[COL]
     // GLV-NIT-4MIL-BLU
     const catCode =
-      cat === "Gloves" ? "GLV" : cat === "Masks & Respirators" ? "MSK" : "PPE";
+      cat === "Gloves"
+        ? "GLV"
+        : cat === "Masks & Respirators"
+          ? "MSK"
+          : cat === "Syringes & Sharps"
+            ? "SYR"
+            : cat === "Wound Care"
+              ? "WND"
+              : cat === "Specimen Collection"
+                ? "SPC"
+                : cat === "Sterilization"
+                  ? "STR"
+                  : cat === "Diagnostic"
+                    ? "DIA"
+                    : "PPE";
 
     // Material Code
     const matMap: Record<string, string> = {
@@ -237,20 +336,45 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
       Latex: "LAT",
       Vinyl: "VIN",
       "Polypropylene (SMS)": "SMS",
+      "Stainless Steel": "SS",
+      "Medical Grade Plastic": "ABS",
+      Cotton: "CTN",
+      Glass: "GLS",
+      "Non-Woven Fabric": "NWF",
     };
     const matCode = matMap[mat] || mat.substring(0, 3).toUpperCase();
 
     // Spec Code
     let specCode = "GEN";
-    let sizeCode = sizes.length > 0 ? "VAR" : "GEN"; // VAR = Varied/Master
+    let sizeCode = sizes.length > 0 ? "VAR" : "GEN";
+
+    // Helper to get spec value safely (re-declared for scope if needed, or rely on closure)
 
     if (cat === "Gloves" && formData.thickness) {
       specCode = formData.thickness.replace(" mil", "MIL").replace(".", "");
     } else if (cat === "Masks & Respirators") {
-      if (specDetail.includes("Level 3")) specCode = "LV3";
-      else if (specDetail.includes("Level 2")) specCode = "LV2";
-      else if (specDetail.includes("Level 1")) specCode = "LV1";
-      else if (specDetail.includes("N95")) specCode = "N95";
+      // Re-derive specDetail for SKU logic if needed or parse certifications again
+      if (formData.certifications?.includes("ASTM F2100 Level 3"))
+        specCode = "LV3";
+      else if (formData.certifications?.includes("ASTM F2100 Level 2"))
+        specCode = "LV2";
+      else if (formData.certifications?.includes("NIOSH Approved"))
+        specCode = "N95";
+    } else if (cat === "Syringes & Sharps") {
+      // Gauge is best identifier: 18G -> 18G
+      const gauge = getSpec("Gauge");
+      if (gauge) specCode = gauge;
+    } else if (cat === "Wound Care") {
+      // Ply or Dimensions
+      const ply = getSpec("Ply");
+      if (ply) specCode = ply.replace("-Ply", "P"); // 12-Ply -> 12P
+    } else if (cat === "Gowns & Apparel") {
+      const aami = getSpec("AAMI Level");
+      if (aami) specCode = aami.replace("Level ", "LV"); // Level 3 -> LV3
+    } else if (cat === "Specimen Collection") {
+      const vol = getSpec("Volume");
+      if (vol)
+        specCode = vol.toUpperCase().replace("ML", "ML").replace("OZ", "OZ");
     }
 
     // Color Code
@@ -718,6 +842,51 @@ export default function PPEProductForm({ initialData }: PPEProductFormProps) {
                   )}
                 </div>
               </div>
+
+              {/* QUICK SPECS - Category Aware */}
+              {QUICK_SPEC_PRESETS[formData.category || ""] && (
+                <div className="bg-blue-50/50 p-4 rounded-lg border border-blue-100 mb-4">
+                  <label className="text-xs font-bold text-blue-800 uppercase tracking-wide block mb-3">
+                    ✨ Quick Add Specs for {formData.category}
+                  </label>
+                  <div className="space-y-3">
+                    {QUICK_SPEC_PRESETS[formData.category || ""].map(
+                      (group) => (
+                        <div
+                          key={group.key}
+                          className="flex flex-wrap gap-2 items-center"
+                        >
+                          <span className="text-xs font-bold text-slate-500 w-24">
+                            {group.key}:
+                          </span>
+                          <div className="flex flex-wrap gap-1 flex-1">
+                            {group.values.map((val) => {
+                              const isActive =
+                                formData.specifications?.[group.key] === val;
+                              return (
+                                <button
+                                  type="button"
+                                  key={val}
+                                  onClick={() =>
+                                    updateSpec(group.key, isActive ? "" : val)
+                                  }
+                                  className={`px-2 py-1 text-xs rounded border transition-all ${
+                                    isActive
+                                      ? "bg-blue-600 text-white border-blue-600 shadow-sm"
+                                      : "bg-white text-slate-600 border-blue-200 hover:border-blue-400 hover:text-blue-700"
+                                  }`}
+                                >
+                                  {val}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ),
+                    )}
+                  </div>
+                </div>
+              )}
 
               {/* Dynamic Additional Specs */}
               <div>

@@ -295,7 +295,7 @@ export default function PPEAdminPage() {
                       <td className="px-6 py-4 text-right">
                         <div className="flex items-center justify-end gap-2">
                           <Link
-                            href={`/ppe/products/${product.id}`}
+                            href={`/medical/products/${product.id}`}
                             target="_blank"
                             className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-full transition-all"
                             title="View Live"

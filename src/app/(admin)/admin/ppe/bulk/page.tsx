@@ -193,6 +193,50 @@ export default function BulkUploadPage() {
             >
               Download Template
             </button>
+            <button
+              onClick={() => {
+                const CLINICAL_PRODUCTS = [
+                  {
+                    sku: "SYR-L3-STR",
+                    name: "Luer-Lock Hypodermic Syringe (3ml)",
+                    category: "Syringes & Sharps",
+                    material: "Medical Grade Plastic",
+                    sterility: "Sterile",
+                    caseQty: "2400",
+                    description:
+                      "Precision-engineered 3ml syringe with secure Luer-Lock tip.",
+                    imageUrl:
+                      "https://placehold.co/600x600/e2e8f0/475569?text=Syringe",
+                  },
+                  {
+                    sku: "WND-GP4-STR",
+                    name: "Sterile Absorbent Cotton Gauze Pads",
+                    category: "Wound Care",
+                    material: "Cotton",
+                    sterility: "Sterile",
+                    caseQty: "1200",
+                    description: "High-absorbency 12-ply cotton gauze pads.",
+                    imageUrl:
+                      "https://placehold.co/600x600/e2e8f0/475569?text=Gauze",
+                  },
+                  {
+                    sku: "SPC-BAG-69",
+                    name: "Biohazard Specimen Transport Bag",
+                    category: "Specimen Collection",
+                    material: "Medical Grade Plastic",
+                    sterility: "Non-Sterile",
+                    caseQty: "1000",
+                    description: "Leak-proof LDPE specimen transport bags.",
+                    imageUrl:
+                      "https://placehold.co/600x600/e2e8f0/475569?text=Specimen+Bag",
+                  },
+                ];
+                setPreviewItems(CLINICAL_PRODUCTS as any);
+              }}
+              className="px-4 py-2 text-xs font-bold text-emerald-600 bg-emerald-50 hover:bg-emerald-100 rounded-lg border border-emerald-200 transition-colors"
+            >
+              Load Clinical Defaults
+            </button>
           </div>
         </div>
       </div>

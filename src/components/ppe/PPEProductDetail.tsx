@@ -27,7 +27,7 @@ const PDFDownloadLink = dynamic(
         Loading PDF...
       </button>
     ),
-  }
+  },
 );
 
 interface PPEProductDetailProps {
@@ -47,11 +47,11 @@ const SIZE_MAP: Record<string, string> = {
 
 export default function PPEProductDetail({ product }: PPEProductDetailProps) {
   const [activeImage, setActiveImage] = useState(
-    product.images?.[0] || product.imageUrl || "/placeholder.png"
+    product.images?.[0] || product.imageUrl || "/placeholder.png",
   );
 
   const [activeSize, setActiveSize] = useState<string | null>(
-    product.sizes?.[0] || null
+    product.sizes?.[0] || null,
   );
 
   const [isClient, setIsClient] = useState(false);
@@ -81,11 +81,11 @@ export default function PPEProductDetail({ product }: PPEProductDetailProps) {
       <div className="bg-slate-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center gap-2 text-sm text-slate-500">
-            <Link href="/ppe" className="hover:text-blue-600">
-              PPE Division
+            <Link href="/medical" className="hover:text-blue-600">
+              Medical Division
             </Link>
             <ChevronRight className="w-4 h-4" />
-            <Link href="/ppe/products" className="hover:text-blue-600">
+            <Link href="/medical/products" className="hover:text-blue-600">
               Catalog
             </Link>
             <ChevronRight className="w-4 h-4" />
@@ -216,6 +216,36 @@ export default function PPEProductDetail({ product }: PPEProductDetailProps) {
               </div>
             </div>
 
+            {/* Dynamic Technical Specs */}
+            {product.specifications &&
+              Object.keys(product.specifications).length > 0 && (
+                <div className="mt-8 bg-slate-50 rounded-xl p-6 border border-slate-100">
+                  <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-slate-500" />
+                    Technical Specifications
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-4 text-sm">
+                    {Object.entries(product.specifications).map(
+                      ([key, value]) =>
+                        // Filter out internal keys if any leak through
+                        !["color", "texture", "style"].includes(key) && (
+                          <div
+                            key={key}
+                            className="flex justify-between border-b border-gray-200 pb-2"
+                          >
+                            <span className="text-slate-500 font-medium">
+                              {key}
+                            </span>
+                            <span className="text-slate-900 font-bold">
+                              {value}
+                            </span>
+                          </div>
+                        ),
+                    )}
+                  </div>
+                </div>
+              )}
+
             {/* SIZE SELECTOR */}
             {product.sizes && product.sizes.length > 0 && (
               <div className="space-y-3">
@@ -295,7 +325,7 @@ export default function PPEProductDetail({ product }: PPEProductDetailProps) {
                   alert(
                     `Added ${activeSize ? activeSize + " - " : ""}${
                       product.name
-                    } to Quote`
+                    } to Quote`,
                   )
                 }
                 className="flex-1 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-900/20 transition-all active:scale-[0.98]"
