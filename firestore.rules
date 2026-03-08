@@ -37,10 +37,7 @@ service cloud.firestore {
       }
     }
 
-    // INQUIRIES: 
-    // - Create: Public (unauthenticated leads) OR Authenticated
-    // - Read: Owner (by email match) OR Admin
-    // - Update: Admin only (Status changes)
+    // INQUIRIES (Legacy): 
     match /inquiries/{inquiryId} {
       allow create: if true; 
       allow read: if isAuthenticated() && 
@@ -48,12 +45,27 @@ service cloud.firestore {
       allow update: if isAdmin();
     }
 
-    // MESSAGES (Contact Form):
-    // - Create: Public
-    // - Read: Admin only
+    // MESSAGES (Contact Form Legacy):
     match /messages/{messageId} {
       allow create: if true;
       allow read: if isAdmin();
+    }
+
+    // QUOTES (Legacy Wine/Custom Forms):
+    match /quotes/{quoteId} {
+      allow create: if true;
+      allow read: if isAdmin();
+    }
+
+    // GLOBAL INQUIRIES (New Universal Inbox):
+    // - Create: Public (unauthenticated leads) OR Authenticated
+    // - Read: Owner (by email match) OR Admin
+    // - Update: Admin only (Status changes)
+    match /global_inquiries/{inquiryId} {
+      allow create: if true; 
+      allow read: if isAuthenticated() && 
+        (resource.data.customer.email == request.auth.token.email || isAdmin());
+      allow update: if isAdmin();
     }
 
     // PRODUCTS:

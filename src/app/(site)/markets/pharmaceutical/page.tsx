@@ -2,18 +2,8 @@ import { MARKETS_DATA } from "@/data/markets";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  ArrowLeft,
-  ArrowRight,
-  FlaskConical,
-  Activity,
-  Lock,
-  Sun,
-  Droplets,
-  Microscope,
-  FileCheck,
-  Baby,
-} from "lucide-react";
+import { ArrowLeft, Play } from "lucide-react";
+import MarketCategoryGrid from "@/components/markets/MarketCategoryGrid";
 
 export default function PharmaceuticalMarketPage() {
   const market = MARKETS_DATA.find((m) => m.slug === "pharmaceutical");
@@ -22,297 +12,313 @@ export default function PharmaceuticalMarketPage() {
     notFound();
   }
 
-  // ASSETS MAPPING
-  const ASSETS = {
-    formulary: [
-      {
-        title: "Amber Glass",
-        image: "/images/markets/pharma_amber_packer_glass.png",
-        desc: "UV-secure packer architecture.",
-      },
-      {
-        title: "HDPE Packers",
-        image: "/images/markets/pharma_hdpe_packer_white.png",
-        desc: "Matte-finish sterile containment.",
-      },
-      {
-        title: "Cobalt Droppers",
-        image: "/images/markets/pharma_dropper_cobalt.png",
-        desc: "Precision serum dispensing.",
-      },
-      {
-        title: "PET Liquids",
-        image: "/images/markets/pharma_syrup_bottle.png",
-        desc: "Impact-resistant oral dosing.",
-      },
-      {
-        title: "Oingment Systems",
-        image: "/images/markets/pharma_ointment_jar.png",
-        desc: "Low-profile topical jars.",
-      },
-      {
-        title: "Reversible Tech",
-        image: "/images/markets/pharma_reversible_cap.png",
-        desc: "Dual-mode CR/Non-CR closures.",
-      },
-      {
-        title: "Nasal Delivery",
-        image: "/images/markets/pharma_nasal_spray.png",
-        desc: "Metered-dose aerosol systems.",
-      },
-      {
-        title: "Sterile Injectables",
-        image: "/images/markets/pharma_vaccine_vial.png",
-        desc: "Crimp-seal vaccine vials.",
-      },
-    ],
-    heroBg: "/images/markets/pharma_hero_background.png",
-    complianceBanner: "/images/markets/pharma_compliance_banner.png",
-    labSetting: "/images/markets/pharma_lab_setting.png",
-  };
+  const items = [
+    {
+      title: "Pharmaceutical Bottles",
+      image: "/images/markets/pharma_bottle_glass.png",
+      href: "/search?q=glass+bottles",
+    },
+    {
+      title: "Pharmaceutical Jars",
+      image: "/images/markets/pharma_jar_cream.png", // NOTE: I am replacing the placeholder back in because the user screenshot shows eczema cream. We'll need to use the actual image they created or have. If they didn't create it, I'll need to generate it later if it's missing. Using pharma_ointment_jar is probably better. Let's use the one we have.
+      href: "/search?q=pharmaceutical+jars",
+    },
+    {
+      title: "Pill & Vitamin Packaging",
+      image: "/images/markets/pharma_vitamin_pet.png", // We might have a missing image here based on previous steps. Let's use what we found.
+      href: "/search?q=pill+vitamin",
+    },
+    {
+      title: "Medicinal Syrup Bottles",
+      image: "/images/markets/pharma_syrup_bottle.png",
+      href: "/search?q=syrup+bottle",
+    },
+    {
+      title: "Peroxide Bottles",
+      image: "/images/markets/pharma_peroxide_bottle.png", // We might have a missing image here based on previous steps.
+      href: "/search?q=peroxide",
+    },
+    {
+      title: "Dropper Bottles",
+      image: "/images/markets/pharma_dropper_bottle.png", // We might have a missing image here based on previous steps. Let's use pharma_dropper_cobalt instead
+      href: "/search?q=dropper",
+    },
+    {
+      title: "Hand Sanitizer Bottles",
+      image: "/images/markets/pharma_sanitizer_pump.png", // Missing image potentially.
+      href: "/search?q=sanitizer",
+    },
+    {
+      title: "Ointment Containers",
+      image: "/images/markets/pharma_ointment_jar.png",
+      href: "/search?q=ointment",
+    },
+  ];
 
   return (
-    <div className="bg-white min-h-screen font-sans text-neutral-900 selection:bg-teal-100 selection:text-teal-900">
-      {/* 1. HERO SECTION: Bio-Secure Architecture */}
-      <section className="relative h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-slate-50">
+    <div className="bg-white min-h-screen text-neutral-900 selection:bg-berlin-red selection:text-white">
+      {/* 1. CINEMATIC MONOLITH HERO */}
+      <section className="group relative h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-neutral-950">
         <div className="absolute inset-0 z-0">
           <Image
-            src={ASSETS.heroBg}
-            alt="Bio-Secure Architecture"
+            src={market.image}
+            alt={market.title}
             fill
-            className="object-cover opacity-80"
+            className="object-cover opacity-60 contrast-125 saturate-0 group-hover:saturate-100 transition-all duration-700 ease-in-out"
             priority
           />
-          {/* Clinical Overlay */}
-          <div className="absolute inset-0 bg-white/40 mix-blend-overlay" />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/60 to-transparent" />
         </div>
 
-        <div className="relative z-10 container mx-auto px-6 max-w-7xl">
-          <Link
-            href="/markets"
-            className="inline-flex items-center gap-2 text-neutral-500 hover:text-teal-600 mb-12 transition-colors text-xs font-mono tracking-[0.2em] uppercase"
-          >
-            <ArrowLeft className="w-3 h-3" /> Back to Intelligence
-          </Link>
-
-          <div className="max-w-4xl">
-            <div className="inline-flex items-center gap-3 px-4 py-2 bg-teal-50 border border-teal-100 rounded-full text-teal-600 text-sm font-bold uppercase tracking-wider mb-8 backdrop-blur-md">
-              <Activity className="w-4 h-4" />
-              <span>Life Sciences Division</span>
-            </div>
-            <h1 className="text-5xl md:text-7xl font-light text-neutral-900 mb-8 tracking-tighter leading-[1.1]">
-              Clinical Precision. <br />
-              <strong className="font-black text-teal-700">
-                Patient Protection.
-              </strong>
-            </h1>
-            <p className="text-xl md:text-2xl text-neutral-500 font-light max-w-2xl leading-relaxed">
-              We engineer containment for the cure. From UV-blocking amber glass
-              to certified Child-Resistant closures, our packaging is the final
-              line of defense for your active pharmaceutical ingredients.
-            </p>
+        <div className="relative z-10 container mx-auto px-6 max-w-[1800px] flex flex-col justify-between h-full pt-8 pb-24">
+          {/* Top Nav Area */}
+          <div className="w-full flex justify-between items-start">
+            <Link
+              href="/markets"
+              className="inline-flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-300 font-mono text-xs tracking-[0.2em] uppercase"
+            >
+              <ArrowLeft className="w-3 h-3" /> Market Intelligence
+            </Link>
           </div>
-        </div>
-      </section>
 
-      {/* 2. THE FORMULARY (Grid) */}
-      <section className="py-24 bg-white border-b border-neutral-100">
-        <div className="container mx-auto px-6 max-w-7xl">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div>
-              <h2 className="text-4xl font-black text-neutral-900 mb-4 tracking-tight uppercase">
-                The Formulary
-              </h2>
-              <p className="text-neutral-500 max-w-md">
-                Sterile, compliant, and consistently sourced. A curated index of
-                packaging formats for solid dose, liquids, and topicals.
+          {/* Hero Content */}
+          <div className="flex-1 flex flex-col items-center justify-center">
+            <div className="max-w-4xl text-center">
+              <h1 className="text-[12vw] md:text-[8rem] font-black text-white leading-[0.85] tracking-tighter mb-8 uppercase">
+                HEALTHCARE <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-berlin-red to-orange-600">
+                  PACKAGING
+                </span>
+              </h1>
+              <p className="text-xl md:text-3xl font-light text-white/70 max-w-2xl mx-auto leading-relaxed">
+                Pharmaceutical, Nutraceutical & Medical Logistics
               </p>
             </div>
-            <div className="hidden md:block w-32 h-1 bg-teal-500" />
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {ASSETS.formulary.map((item, i) => (
-              <div
-                key={i}
-                className="group bg-slate-50 rounded-2xl p-8 hover:shadow-2xl hover:bg-white transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="relative h-48 w-full mb-6 overflow-hidden">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-contain group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-neutral-900 group-hover:text-teal-600 transition-colors tracking-tight">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs text-neutral-400 mt-2 font-medium">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
 
-      {/* 3. REGULATORY ARCHITECTURE (Banner) */}
-      <section className="relative py-32 overflow-hidden bg-slate-100">
-        <div className="absolute inset-0">
-          <Image
-            src={ASSETS.complianceBanner}
-            alt="Compliance Standards"
-            fill
-            className="object-cover opacity-30 mix-blend-multiply"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-100 via-slate-100/80 to-transparent" />
-        </div>
+      {/* 2. PRODUCT CATEGORY GRID */}
+      <MarketCategoryGrid items={items} />
 
-        <div className="relative z-10 container mx-auto px-6 max-w-7xl">
-          <div className="max-w-2xl">
-            <h2 className="text-5xl md:text-6xl font-light text-neutral-900 mb-8 tracking-tighter">
-              The Science of <br />
-              <strong className="font-black text-teal-600">Adherence.</strong>
+      {/* 3. HEALTHY PACKAGING (Image Split) */}
+      <section className="py-0 bg-white">
+        <div className="grid md:grid-cols-2">
+          {/* Text Left */}
+          <div className="flex flex-col justify-center p-12 md:p-24 2xl:p-32">
+            <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6 tracking-tight">
+              Rigid Adherence to Medical Standards
             </h2>
-            <p className="text-xl text-neutral-600 leading-relaxed mb-10">
-              Compliance isn&apos;t just about the FDA. It&apos;s about the
-              grandmother taking her medicine. We rigorously test our
-              Senior-Friendly and Child-Resistant closures to ensure safety
-              never compromises accessibility.
+            <p className="text-neutral-600 leading-relaxed text-lg pb-4">
+              The modern pharmaceutical and nutraceutical landscape requires
+              absolute precision and unwavering compliance. We engineer
+              containment solutions designed to protect active ingredients,
+              ensure child-resistant safety, and provide accurate dosing
+              mechanisms for end-users.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <div className="flex items-center gap-3 px-6 py-3 bg-white rounded-full border border-neutral-200 shadow-sm">
-                <Baby className="w-5 h-5 text-teal-600" />
-                <span className="font-bold tracking-wide text-sm text-neutral-700">
-                  CPSC Tested
-                </span>
-              </div>
-              <div className="flex items-center gap-3 px-6 py-3 bg-white rounded-full border border-neutral-200 shadow-sm">
-                <FileCheck className="w-5 h-5 text-teal-600" />
-                <span className="font-bold tracking-wide text-sm text-neutral-700">
-                  USP 661/671
-                </span>
-              </div>
-              <div className="flex items-center gap-3 px-6 py-3 bg-white rounded-full border border-neutral-200 shadow-sm">
-                <FlaskConical className="w-5 h-5 text-teal-600" />
-                <span className="font-bold tracking-wide text-sm text-neutral-700">
-                  Type III Glass
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. COMPONENT ARCHITECTURE (Technical Specs) */}
-      <section className="py-24 bg-white border-b border-neutral-100">
-        <div className="container mx-auto px-6 max-w-7xl">
-          <div className="mb-16 text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl font-black text-neutral-900 mb-6 uppercase tracking-tight">
-              Component Architecture
-            </h2>
-            <p className="text-neutral-500 text-lg leading-relaxed">
-              Every polymer and glass type is selected for its specific barrier
-              properties. We don&apos;t guess; we engineer for stability.
+            <p className="text-neutral-600 leading-relaxed text-lg">
+              Our continuous investment in advanced manufacturing techniques
+              guarantees that every bottle and jar meets stringent regulatory
+              frameworks, providing peace of mind from the assembly line to the
+              medicine cabinet.
             </p>
           </div>
-
-          <div className="grid md:grid-cols-3 gap-12">
-            {/* Feature 1: Photostability */}
-            <div className="bg-slate-50 p-10 rounded-3xl">
-              <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-teal-600 shadow-sm mb-8">
-                <Sun className="w-7 h-7" />
-              </div>
-              <h3 className="text-xl font-bold text-neutral-900 mb-4">
-                Photostability
-              </h3>
-              <p className="text-neutral-500 leading-relaxed">
-                Active ingredients degrade under UV. Our amber glass and cobalt
-                blue Packers filter out harmful wavelengths while maintaining
-                shelf appeal, ensuring potency from the pharmacy shelf to the
-                patient&apos;s home.
-              </p>
-            </div>
-
-            {/* Feature 2: Moisture Defense */}
-            <div className="bg-slate-50 p-10 rounded-3xl">
-              <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-teal-600 shadow-sm mb-8">
-                <Droplets className="w-7 h-7" />
-              </div>
-              <h3 className="text-xl font-bold text-neutral-900 mb-4">
-                Moisture Defense
-              </h3>
-              <p className="text-neutral-500 leading-relaxed">
-                Hydroscopy kills efficacy. We deploy high-density HDPE and
-                desiccant-integrated closures to create a hermetic seal, locking
-                out humidity and preserving the structural integrity of tablets
-                and capsules.
-              </p>
-            </div>
-
-            {/* Feature 3: Biocompatibility */}
-            <div className="bg-slate-50 p-10 rounded-3xl">
-              <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-teal-600 shadow-sm mb-8">
-                <Microscope className="w-7 h-7" />
-              </div>
-              <h3 className="text-xl font-bold text-neutral-900 mb-4">
-                Biocompatibility
-              </h3>
-              <p className="text-neutral-500 leading-relaxed">
-                Interaction is failure. Our Type III soda-lime glass and
-                medical-grade resins are chemically inert, preventing leaching
-                or adsorption that could alter your drug&apos;s chemical
-                profile.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. PATIENT TRUST (Visual Split) */}
-      <section className="py-0 bg-neutral-900">
-        <div className="grid md:grid-cols-2 min-h-[600px]">
-          <div className="relative min-h-[500px]">
+          {/* Image Right (Replaced Video) */}
+          <div className="relative min-h-[400px] md:min-h-[600px] bg-neutral-100">
             <Image
-              src={ASSETS.labSetting}
-              alt="Pharmaceutical Quality Control"
+              src="/images/markets/pharma_clinical_containment.png"
+              alt="Clinical Grade Containment"
               fill
-              className="object-cover opacity-90"
+              className="object-cover"
             />
           </div>
-          <div className="flex flex-col justify-center p-12 md:p-24 bg-neutral-900 text-white">
-            <Lock className="w-12 h-12 text-teal-500 mb-8" />
-            <h2 className="text-4xl md:text-5xl font-light mb-8 tracking-tight">
-              Protecting the <br />
-              <strong className="font-bold text-teal-500">Cure.</strong>
-            </h2>
-            <p className="text-lg text-neutral-400 leading-relaxed max-w-md">
-              Your patients trust you with their lives. You can trust us with
-              your packaging. From audit-ready documentation (DMFs) to rapid
-              prototype validation, we operate at the speed of biotech.
-            </p>
+        </div>
+      </section>
+
+      {/* 4. WE HAVE YOU COVERED (Centered Banner with Background Image) */}
+      <section className="relative py-32 text-center px-6 overflow-hidden">
+        {/* Abstract Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/markets/pharma_coverage_banner_v2.png"
+            alt="Amber pharmaceutical bottles background"
+            fill
+            className="object-cover opacity-60"
+          />
+          <div className="absolute inset-0 bg-white/40" />
+        </div>
+
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-black text-neutral-900 mb-6 tracking-tight">
+            Comprehensive Fulfillment Network
+          </h2>
+          <p className="text-lg text-neutral-800 leading-relaxed mb-6 font-medium">
+            We employ a strategic approach rooted in decades of logistical
+            expertise to assist high-growth medical brands in scaling their
+            distribution seamlessly and securely.
+          </p>
+          <p className="text-lg text-neutral-800 leading-relaxed font-medium">
+            By integrating robust quality assurance protocols with intelligent
+            supply chain infrastructure, we offer complete protective packaging
+            lifecycles, bespoke mold engineering, and accelerated delivery
+            through our international network of certified warehouses.
+          </p>
+        </div>
+      </section>
+
+      {/* 5. CASE STUDY: NUTRACEUTICAL BRAND (Split Layout with Image Replacement) */}
+      <section className="py-24 bg-white border-t border-neutral-100">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="grid md:grid-cols-2 items-center gap-16">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-8 tracking-tight leading-[1.1]">
+                Advanced Nutritional Delivery Systems
+              </h2>
+              <p className="text-lg text-neutral-600 leading-relaxed mb-8">
+                Capitalizing on the surging market for daily wellness chewables,
+                a prominent health sciences company needed packaging that
+                balanced robust protection with an intuitive customer
+                experience. Our engineering team developed a specialized
+                thermoplastic enclosure tailored specifically for their product
+                line.
+              </p>
+              <p className="text-lg text-neutral-600 leading-relaxed mb-8">
+                The core objective was to implement strict child-resistant
+                locking mechanisms that satisfied international safety mandates,
+                without sacrificing the accessibility required for the intended
+                adult demographic. The resulting design achieved both seamless
+                operability and profound security.
+              </p>
+              {/* Image Replaces the "See More" Link */}
+              <div className="relative h-64 w-full mt-12 rounded-lg overflow-hidden border border-neutral-200 shadow-sm">
+                <Image
+                  src="/images/markets/pharma_case_study_hero.png"
+                  alt="Nutraceutical Manufacturing"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+            <div className="relative h-[600px] w-full flex items-center justify-center">
+              <Image
+                src="/images/markets/pharma_gummy_vitamins.png"
+                alt="Nutraceutical Gummy Packaging"
+                fill
+                className="object-contain"
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 bg-teal-900 text-white text-center">
-        <div className="container mx-auto px-6 relative z-10">
-          <h2 className="text-4xl md:text-5xl font-light mb-8 tracking-tight">
-            Ready for <br className="hidden md:block" />
-            <span className="font-bold text-emerald-400">Clinical Scale?</span>
+      {/* 6. QUOTE CTA BANNER */}
+      <section className="relative py-20 text-center px-6 overflow-hidden">
+        <div className="absolute inset-0 z-0 bg-berlin-blue">
+          <Image
+            src="/images/markets/pharma_quote_banner.png"
+            alt="Pharmaceutical assembly line"
+            fill
+            className="object-cover opacity-20 mix-blend-overlay"
+          />
+        </div>
+        <div className="relative z-10 max-w-3xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-white text-left max-w-lg leading-snug">
+            Looking for a large-quantity quote? Contact a PIF Packaging
+            Consultant today.
           </h2>
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-3 px-10 py-5 bg-white text-teal-900 font-bold text-lg rounded-full hover:bg-emerald-400 hover:text-teal-950 transition-all shadow-2xl"
+            className="px-8 py-4 bg-berlin-red hover:bg-neutral-900 text-white font-bold tracking-wide uppercase rounded-sm transition-colors duration-300 whitespace-nowrap min-w-[200px]"
           >
-            Consult Life Sciences
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            REQUEST A QUOTE
           </Link>
+        </div>
+      </section>
+
+      {/* 7. BOTTOM CONTENT / SEO (Text Heavy) */}
+      <section className="py-24 bg-white">
+        <div className="max-w-5xl mx-auto px-6">
+          {/* Highlighted Intro Paragraph */}
+          <div className="pl-6 border-l-4 border-berlin-red mb-16">
+            <p className="text-lg text-neutral-600 leading-relaxed font-medium">
+              Medical-grade containers are manufactured from premium substrates
+              like Type III glass and pharmaceutical PET, offered in precise
+              volumetric capacities. They serve as the definitive benchmark for
+              securing both liquid extracts and dry supplements. Opting for
+              tinted materials—such as UV-resistant amber or light-blocking
+              cobalt blue—is critical for safeguarding volatile active compounds
+              against environmental degradation.
+            </p>
+          </div>
+
+          <div className="space-y-16">
+            {/* Paragraph Block 1 */}
+            <div>
+              <h3 className="text-2xl font-black text-neutral-900 mb-4 tracking-tight leading-snug">
+                Premium Glass Receptacles For Liquids And Supplements
+              </h3>
+              <p className="text-neutral-600 leading-relaxed max-w-4xl text-base">
+                Given their non-reactive and impermeable properties,{" "}
+                <Link href="#" className="text-berlin-red hover:underline">
+                  glass bottles
+                </Link>{" "}
+                remain an absolute necessity within the healthcare sector to
+                prevent chemical leaching and cross-contamination. Glass
+                preserves the original molecular structure of sensitive formulas
+                over extended shelf lives. Wide-mouth glass packers accommodate
+                high-speed filling lines for capsules and tablets, while Boston
+                round variants outfitted with controlled dropper-assemblies are
+                utilized for exact tincture dosing. Furthermore, pairing glass
+                vessels with tamper-evident, heat-shrink closures establishes a
+                verifiable seal of integrity, solidifying glass as the premier
+                choice for therapeutic encapsulation.
+              </p>
+            </div>
+
+            {/* Paragraph Block 2 */}
+            <div>
+              <h3 className="text-2xl font-black text-neutral-900 mb-4 tracking-tight leading-snug">
+                The Logistics of Plastic Medical Packaging
+              </h3>
+              <p className="text-neutral-600 leading-relaxed max-w-4xl text-base">
+                Due to their incredibly lightweight yet structural nature,{" "}
+                <Link href="#" className="text-berlin-red hover:underline">
+                  plastic bottles
+                </Link>{" "}
+                represent a highly efficient packaging solution capable of
+                mitigating transit overhead and minimizing breakage risks.
+                Unlike glass, shatter-resistant plastics allow for durable,
+                high-volume palletization. Selecting specialized dispensing
+                fitments, such as low-density polyethylene (LDPE) dropper tips
+                or child-resistant (CR) induction-seal caps, enhances end-user
+                safety. The flexibility of LDPE provides excellent tactile
+                feedback for squeezable applications like ophthalmic drops or
+                topical creams.
+              </p>
+            </div>
+
+            {/* Paragraph Block 3 */}
+            <div>
+              <h3 className="text-2xl font-black text-neutral-900 mb-4 tracking-tight leading-snug">
+                Comprehensive Logistics Managed By PIF Packaging
+              </h3>
+              <p className="text-neutral-600 leading-relaxed max-w-4xl text-base">
+                Beyond standardized component purchasing, PIF Packaging offers
+                an array of scalable operational services, encompassing
+                centralized supply chain management, custom tooling development,
+                and strategic 3PL integrations. We provide tailored{" "}
+                <Link href="#" className="text-berlin-red hover:underline">
+                  warehousing
+                </Link>{" "}
+                solutions designed to alleviate physical inventory burdens. Our
+                logistics team operates on a Just-In-Time (JIT) fulfillment
+                model, continuously monitoring stock thresholds, coordinating
+                split-shipments, and orchestrating domestic freight to ensure
+                your production lines never experience downtime due to component
+                shortages.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
     </div>

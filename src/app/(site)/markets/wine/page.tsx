@@ -1,47 +1,31 @@
-import { MARKETS_DATA } from "@/data/markets";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { ArrowLeft, Zap, Droplets, Box, Factory } from "lucide-react";
+import {
+  ArrowLeft,
+  ShieldCheck,
+  Truck,
+  Target,
+  Recycle,
+  Clock,
+  Globe2,
+  ArrowRight,
+  Download,
+} from "lucide-react";
+import { MARKETS_DATA } from "@/data/markets";
 
 export default function WineMarketPage() {
   const market = MARKETS_DATA.find((m) => m.slug === "wine") || {
-    // Fallback if not in data yet
     slug: "wine",
     title: "Wine",
     image:
       "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2670&auto=format&fit=crop",
     description: "Premium glass packaging for vineyards and wineries.",
-    gallery: [
-      {
-        title: "Bordeaux",
-        desc: "Classic shoulders.",
-        image:
-          "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=2670&auto=format&fit=crop",
-        imagePosition: "",
-      },
-      {
-        title: "Burgundy",
-        desc: "Sloped elegance.",
-        image:
-          "https://images.unsplash.com/photo-1559563362-c667ba5f5480?q=80&w=2602&auto=format&fit=crop",
-        imagePosition: "",
-      },
-      {
-        title: "Sparkling",
-        desc: "Pressure rated.",
-        image:
-          "https://images.unsplash.com/photo-1594452092523-287df5d4151b?q=80&w=2670&auto=format&fit=crop",
-        imagePosition: "",
-      },
-    ],
   };
 
   return (
-    <div className="bg-white min-h-screen text-neutral-900 selection:bg-berlin-red selection:text-white">
+    <div className="bg-white min-h-screen text-neutral-900 selection:bg-berlin-red selection:text-white pb-32">
       {/* 1. CINEMATIC MONOLITH HERO */}
       <section className="relative h-screen min-h-[700px] w-full overflow-hidden bg-neutral-950 flex flex-col justify-between">
-        {/* Background Layer */}
         <div className="absolute inset-0 z-0">
           <Image
             src={market.image}
@@ -52,8 +36,6 @@ export default function WineMarketPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/80 via-transparent to-neutral-950/90" />
         </div>
-
-        {/* Top Nav Area */}
         <div className="relative z-10 w-full p-8 flex justify-between items-start">
           <Link
             href="/markets"
@@ -65,8 +47,6 @@ export default function WineMarketPage() {
             Sector ID: 006-WINE
           </div>
         </div>
-
-        {/* Hero Content */}
         <div className="relative z-10 container mx-auto px-6 pb-24 max-w-[1800px]">
           <div className="max-w-4xl">
             <h1 className="text-[12vw] md:text-[8rem] font-black text-white leading-[0.85] tracking-tighter mb-8">
@@ -85,201 +65,345 @@ export default function WineMarketPage() {
         </div>
       </section>
 
-      {/* 2. SPOTLIGHT (Asymmetrical Layout) */}
-      <section className="py-32 bg-white relative overflow-hidden">
-        <div className="container mx-auto px-6 max-w-[1600px]">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-center">
-            {/* Image Side - Unconstrained */}
-            <div className="lg:col-span-7 relative group">
-              <div className="relative aspect-[4/5] w-full overflow-hidden bg-neutral-100">
-                <Image
-                  src="https://images.unsplash.com/photo-1504279577054-12350c3c75fe?q=80&w=2574&auto=format&fit=crop"
-                  alt="Vineyard Case Study"
-                  fill
-                  className="object-cover transition-transform duration-1000 group-hover:scale-105 grayscale group-hover:grayscale-0"
-                />
-                {/* Floating Badge */}
-                <div className="absolute top-8 left-8 bg-white/90 backdrop-blur-md px-6 py-4 border border-white/20 shadow-2xl">
-                  <span className="block font-mono text-xs text-neutral-400 uppercase tracking-widest mb-1">
-                    Featured Partner
-                  </span>
-                  <span className="block font-bold text-xl text-berlin-blue">
-                    Napa Valley Estates
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Content Side - Typography Focused */}
-            <div className="lg:col-span-5 space-y-12">
-              <div className="space-y-6">
-                <h2 className="text-6xl font-black text-neutral-900 tracking-tighter leading-[0.9]">
-                  THE HARVEST <br />
-                  <span className="text-berlin-red">READY.</span>
-                </h2>
-                <p className="text-xl text-neutral-500 font-light leading-relaxed">
-                  When a record harvest overwhelmed local glass supplies, we
-                  mobilized our global network to deliver 50,000 cases of
-                  Antique Green Bordeaux bottles in 72 hours.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-8 border-t border-neutral-200 pt-8">
-                <div>
-                  <div className="text-4xl font-black text-neutral-900 mb-2">
-                    50K
-                  </div>
-                  <div className="text-sm font-mono text-neutral-500 uppercase tracking-widest">
-                    Cases Delivered
-                  </div>
-                </div>
-                <div>
-                  <div className="text-4xl font-black text-neutral-900 mb-2">
-                    72hr
-                  </div>
-                  <div className="text-sm font-mono text-neutral-500 uppercase tracking-widest">
-                    Turnaround
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. "DRINK IT IN" FEATURE (Dark Mode Break) */}
-      <section className="py-32 bg-neutral-950 text-white relative isolate overflow-hidden">
-        {/* Abstract Background Elements */}
-        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 w-[800px] h-[800px] bg-berlin-blue/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 left-0 translate-y-1/3 -translate-x-1/3 w-[600px] h-[600px] bg-berlin-red/10 rounded-full blur-[100px]" />
-
-        <div className="container mx-auto px-6 max-w-[1600px] relative z-10">
-          <div className="text-center max-w-3xl mx-auto mb-24">
-            <h2 className="text-5xl md:text-7xl font-black mb-8 tracking-tighter">
-              AGE WITH GRACE.
+      {/* 2. PRODUCT GRID (5-ITEM) */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black text-neutral-900 mb-6 tracking-tight">
+              Glass That Elevates Every Vintage
             </h2>
-            <p className="text-xl md:text-2xl text-neutral-400 font-light leading-relaxed">
-              Glass engineered for long-term cellaring. Protection against UV
-              and oxidation to ensure the bottle only gets better with time.
+            <p className="text-lg text-neutral-600 max-w-2xl mx-auto mb-8">
+              Discover our comprehensive portfolio of premium wine packaging,
+              engineered to preserve delicate flavor profiles while maximizing
+              shelf impact.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Card 1 */}
-            <div className="group p-8 bg-neutral-900/50 border border-white/5 hover:border-white/20 transition-all duration-500">
-              <div className="mb-8 w-16 h-16 bg-berlin-blue/10 rounded-full flex items-center justify-center text-berlin-blue group-hover:bg-berlin-blue group-hover:text-white transition-colors">
-                <Zap className="w-8 h-8" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 group-hover:translate-x-2 transition-transform">
-                UV Filtration
-              </h3>
-              <p className="text-neutral-500 leading-relaxed group-hover:text-neutral-400 transition-colors">
-                Antique Green and Dead Leaf Green glass block harmful light
-                spectrums, preventing oxidation and &quot;light strike&quot;
-                faults in delicate wines.
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+            {[
+              {
+                img: "/images/markets/wine_cat_burgundy_1772895216021.png",
+                title: "Burgundy Glass",
+              },
+              {
+                img: "/images/markets/wine_cat_claret_1772895231514.png",
+                title: "Claret / Bordeaux",
+              },
+              {
+                img: "/images/markets/wine_cat_hock_1772895248630.png",
+                title: "Hock Forms",
+              },
+              {
+                img: "/images/markets/wine_cat_sparkling_1772895260971.png",
+                title: "Sparkling & Cuvée",
+              },
+              {
+                img: "/images/markets/wine_cat_closures_1772895277828.png",
+                title: "Premium Closures",
+              },
+            ].map((item, i) => (
+              <Link
+                href={`/products?category=${item.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                key={i}
+                className="flex flex-col items-center group cursor-pointer text-center"
+              >
+                <div className="relative w-full aspect-[3/4] mb-4 bg-[#f8f8f8] border border-neutral-100 group-hover:border-berlin-red/30 transition-colors overflow-hidden">
+                  <Image
+                    src={item.img}
+                    alt={item.title}
+                    fill
+                    className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <h4 className="font-bold text-sm tracking-widest uppercase text-neutral-800 group-hover:text-berlin-red transition-colors">
+                  {item.title}
+                </h4>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-12 text-center">
+            <Link
+              href="/products"
+              className="inline-block border-2 border-neutral-900 px-8 py-3 font-bold text-sm uppercase tracking-widest hover:bg-neutral-900 hover:text-white transition-colors"
+            >
+              View In-Stock Catalog
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. EXPERTISE SPLIT */}
+      <section className="py-24 bg-[#f4f4f4]">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-6">
+              <h2 className="text-4xl md:text-5xl font-black leading-[0.9] tracking-tighter">
+                Strategic Partners For The Global Wine Industry
+              </h2>
+              <p className="text-neutral-600 text-lg leading-relaxed">
+                Wine production is a delicate balance of agriculture, chemistry,
+                and precise timing. At PIF Packaging, our deep understanding of
+                the harvest cycle allows us to preempt supply chain bottlenecks.
               </p>
+              <p className="text-neutral-600 text-lg leading-relaxed">
+                Whether you are a boutique estate winery requiring rapid
+                inventory turns, or a mass-market conglomerate managing massive
+                glass allocations, our logistics network ensures your bottles
+                arrive flawlessly, exactly when the vintage demands it.
+              </p>
+              <div className="pt-4">
+                <Link
+                  href="/quotes/wine"
+                  className="inline-block border-2 border-neutral-900 px-8 py-3 font-bold text-sm uppercase tracking-widest hover:bg-neutral-900 hover:text-white transition-colors"
+                >
+                  Get In Touch Today
+                </Link>
+              </div>
             </div>
 
-            {/* Card 2 */}
-            <div className="group p-8 bg-neutral-900/50 border border-white/5 hover:border-white/20 transition-all duration-500">
-              <div className="mb-8 w-16 h-16 bg-berlin-red/10 rounded-full flex items-center justify-center text-berlin-red group-hover:bg-berlin-red group-hover:text-white transition-colors">
-                <Droplets className="w-8 h-8" />
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-4">
+                <div className="relative aspect-[4/5] w-full group overflow-hidden">
+                  <Image
+                    src="/images/markets/wine_exp_vineyard_1772895307188.png"
+                    alt="Vineyard"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
+                <div className="relative aspect-square w-full group overflow-hidden">
+                  <Image
+                    src="/images/markets/wine_exp_logistics_1772895336690.png"
+                    alt="Logistics"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
               </div>
-              <h3 className="text-2xl font-bold mb-4 group-hover:translate-x-2 transition-transform">
-                Punt Technology
-              </h3>
-              <p className="text-neutral-500 leading-relaxed group-hover:text-neutral-400 transition-colors">
-                Deep punts not only add aesthetic weight and grandeur but also
-                aid in sediment collection for proper decanting and service.
-              </p>
-            </div>
-
-            {/* Card 3 */}
-            <div className="group p-8 bg-neutral-900/50 border border-white/5 hover:border-white/20 transition-all duration-500">
-              <div className="mb-8 w-16 h-16 bg-white/5 rounded-full flex items-center justify-center text-white group-hover:bg-white group-hover:text-neutral-950 transition-colors">
-                <Box className="w-8 h-8" />
+              <div className="pt-12">
+                <div className="relative aspect-[4/5] w-full group overflow-hidden shadow-2xl">
+                  <Image
+                    src="/images/markets/wine_exp_cellar_1772895322498.png"
+                    alt="Cellar"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-berlin-red/10 group-hover:bg-transparent transition-colors duration-500" />
+                </div>
               </div>
-              <h3 className="text-2xl font-bold mb-4 group-hover:translate-x-2 transition-transform">
-                Finish Precision
-              </h3>
-              <p className="text-neutral-500 leading-relaxed group-hover:text-neutral-400 transition-colors">
-                Exact bore specifications for cork, synthetic, or screw cap
-                (Stelvin), ensuring a perfect airtight seal every time.
-              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. THE SHOWROOM (Grid) */}
-      <section className="py-32 bg-neutral-50">
-        <div className="container mx-auto px-6 max-w-[1600px]">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-black text-neutral-900 tracking-tighter mb-4">
-                THE CELLAR
-              </h2>
-              <p className="text-lg text-neutral-500 max-w-md">
-                curated glass for the modern vintner.
-              </p>
-            </div>
-            <Link
-              href="/catalog"
-              className="text-berlin-blue font-bold hover:text-berlin-red transition-colors uppercase tracking-widest text-sm"
-            >
-              View Full Catalog &rarr;
-            </Link>
-          </div>
+      {/* 4. GLOBAL REACH BANNER */}
+      <section className="relative py-32 bg-black overflow-hidden flex items-center justify-center min-h-[500px]">
+        <Image
+          src="/images/markets/wine_global_reach_1772895352856.png"
+          alt="Global Region"
+          fill
+          className="object-cover opacity-50"
+        />
+        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto text-white">
+          <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 uppercase">
+            At Home In Every Terroir
+          </h2>
+          <p className="text-xl md:text-2xl font-light text-white/90 mb-8 leading-relaxed">
+            From the historic soils of Bordeaux, France to the sun-drenched
+            valleys of Napa, California, our logistics architecture spans the
+            globe. We hold vast domestic inventory to shield our partners from
+            geopolitical shipping delays.
+          </p>
+          <button className="bg-transparent border-2 border-white px-8 py-3 uppercase tracking-widest text-sm font-bold hover:bg-white hover:text-black transition-colors">
+            Explore Our Network
+          </button>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8">
-            {market.gallery.map((item, i) => (
-              <div key={i} className="group perspective-1000">
-                <div className="relative aspect-square bg-white shadow-xl hover:shadow-2xl transition-all duration-500 mb-8 overflow-hidden transform-gpu group-hover:rotate-1">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className={`object-cover ${
-                      item.imagePosition || "object-center"
-                    } group-hover:scale-110 transition-transform duration-700`}
-                  />
+      {/* 5. SERVICES GRID */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-black tracking-tighter mb-4">
+              Value-Added Structural Services
+            </h2>
+            <p className="text-neutral-500 max-w-2xl mx-auto text-lg pt-4 border-t border-neutral-200">
+              Beyond supplying glass, PIF Packaging provides the infrastructural
+              support required to dominate retail environments.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-y-16 gap-x-12">
+            {[
+              {
+                icon: Truck,
+                title: "Just-In-Time Delivery",
+                desc: "Warehousing programs matched to your bottling schedule.",
+              },
+              {
+                icon: Globe2,
+                title: "Global Glass Sourcing",
+                desc: "Unrestricted access to the world's finest glass manufacturing facilities.",
+              },
+              {
+                icon: ShieldCheck,
+                title: "Quality Assurance",
+                desc: "Rigorous QA checks for punt depth, bore consistency, and pressure safety.",
+              },
+              {
+                icon: Target,
+                title: "Brand Alignment",
+                desc: "Bespoke molds and proprietary shapes for market differentiation.",
+              },
+              {
+                icon: Recycle,
+                title: "Sustainability Protocols",
+                desc: "Lightweighted glass options and PCR integration to meet ESG targets.",
+              },
+              {
+                icon: Clock,
+                title: "Harvest Readiness",
+                desc: "Emergency glass allocations secured prior to harvest peaks.",
+              },
+            ].map((feature, i) => (
+              <div key={i} className="text-center group">
+                <div className="mx-auto w-16 h-16 rounded-full border border-neutral-200 flex items-center justify-center mb-6 group-hover:border-berlin-red group-hover:text-berlin-red transition-colors">
+                  <feature.icon className="w-6 h-6 stroke-[1.5]" />
                 </div>
-                <div className="flex justify-between items-start border-t border-neutral-200 pt-6">
-                  <div>
-                    <h3 className="text-2xl font-bold text-neutral-900 mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-neutral-500 font-mono text-sm">
-                      {item.desc}
-                    </p>
-                  </div>
-                  <div className="text-neutral-300 group-hover:text-berlin-red transition-colors">
-                    <Factory className="w-6 h-6" />
-                  </div>
-                </div>
+                <h4 className="font-bold text-lg mb-2">{feature.title}</h4>
+                <p className="text-neutral-500 text-sm leading-relaxed">
+                  {feature.desc}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 6. FINAL CTA */}
-      <section className="py-32 bg-berlin-blue text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.05)_50%,transparent_75%,transparent_100%)] bg-[length:20px_20px]" />
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-8">
-            READY TO BOTTLE?
+      {/* 6. 3-COLUMN CAPABILITY GRID */}
+      <section className="py-24 bg-[#0a0a0a] text-white">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+            <h2 className="text-4xl md:text-5xl font-black tracking-tighter max-w-lg leading-[0.9]">
+              WE BRING CELLARS TO LIFE
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                img: "/images/markets/wine_cap_design_1772895386185.png",
+                title: "Custom Structural Design",
+                desc: "In-house industrial engineers drafting proprietary glass shapes that command the shelf and disrupt traditional wine packaging norms.",
+              },
+              {
+                img: "/images/ীব/wine_cap_secondary_1772895401146.png",
+                title: "Secondary Packaging",
+                desc: "Premium custom corrugated shippers, pulp dividers, and luxury presentation boxes designed to survive transit while retaining brand equity.",
+              },
+              {
+                img: "/images/markets/wine_cap_repack_1772895418156.png",
+                title: "Quality Control & Prep",
+                desc: "Meticulous pre-bottling inspection, sanitization protocols, and preparatory staging for high-speed automated bottling lines.",
+              },
+            ].map((cap, i) => (
+              <div key={i} className="group">
+                <div className="relative aspect-[4/3] w-full mb-6 overflow-hidden">
+                  {/* Using standard replace logic for the typo in img path */}
+                  <Image
+                    src={cap.img.replace("ীব", "markets")}
+                    alt={cap.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"
+                  />
+                </div>
+                <h4 className="text-xl font-bold mb-3">{cap.title}</h4>
+                <p className="text-neutral-400 text-sm leading-relaxed">
+                  {cap.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. REPACKING SPLIT SECTION */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-4xl font-black mb-6 tracking-tighter leading-[0.9]">
+                High-Volume Repacking & Value-Add Services
+              </h2>
+              <p className="text-neutral-600 text-lg leading-relaxed mb-6">
+                Bottling wine is only half the battle. PIF Packaging provides
+                mass-scale contract repacking, club-box assembly, and multi-pack
+                kitting services directly from our FDA-certified warehouse hubs.
+                We strip away logistical friction.
+              </p>
+              <Link
+                href="/services/logistics"
+                className="inline-flex items-center gap-2 font-bold uppercase tracking-widest text-sm text-berlin-red hover:text-neutral-900 transition-colors"
+              >
+                Learn About Logistics <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+            <div className="relative aspect-[16/9] w-full border border-neutral-200">
+              <Image
+                src="/images/markets/wine_repacking_wide_1772895432487.png"
+                alt="Repacking Line"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. GLOBAL SOURCING NETWORK (Case Study Replacement) */}
+      <section className="py-24 bg-neutral-900 text-white text-center">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <h2 className="text-3xl font-bold tracking-[0.2em] text-neutral-400 mb-6 uppercase text-sm">
+            Strategic Infrastructure
           </h2>
-          <p className="text-xl text-blue-200 mb-12 max-w-2xl mx-auto">
-            Prepare for the crush. Secure your glass allocation before harvest
-            season begins.
+          <h3 className="text-4xl md:text-6xl font-black tracking-tighter mb-8 bg-clip-text text-transparent bg-gradient-to-r from-white via-neutral-200 to-neutral-500 pb-2">
+            The Global Sourcing Network
+          </h3>
+          <p className="text-xl font-light text-neutral-300 leading-relaxed mb-12">
+            When domestic glass furnaces face unexpected shutdowns or seasonal
+            harvest spikes overwhelm regional supply, PIF Packaging leverages
+            its deeply entrenched global procurement matrix. We secure
+            high-tonnage glass allocations internationally, shielding our
+            partners from critical supply chain failures.
           </p>
-          <Link
-            href="/contact"
-            className="inline-block px-12 py-6 bg-white text-berlin-blue font-black text-lg uppercase tracking-widest hover:bg-berlin-red hover:text-white transition-colors duration-300"
-          >
-            Start Your Order
-          </Link>
+        </div>
+      </section>
+
+      {/* 9. BROCHURE BANNER */}
+      <section className="py-16 bg-[#f4f4f4]">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <div className="bg-white p-8 md:p-12 shadow-2xl flex flex-col md:flex-row gap-12 items-center">
+            <div className="relative w-full md:w-1/2 aspect-square">
+              <Image
+                src="/images/markets/wine_brochure_1772895446083.png"
+                alt="Brochure"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="w-full md:w-1/2 space-y-6">
+              <h3 className="text-3xl font-black tracking-tighter">
+                The 2026 In-Stock Wine Offerings Portfolio
+              </h3>
+              <p className="text-neutral-600 leading-relaxed">
+                Explore our immediate-release inventory of premium glass,
+                closures, and presentation packaging. Access the digital
+                brochure to view structural specs, punt depths, and pallet
+                configurations.
+              </p>
+              <button className="flex items-center gap-3 bg-berlin-red text-white px-8 py-4 font-bold uppercase tracking-widest hover:bg-neutral-900 transition-colors">
+                <Download className="w-5 h-5" /> Download PDF
+              </button>
+            </div>
+          </div>
         </div>
       </section>
     </div>

@@ -13,12 +13,18 @@ interface GridItem {
 interface MarketCategoryGridProps {
   items: GridItem[];
   title?: string;
+  columns?: 4 | 5;
 }
 
 export default function MarketCategoryGrid({
   items,
   title = "Shop by Category",
+  columns = 4,
 }: MarketCategoryGridProps) {
+  const gridClass =
+    columns === 5
+      ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6"
+      : "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6";
   return (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
@@ -31,32 +37,28 @@ export default function MarketCategoryGrid({
         </div>
 
         {/* The Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className={gridClass}>
           {items.map((item, idx) => (
             <Link
               key={idx}
               href={item.href}
-              className="group block bg-white border border-gray-100 hover:border-red-600 hover:shadow-lg transition-all duration-300 rounded-sm overflow-hidden"
+              className="group flex flex-col bg-white border border-neutral-100 hover:shadow-xl transition-shadow duration-300 relative overflow-hidden h-[420px]"
             >
-              <div className="aspect-[4/5] relative p-6 flex flex-col items-center justify-between">
-                {/* Image Area */}
-                <div className="relative w-full h-48 sm:h-56">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-contain group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
+              <div className="flex-1 relative p-8">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
 
-                {/* Label Area */}
-                <div className="w-full text-center mt-4 pt-4 border-t border-gray-100 group-hover:border-red-100 transition-colors">
-                  <h3 className="text-sm font-bold text-slate-900 group-hover:text-red-600 uppercase tracking-wide transition-colors">
+              {/* Label Area (Red Outlined Button Style exactly like reference) */}
+              <div className="px-6 pb-6 w-full">
+                <div className="w-full text-center py-2.5 border border-red-600 bg-white group-hover:bg-red-50 transition-colors duration-300">
+                  <h3 className="text-[13px] font-bold text-red-600 tracking-wide capitalize">
                     {item.title}
                   </h3>
-                  <div className="mt-2 text-xs font-bold text-red-600 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1">
-                    View Products <ArrowRight className="w-3 h-3" />
-                  </div>
                 </div>
               </div>
             </Link>

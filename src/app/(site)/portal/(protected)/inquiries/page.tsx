@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react";
 import { getUserInquiries } from "@/services/inquiryService";
 import { useAuth } from "@/context/AuthContext";
-import { Inquiry } from "@/types";
+import { UniversalInquiry } from "@/types";
 import { Package, Clock, CalendarDays, ExternalLink } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
 export default function MyInquiriesPage() {
   const { user } = useAuth();
-  const [inquiries, setInquiries] = useState<Inquiry[]>([]);
+  const [inquiries, setInquiries] = useState<UniversalInquiry[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,16 +27,24 @@ export default function MyInquiriesPage() {
     loadData();
   }, [user]);
 
-  const statusConfig = {
+  const statusConfig: Record<
+    string,
+    { label: string; color: string; dot: string }
+  > = {
     new: {
       label: "Request Received",
       color: "bg-blue-50 text-blue-600 border-blue-100",
       dot: "bg-blue-500",
     },
-    contacted: {
+    in_review: {
       label: "In Review",
       color: "bg-yellow-50 text-yellow-600 border-yellow-100",
       dot: "bg-yellow-500",
+    },
+    contacted: {
+      label: "Contacted",
+      color: "bg-orange-50 text-orange-600 border-orange-100",
+      dot: "bg-orange-500",
     },
     quoted: {
       label: "Quoted",
@@ -100,27 +108,41 @@ export default function MyInquiriesPage() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-4 mt-6 pt-6 border-t border-slate-100">
                   <div className="bg-slate-50 p-3 rounded-lg hidden sm:block">
                     <Package className="w-6 h-6 text-slate-400" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-slate-900 mb-1">
-                      {inq.items.length} Item{inq.items.length !== 1 ? "s" : ""}{" "}
-                      Requested
+                    <h3 className="font-semibold text-slate-900 mb-2">
+                      {inq.sourceType === "product_inquiry" && inq.payload.items
+                        ? `${inq.payload.items.length} Item${inq.payload.items.length !== 1 ? "s" : ""} Requested`
+                        : inq.sourceType === "wine_quote"
+                          ? "Bulk Wine Quote Details"
+                          : inq.sourceType === "custom_closure"
+                            ? "Custom Closure Details"
+                            : "General Inquiry"}
                     </h3>
                     <div className="text-sm text-slate-600 space-y-1">
-                      {inq.items.map((item) => (
-                        <div
-                          key={item.product.id}
-                          className="flex justify-between border-b last:border-0 border-slate-100 py-1"
-                        >
-                          <span>{item.product.name}</span>
-                          <span className="font-medium text-slate-900">
-                            Qty: {item.quantity}
-                          </span>
+                      {inq.sourceType === "product_inquiry" &&
+                      inq.payload.items ? (
+                        inq.payload.items.map((item: any) => (
+                          <div
+                            key={item.product?.id || Math.random()}
+                            className="flex justify-between border-b last:border-0 border-slate-100 py-1"
+                          >
+                            <span>
+                              {item.product?.name || "Unknown Product"}
+                            </span>
+                            <span className="font-medium text-slate-900">
+                              Qty: {item.quantity}
+                            </span>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="text-slate-500 italic">
+                          Details available in communication thread.
                         </div>
-                      ))}
+                      )}
                     </div>
                   </div>
                 </div>

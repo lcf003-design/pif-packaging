@@ -114,3 +114,41 @@ export interface ContactMessage {
   message: string;
   submittedAt?: any; // Firestore serverTimestamp
 }
+
+export interface QuoteRequest {
+  id?: string;
+  type: string; // e.g., "wine-bulk"
+  firstName: string;
+  lastName: string;
+  title: string;
+  phone: string;
+  email: string;
+  company: string;
+  website?: string;
+  address: string;
+  city: string;
+  country: string;
+  state: string;
+  zipCode: string;
+  submittedAt?: any;
+  status?: "new" | "reviewed" | "quoted" | "closed";
+}
+
+export interface UniversalInquiry {
+  id?: string;
+  sourceType:
+    | "general_contact"
+    | "wine_quote"
+    | "custom_closure"
+    | "product_inquiry";
+  status: "new" | "in_review" | "contacted" | "closed";
+  customer: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone?: string;
+    company?: string;
+  };
+  payload: any; // Dynamic payload retaining original form fields
+  submittedAt?: any; // Firestore serverTimestamp
+}
