@@ -20,7 +20,7 @@ export default function CosmeticsMarketPage() {
     {
       title: "Eyeshadow Containers",
       image: "/images/markets/cosmetics_eyeshadow.png",
-      href: "/search?q=eyeshadow+containers",
+      href: "/products/eyeshadow-containers",
     },
     {
       title: "Lip Balm & Lip Gloss Containers",

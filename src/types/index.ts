@@ -19,7 +19,9 @@ export type Category =
   | "Jugs"
   | "Vials"
   | "Tubes"
-  | "Closures";
+  | "Closures"
+  | "Eyeshadow Containers"
+  | "Lip Balm & Lip Gloss Containers";
 
 export type Material =
   | "Glass"
@@ -43,7 +45,7 @@ export interface Product {
   sku: string;
   name: string;
   brand: string;
-  category: Category;
+  categories: Category[]; // Migrated from singular 'category'
   industry: Industry[];
   material: string | Material;
   materialGroup?: MaterialGroup;
@@ -81,6 +83,7 @@ export interface Product {
   features?: string[];
   palletQty?: number;
   capSize?: string;
+  price?: number;
   downloads?: { label: string; url: string }[];
   specifications?: Record<string, string>;
   createdAt?: string;

@@ -16,9 +16,12 @@ export default async function CategoryPage({
   const { category: rawCategory } = await params;
   const searchParamsValue = await searchParams;
 
-  // Format category param to Title Case (e.g., "bottles" -> "Bottles")
-  const categoryParam =
-    rawCategory.charAt(0).toUpperCase() + rawCategory.slice(1);
+  // Format category param to Title Case (e.g., "bottles" -> "Bottles", "eyeshadow-containers" -> "Eyeshadow Containers")
+  const decodedCategory = decodeURIComponent(rawCategory);
+  const categoryParam = decodedCategory
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 
   // Initialize filters
   let category: string | undefined = categoryParam;

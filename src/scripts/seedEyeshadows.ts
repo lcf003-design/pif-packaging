@@ -1,135 +1,32 @@
-import { Product } from "@/types";
+import { initializeApp } from "firebase/app";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
-export const MOCK_PRODUCTS: Product[] = [
-  // Bottles
+// Barebones initialization for the seeding script to bypass the full client-side setup
+const firebaseConfig = {
+  apiKey:
+    process.env.NEXT_PUBLIC_FIREBASE_API_KEY ||
+    "dummy-key-for-emulator-or-unauthed-writes",
+  authDomain:
+    process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ||
+    "dummy-domain.firebaseapp.com",
+  projectId:
+    process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "packaging-catalog-demo",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Required structure from src/types/index.ts
+// We are injecting the EXACT 12 products seen in the reference screenshot for "Eyeshadow Containers"
+const EYESHADOW_PRODUCTS = [
   {
-    id: "b1",
-    sku: "GLS-001",
-    name: "12 oz Flint Glass Woozy Bottle",
-    brand: "",
-    category: "Bottles",
-    industry: ["Food", "Beverage"],
-    material: "Glass",
-    shape: "Round",
-    color: "Clear",
-    capacity: { value: 12, unit: "oz" },
-    dimensions: { height: '8.5"', diameter: '2.25"' },
-    neckFinish: "24-414",
-    weight: "250g",
-    caseQty: 12,
-    imageUrl: "https://placehold.co/400x600/e2e8f0/1e293b?text=Woozy+Bottle",
-    description:
-      "Classic sauce bottle style, perfect for hot sauces, marinades, and dressings. Flint glass offers maximum product visibility.",
-    recommendedClosureIds: ["c1", "c2"],
-    isClosure: false,
-  },
-  {
-    id: "b2",
-    sku: "PET-002",
-    name: "16 oz Clear PET Boston Round",
-    brand: "",
-    category: "Bottles",
-    industry: ["Personal Health & Beauty", "Home Care"],
-    material: "PET",
-    shape: "Boston Round",
-    color: "Clear",
-    capacity: { value: 16, unit: "oz" },
-    dimensions: { height: '6.7"', diameter: '2.8"' },
-    neckFinish: "24-410",
-    weight: "35g",
-    caseQty: 24,
-    imageUrl: "https://placehold.co/400x600/e2e8f0/1e293b?text=Boston+Round",
-    description:
-      "Versatile PET bottle with high clarity and impact resistance. Ideal for lotions, soaps, and sanitizers.",
-    recommendedClosureIds: ["c1"],
-    isClosure: false,
-  },
-  {
-    id: "j1",
-    sku: "GLS-003",
-    name: "9 oz Straight Sided Glass Jar",
-    brand: "",
-    category: "Jars",
-    industry: ["Food", "Personal Health & Beauty"],
-    material: "Glass",
-    shape: "Round",
-    color: "Clear",
-    capacity: { value: 9, unit: "oz" },
-    dimensions: { height: '3.5"', diameter: '2.8"' },
-    neckFinish: "70-400",
-    weight: "210g",
-    caseQty: 12,
-    imageUrl: "https://placehold.co/400x400/e2e8f0/1e293b?text=Glass+Jar",
-    description:
-      "Premium heavy-base glass jar. Excellent for jams, candles, or creams.",
-    recommendedClosureIds: ["c3"],
-    isClosure: false,
-  },
-  // Closures
-  {
-    id: "c1",
-    sku: "CAP-001",
-    name: "24-410 Black Disc Top Cap",
-    brand: "",
-    category: "Closures",
-    industry: ["Personal Health & Beauty"],
-    material: "PP",
-    color: "Black",
-    neckFinish: "24-410",
-    imageUrl: "https://placehold.co/200x200/334155/ffffff?text=Disc+Top",
-    description: "Press-top dispensing closure.",
-    isClosure: true,
-  },
-  {
-    id: "c2",
-    sku: "CAP-002",
-    name: "24-414 Black Ribbed Screw Cap",
-    brand: "",
-    category: "Closures",
-    industry: ["Food"],
-    material: "PP",
-    color: "Black",
-    neckFinish: "24-414",
-    imageUrl: "https://placehold.co/200x200/334155/ffffff?text=Screw+Cap",
-    description: "Standard continuous thread closure with liner.",
-    isClosure: true,
-  },
-  {
-    id: "c3",
-    sku: "CAP-003",
-    name: "70-400 Silver Metal Lug Cap",
-    brand: "",
-    category: "Closures",
-    industry: ["Food"],
-    material: "Tinplate",
-    color: "Silver",
-    neckFinish: "70-400",
-    imageUrl: "https://placehold.co/200x200/94a3b8/000000?text=Metal+Cap",
-    description: "Plastisol lined lug cap for vacuum sealing.",
-    isClosure: true,
-  },
-  {
-    id: "b3",
-    sku: "GLS-064",
-    name: "64 oz Amber Glass Growler",
-    brand: "",
-    category: "Bottles",
-    industry: ["Beer", "Beverage"],
-    material: "Glass",
-    shape: "Round",
-    color: "Amber",
-    capacity: { value: 64, unit: "oz" },
-    dimensions: { height: '11"', diameter: '5"' },
-    neckFinish: "38-400",
-    weight: "500g",
-    caseQty: 6,
-    imageUrl: "https://placehold.co/400x600/d97706/ffffff?text=Growler",
-    description: "Classic amber growler for beer and kombucha.",
-    recommendedClosureIds: ["c2"],
-  },
-  // --- Eyeshadow Containers (Exact Mirror of Reference) ---
-  {
-    id: "e1",
     sku: "MJJ",
     name: "2.67 oz Natural PP Plastic Round Low Profile Jar with Natural Cap - MJJ",
     brand: "PIF Packaging",
@@ -144,10 +41,10 @@ export const MOCK_PRODUCTS: Product[] = [
     imageUrl: "/images/catalog/eyeshadow_pp_low_profile_jar.png",
     description:
       "2 Capacities | 1 Quantity Size | 2 Cap Sizes | 2.67 oz Natural PP Plastic Round Low Profile Jar with Natural Cap - MJJ",
-    isClosure: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
-    id: "e2",
     sku: "v2016001",
     name: "Natural PP Plastic Low Profile Jar with Natural Cap",
     brand: "PIF Packaging",
@@ -161,10 +58,10 @@ export const MOCK_PRODUCTS: Product[] = [
     imageUrl: "/images/catalog/eyeshadow_pp_low_profile_jar_2.png",
     description:
       "2 Capacities | 1 Quantity Size | 2 Cap Sizes | Natural PP Plastic Low Profile Jar with Natural Cap",
-    isClosure: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
-    id: "e3",
     sku: "vDW1",
     name: "PP-PS Plastic Double Wall Straight Base Jars with Smooth Cap",
     brand: "PIF Packaging",
@@ -178,10 +75,10 @@ export const MOCK_PRODUCTS: Product[] = [
     imageUrl: "/images/catalog/eyeshadow_pp_double_wall_jar.png",
     description:
       "3 Capacities | PP-PS Plastic Double Wall Straight Base Jars with Smooth Cap",
-    isClosure: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
-    id: "e4",
     sku: "v1122D90C0T",
     name: "Matte Black PETG Plastic Tube with Eyeliner Wand & Wiper",
     brand: "PIF Packaging",
@@ -195,10 +92,10 @@ export const MOCK_PRODUCTS: Product[] = [
     imageUrl: "/images/catalog/eyeshadow_petg_tube_black.png",
     description:
       "1 Capacity | Matte Black PETG Plastic Tube with Eyeliner Wand & Wiper",
-    isClosure: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
-    id: "e5",
     sku: "v6218T30",
     name: "Flush Seal Seamless Screw Top Tins",
     brand: "PIF Packaging",
@@ -208,14 +105,14 @@ export const MOCK_PRODUCTS: Product[] = [
     shape: "Round",
     color: "Silver",
     price: 69.83,
-    caseQty: 100,
+    caseQty: 100, // Assuming case pricing
     imageUrl: "/images/catalog/eyeshadow_flush_seal_tin.png",
     description:
       "2 Capacities | 3 Quantity Sizes | Flush Seal Seamless Screw Top Tins",
-    isClosure: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
-    id: "e6",
     sku: "6218T32",
     name: "8 oz Flush Seal Seamless Screw Top Tins - 6218T32",
     brand: "PIF Packaging",
@@ -226,13 +123,13 @@ export const MOCK_PRODUCTS: Product[] = [
     color: "Silver",
     capacity: { value: 8, unit: "oz" },
     price: 114.11,
-    caseQty: 100,
+    caseQty: 100, // Assuming Case pricing
     imageUrl: "/images/catalog/eyeshadow_flush_seal_tin_2.png",
     description: "8 oz Flush Seal Seamless Screw Top Tins - 6218T32",
-    isClosure: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
-    id: "e7",
     sku: "v240DB01",
     name: "PP-PP Plastic Double Wall Straight Base Jars with Cap",
     brand: "PIF Packaging",
@@ -246,10 +143,10 @@ export const MOCK_PRODUCTS: Product[] = [
     imageUrl: "/images/catalog/eyeshadow_pp_black_jar.png",
     description:
       "2 Capacities | 2 Colors | PP-PP Plastic Double Wall Straight Base Jars with Cap",
-    isClosure: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
-    id: "e8",
     sku: "v6623T01",
     name: "Seamless Short Tins",
     brand: "PIF Packaging",
@@ -259,13 +156,13 @@ export const MOCK_PRODUCTS: Product[] = [
     shape: "Round",
     color: "Silver",
     price: 17.95,
-    caseQty: 100,
+    caseQty: 100, // Assuming Case
     imageUrl: "/images/catalog/eyeshadow_seamless_short_tin.png",
     description: "3 Capacities | 2 Quantity Sizes | Seamless Short Tins",
-    isClosure: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
-    id: "e9",
     sku: "vL9TSL",
     name: "Slide Top Tins",
     brand: "PIF Packaging",
@@ -278,10 +175,10 @@ export const MOCK_PRODUCTS: Product[] = [
     caseQty: 1,
     imageUrl: "/images/catalog/eyeshadow_slide_top_tin.png",
     description: "2 Capacities | Slide Top Tins",
-    isClosure: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
-    id: "e10",
     sku: "v6774112",
     name: "Seamless Tall Tins",
     brand: "PIF Packaging",
@@ -291,13 +188,13 @@ export const MOCK_PRODUCTS: Product[] = [
     shape: "Round",
     color: "Silver",
     price: 68.73,
-    caseQty: 100,
+    caseQty: 100, // Assuming Case
     imageUrl: "/images/catalog/eyeshadow_seamless_tall_tin.png",
     description: "1 Capacity | 2 Quantity Sizes | Seamless Tall Tins",
-    isClosure: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
-    id: "e11",
     sku: "v6222140",
     name: "Square Seamless Window Tins",
     brand: "PIF Packaging",
@@ -307,14 +204,14 @@ export const MOCK_PRODUCTS: Product[] = [
     shape: "Square",
     color: "Silver",
     price: 64.53,
-    caseQty: 100,
+    caseQty: 100, // Assuming Case
     imageUrl: "/images/catalog/eyeshadow_square_seamless_window_tin.png",
     description:
       "2 Capacities | 2 Quantity Sizes | Square Seamless Window Tins",
-    isClosure: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
-    id: "e12",
     sku: "v6222121",
     name: "Seamless Window Tins",
     brand: "PIF Packaging",
@@ -324,24 +221,49 @@ export const MOCK_PRODUCTS: Product[] = [
     shape: "Round",
     color: "Silver",
     price: 79.11,
-    caseQty: 100,
+    caseQty: 100, // Assuming Case
     imageUrl: "/images/catalog/eyeshadow_round_seamless_window_tin.png",
     description: "2 Capacities | 3 Quantity Sizes | Seamless Window Tins",
-    isClosure: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
 ];
 
-export function getProducts() {
-  return MOCK_PRODUCTS;
+async function seedEyeshadowContainers() {
+  try {
+    const productsRef = collection(db, "products");
+
+    console.log(`Checking for existing Eyeshadow Container products...`);
+    const q = query(
+      productsRef,
+      where("category", "==", "Eyeshadow Containers"),
+    );
+    const snapshot = await getDocs(q);
+
+    if (!snapshot.empty) {
+      console.log(
+        `Found ${snapshot.docs.length} existing eyeshadow products. Skipping seed to prevent duplicates.`,
+      );
+      return;
+    }
+
+    console.log(`Injecting exactly 12 Eyeshadow Container products...`);
+
+    for (const product of EYESHADOW_PRODUCTS) {
+      const { id } = await addDoc(productsRef, product);
+      console.log(`✅ Seeded: ${product.sku} (${id})`);
+    }
+
+    console.log(`\n🎉 Successfully seeded all 12 Eyeshadow Containers!`);
+  } catch (error) {
+    console.error("Error seeding eyeshadow containers:", error);
+  }
 }
 
-export function getProductById(id: string) {
-  return MOCK_PRODUCTS.find((p) => p.id === id);
-}
-
-export function getRecommendedClosures(product: Product) {
-  if (!product.recommendedClosureIds) return [];
-  return MOCK_PRODUCTS.filter((p) =>
-    product.recommendedClosureIds?.includes(p.id),
+// Execute the function
+seedEyeshadowContainers().then(() => {
+  console.log(
+    "Seeding script complete. Ensure the images are moved to the public/images/catalog/ folder.",
   );
-}
+  process.exit(0);
+});

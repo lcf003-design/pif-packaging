@@ -104,6 +104,18 @@ export default function CategoryDescription({
       };
     }
 
+    if (
+      category.toLowerCase() === "eyeshadow containers" ||
+      category.toLowerCase() === "eyeshadow-containers"
+    ) {
+      return {
+        title: "Eyeshadow Containers",
+        short:
+          "Finding the right eyeshadow packaging for your cosmetics line requires combining practicality with branding in a complementary way. We carry an assortment of high-quality eyeshadow tubs and pots to secure your product while maximizing visual appeal. Available in numerous colors and plastic types, our selection of eyeshadow jars meets the quality and volume you expect with cosmetic production.",
+        full: null, // As per standard Berlin catalog, this short text is usually all there is for specific subcategories
+      };
+    }
+
     // Default fallback for other categories
     return {
       title: category,
