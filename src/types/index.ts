@@ -140,7 +140,8 @@ export interface UniversalInquiry {
     | "general_contact"
     | "wine_quote"
     | "custom_closure"
-    | "product_inquiry";
+    | "product_inquiry"
+    | "truckload_quote";
   status: "new" | "in_review" | "contacted" | "closed";
   customer: {
     firstName: string;
@@ -151,4 +152,23 @@ export interface UniversalInquiry {
   };
   payload: any; // Dynamic payload retaining original form fields
   submittedAt?: any; // Firestore serverTimestamp
+}
+
+export interface TruckloadQuoteRequest {
+  firstName: string;
+  lastName: string;
+  title: string;
+  phone: string;
+  email: string;
+  company: string;
+  website?: string;
+  address: string;
+  city: string;
+  country: string;
+  state: string;
+  zipCode: string;
+  projectTimeframe: string;
+  annualVolume: string;
+  details: string;
+  submittedAt?: any;
 }

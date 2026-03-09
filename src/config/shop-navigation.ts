@@ -74,6 +74,11 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
         image: "/images/markets/beauty.png",
       },
       {
+        label: "Cosmetics",
+        href: "/markets/cosmetics",
+        image: "/images/markets/cosmetics_hero.png",
+      },
+      {
         label: "Wine",
         href: "/markets/wine",
         image:

@@ -243,6 +243,11 @@ export default function InquiriesPage() {
                             Product Inquiry
                           </span>
                         )}
+                        {inq.sourceType === "truckload_quote" && (
+                          <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-purple-100 text-purple-800">
+                            Truckload Quote
+                          </span>
+                        )}
                       </td>
                       <td className="px-6 py-4">
                         <div className="text-slate-500 text-xs truncate max-w-[150px]">
@@ -251,7 +256,9 @@ export default function InquiriesPage() {
                             ? `${inq.payload.items.length} Products`
                             : inq.sourceType === "general_contact"
                               ? inq.payload.message
-                              : "Custom Quote Request"}
+                              : inq.sourceType === "truckload_quote"
+                                ? inq.payload.details
+                                : "Custom Quote Request"}
                         </div>
                       </td>
                       <td className="px-6 py-4 text-slate-500">
@@ -410,6 +417,54 @@ export default function InquiriesPage() {
                                           <p className="text-slate-900 whitespace-pre-wrap">
                                             {inq.payload.requirements ||
                                               "None specified."}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    )}
+
+                                    {inq.sourceType === "truckload_quote" && (
+                                      <div className="grid grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                          <span className="block text-xs text-slate-400 mb-1">
+                                            Project Timeframe
+                                          </span>
+                                          <span className="text-slate-900 font-medium">
+                                            {inq.payload.projectTimeframe ||
+                                              "N/A"}
+                                          </span>
+                                        </div>
+                                        <div>
+                                          <span className="block text-xs text-slate-400 mb-1">
+                                            Annual Volume
+                                          </span>
+                                          <span className="text-slate-900 font-medium whitespace-nowrap">
+                                            {inq.payload.annualVolume || "N/A"}
+                                          </span>
+                                        </div>
+                                        <div className="col-span-2">
+                                          <span className="block text-xs text-slate-400 mb-1 flex items-center gap-1">
+                                            <MapPin className="w-3 h-3" />{" "}
+                                            Shipping Destination
+                                          </span>
+                                          <span className="text-slate-900 font-medium">
+                                            {[
+                                              inq.payload.address,
+                                              inq.payload.city,
+                                              inq.payload.state,
+                                              inq.payload.zipCode,
+                                              inq.payload.country,
+                                            ]
+                                              .filter(Boolean)
+                                              .join(", ") || "N/A"}
+                                          </span>
+                                        </div>
+                                        <div className="col-span-2 mt-2">
+                                          <span className="block text-xs text-slate-400 mb-1">
+                                            Project Details
+                                          </span>
+                                          <p className="text-slate-900 whitespace-pre-wrap bg-slate-50 p-4 border border-slate-100 rounded-lg">
+                                            {inq.payload.details ||
+                                              "No details provided."}
                                           </p>
                                         </div>
                                       </div>

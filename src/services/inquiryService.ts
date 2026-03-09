@@ -96,6 +96,38 @@ export async function submitContactMessage(
   }
 }
 
+export async function submitTruckloadQuote(
+  data: import("@/types").TruckloadQuoteRequest,
+): Promise<boolean> {
+  if (USE_MOCK_DATA) {
+    console.log("Mock Truckload Quote:", data);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return true;
+  }
+
+  try {
+    const universalPayload: UniversalInquiry = {
+      sourceType: "truckload_quote",
+      status: "new",
+      customer: {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        company: data.company,
+      },
+      payload: data,
+      submittedAt: serverTimestamp(),
+    };
+
+    await addDoc(collection(db, "global_inquiries"), universalPayload);
+    return true;
+  } catch (error) {
+    console.error("Error submitting truckload quote to Firestore:", error);
+    return false;
+  }
+}
+
 export async function getAllInquiries(): Promise<UniversalInquiry[]> {
   if (USE_MOCK_DATA) {
     return [
