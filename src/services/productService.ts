@@ -39,12 +39,14 @@ export async function fetchProducts(filters?: {
       filtered = filtered.filter(
         (p) =>
           p.name.toLowerCase().includes(q) ||
-          p.category.toLowerCase().includes(q) ||
+          p.categories?.some((cat) => cat.toLowerCase().includes(q)) ||
           p.description?.toLowerCase().includes(q),
       );
     }
     if (filters?.category)
-      filtered = filtered.filter((p) => p.category === filters.category);
+      filtered = filtered.filter((p) =>
+        p.categories?.includes(filters.category as any),
+      );
     if (filters?.material)
       filtered = filtered.filter((p) => p.material === filters.material);
     if (filters?.color)
@@ -94,7 +96,7 @@ export async function fetchProducts(filters?: {
     let q = query(productsRef);
 
     if (filters?.category)
-      q = query(q, where("category", "==", filters.category));
+      q = query(q, where("categories", "array-contains", filters.category));
     if (filters?.material) {
       if (filters.material === "Glass") {
         q = query(q, where("material", "in", ["Glass", "Type III Glass"]));
@@ -163,7 +165,7 @@ export async function fetchProducts(filters?: {
       results = results.filter(
         (p) =>
           p.name.toLowerCase().includes(queryText) ||
-          p.category.toLowerCase().includes(queryText),
+          p.categories?.some((cat) => cat.toLowerCase().includes(queryText)),
       );
     }
 
@@ -411,7 +413,11 @@ export async function fetchProductVariants(
     // Strategy: Query by Category + Material + Shape
     let q = query(
       productsRef,
-      where("category", "==", product.category || "Bottles"),
+      where(
+        "categories",
+        "array-contains",
+        product.categories?.[0] || "Bottles",
+      ),
       where("material", "==", product.material || "Plastic"),
       where("shape", "==", product.shape || "Round"),
     );

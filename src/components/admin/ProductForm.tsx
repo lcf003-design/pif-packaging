@@ -317,7 +317,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
       name: "",
       sku: "",
       brand: "",
-      category: "Bottles",
+      categories: ["Bottles"],
       industry: [],
       material: "Glass",
       shape: "",
@@ -383,7 +383,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         };
         const { slug } = generateProductMetadata(
           specs,
-          formData.category || "Container",
+          formData.categories?.[0] || "Container",
         );
         finalData.slug = slug;
       }
@@ -426,7 +426,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
     let { title, slug } = generateProductMetadata(
       specs,
-      formData.category || "Container",
+      formData.categories?.[0] || "Container",
     );
 
     // Append Closure if present (User Request)
@@ -778,7 +778,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     const name = (formData.name || "").toLowerCase();
     const desc = (formData.description || "").toLowerCase();
     const mat = (formData.material || "").toLowerCase();
-    const cat = (formData.category || "").toLowerCase();
+    const cat = (formData.categories?.[0] || "").toLowerCase();
     const shape = (formData.shape || "").toLowerCase();
     const neck = (formData.neckFinish || "").toLowerCase();
     const closureType = (formData.closure?.type || "").toLowerCase();
@@ -2134,24 +2134,37 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
             <div className="mb-6">
               <label className="block text-sm font-bold text-gray-700 mb-2">
-                Category
+                Categories
               </label>
-              <select
-                className="w-full rounded-md border-gray-300 border p-2.5 bg-gray-50 focus:bg-white transition-colors"
-                value={formData.category}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    category: e.target.value as Category,
-                  })
-                }
-              >
+              <div className="space-y-2 max-h-48 overflow-y-auto p-2 border border-gray-200 rounded-md bg-gray-50">
                 {CATEGORIES.map((c) => (
-                  <option key={c} value={c}>
+                  <label
+                    key={c}
+                    className="flex items-center gap-2 text-sm text-gray-600 hover:text-berlin-blue cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formData.categories?.includes(c) || false}
+                      onChange={(e) => {
+                        const current = formData.categories || [];
+                        if (e.target.checked) {
+                          setFormData({
+                            ...formData,
+                            categories: [...current, c],
+                          });
+                        } else {
+                          setFormData({
+                            ...formData,
+                            categories: current.filter((cat) => cat !== c),
+                          });
+                        }
+                      }}
+                      className="rounded text-berlin-blue focus:ring-berlin-blue w-4 h-4 border-gray-300"
+                    />
                     {c}
-                  </option>
+                  </label>
                 ))}
-              </select>
+              </div>
             </div>
 
             <div className="mb-4">

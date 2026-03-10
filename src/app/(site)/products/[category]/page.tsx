@@ -16,12 +16,24 @@ export default async function CategoryPage({
   const { category: rawCategory } = await params;
   const searchParamsValue = await searchParams;
 
+  // Custom SEO-friendly URL mappings to precise database categories
+  const SEO_CATEGORY_MAP: Record<string, string> = {
+    "lip-balm-lip-gloss-containers": "Lip Balm & Lip Gloss Containers",
+    "mascara-and-eyebrow-packaging": "Mascara & Eyebrow Packaging",
+    "foundation-and-concealer-packaging": "Foundation & Concealer Packaging",
+    "bronzer-and-blush-packaging": "Bronzer & Blush Packaging",
+    "nail-polish-bottles-and-nail-care-product-packaging":
+      "Nail Polish Bottles & Nail Care Product Packaging",
+  };
+
   // Format category param to Title Case (e.g., "bottles" -> "Bottles", "eyeshadow-containers" -> "Eyeshadow Containers")
   const decodedCategory = decodeURIComponent(rawCategory);
-  const categoryParam = decodedCategory
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+  const categoryParam =
+    SEO_CATEGORY_MAP[rawCategory] ||
+    decodedCategory
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
 
   // Initialize filters
   let category: string | undefined = categoryParam;

@@ -332,9 +332,16 @@ export default function AdminProductsPage() {
                         </div>
                       </td>
                       <td className="px-6 py-4 align-top">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                          {product.category}
-                        </span>
+                        <div className="flex flex-wrap gap-1">
+                          {product.categories?.map((cat, i) => (
+                            <span
+                              key={i}
+                              className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                            >
+                              {cat}
+                            </span>
+                          ))}
+                        </div>
                         <div className="mt-2 flex flex-wrap gap-1">
                           {product.industry.slice(0, 2).map((ind, i) => (
                             <span

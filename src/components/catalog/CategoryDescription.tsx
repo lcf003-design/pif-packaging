@@ -116,6 +116,56 @@ export default function CategoryDescription({
       };
     }
 
+    if (
+      category.toLowerCase() === "mascara & eyebrow packaging" ||
+      category.toLowerCase() === "mascara-and-eyebrow-packaging"
+    ) {
+      return {
+        title: "Mascara Tubes & Eyeliner Packaging",
+        short:
+          "Berlin Packaging offers empty mascara tubes and eyebrow products and eyeliner packaging in various colors and capacity options. Choose from clear or matte black PETG plastic mascara bottles with brushes or frosted ABS plastic tubes with wands and wipers.",
+        full: null,
+      };
+    }
+
+    if (
+      category.toLowerCase() === "foundation & concealer packaging" ||
+      category.toLowerCase() === "foundation-and-concealer-packaging"
+    ) {
+      return {
+        title: "Foundation Containers & Concealer Packaging",
+        short:
+          "Package your products beautifully in top-quality concealer and foundation containers from Berlin Packaging. We offer plastic and glass bottles and vials in a wide range of capacities for use as liquid foundation containers. Offer your customers precision application with a dropper cap or the ease of treatment pump caps - both sold separately. For solid foundation packaging, choose from popular push-up or twist-up stick styles with screw caps. All our options are available in bulk quantities and at wholesale prices!",
+        full: null,
+      };
+    }
+
+    if (
+      category.toLowerCase() === "bronzer & blush packaging" ||
+      category.toLowerCase() === "bronzer-and-blush-packaging"
+    ) {
+      return {
+        title: "Bronzer & Blush Packaging",
+        short:
+          "Whether you're developing a new product line or rebranding an existing one, stand out on store shelves with high-quality bronzer and blush packaging from Berlin Packaging. We offer a variety of shapes and capacities for powder or liquid cosmetics, from 0.5 ounces to 32-ounce bulk sizes. Browse our selection of empty blush containers and bronzer dispensers, including plastic tubes, bottles with dropper caps, glass vials, and other popular styles.",
+        full: null,
+      };
+    }
+
+    if (
+      category.toLowerCase() ===
+        "nail polish bottles & nail care product packaging" ||
+      category.toLowerCase() ===
+        "nail-polish-bottles-and-nail-care-product-packaging"
+    ) {
+      return {
+        title: "Nail Polish Bottles & Nail Care Product Packaging",
+        short:
+          "Whether you're crafting a new base coat or rebranding your line of cuticle creams, your items will stand out on store shelves in premium packaging. Our selection of nail care packaging features metal tins, plastic lip balm and mascara tubes, glass dropper bottles, and heavy wall jars. Protect and present your nail products properly with wholesale nail polish bottles and containers from Berlin Packaging.",
+        full: null,
+      };
+    }
+
     // Default fallback for other categories
     return {
       title: category,

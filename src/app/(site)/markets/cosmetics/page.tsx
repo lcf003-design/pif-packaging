@@ -25,27 +25,27 @@ export default function CosmeticsMarketPage() {
     {
       title: "Lip Balm & Lip Gloss Containers",
       image: "/images/markets/cosmetics_lip_balm.png",
-      href: "/search?q=lip+balm+gloss",
+      href: "/products/lip-balm-lip-gloss-containers",
     },
     {
       title: "Mascara & Eyebrow Packaging",
       image: "/images/markets/cosmetics_mascara.png",
-      href: "/search?q=mascara+eyebrow",
+      href: "/products/mascara-and-eyebrow-packaging",
     },
     {
       title: "Foundation & Concealer Packaging",
       image: "/images/markets/cosmetics_foundation.png",
-      href: "/search?q=foundation+concealer",
+      href: "/products/foundation-and-concealer-packaging",
     },
     {
-      title: "Blush & Bronzer Packaging",
+      title: "Bronzer & Blush Packaging",
       image: "/images/markets/cosmetics_blush.png",
-      href: "/search?q=blush+bronzer",
+      href: "/products/bronzer-and-blush-packaging",
     },
     {
       title: "Nail Care Packaging",
-      image: "/images/markets/cosmetics_nail_care.png",
-      href: "/search?q=nail+care",
+      image: "/images/markets/cosmetics_nail.png",
+      href: "/products/nail-polish-bottles-and-nail-care-product-packaging",
     },
     {
       title: "Online Easy Labels",

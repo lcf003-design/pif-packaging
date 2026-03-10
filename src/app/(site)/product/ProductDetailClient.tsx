@@ -61,7 +61,7 @@ export default function ProductDetailClient({
     uniqueImages.length > 0 ? uniqueImages : [product.imageUrl].filter(Boolean);
 
   const [selectedImage, setSelectedImage] = useState(
-    allImages[0] || product.imageUrl
+    allImages[0] || product.imageUrl,
   );
 
   const handleAddToInquiry = () => {
@@ -362,10 +362,12 @@ export default function ProductDetailClient({
           </Link>
           <span className="text-industrial-300">/</span>
           <Link
-            href={`/products/${product.category.toLowerCase()}`}
+            href={`/products/${(
+              product.categories?.[0] || "products"
+            ).toLowerCase()}`}
             className="hover:text-berlin-blue"
           >
-            {product.category}
+            {product.categories?.[0] || "Products"}
           </Link>
           <span className="text-industrial-300">/</span>
           <span className="text-industrial-900">{product.name}</span>
@@ -518,7 +520,7 @@ export default function ProductDetailClient({
                                   </strong>
                                 ) : (
                                   <span key={i}>{part}</span>
-                                )
+                                ),
                               )}
                               {idx <
                                 product.description!.split("\n").length - 1 && (
@@ -610,7 +612,7 @@ export default function ProductDetailClient({
                             },
                             ...(product.specifications
                               ? Object.entries(product.specifications).map(
-                                  ([key, val]) => ({ label: key, value: val })
+                                  ([key, val]) => ({ label: key, value: val }),
                                 )
                               : []),
                             {
@@ -648,7 +650,7 @@ export default function ProductDetailClient({
                                   {row.value}
                                 </td>
                               </tr>
-                            )
+                            ),
                           )}
                         </tbody>
                       </table>

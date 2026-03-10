@@ -159,7 +159,7 @@ const StandardCatalogPDF = ({ products }: StandardCatalogPDFProps) => {
             </View>
 
             <View style={styles.detailsColumn}>
-              <Text style={styles.detailItem}>{product.category}</Text>
+              <Text style={styles.detailItem}>{product.categories?.[0]}</Text>
               <Text style={styles.detailItem}>
                 {typeof product.material === "string"
                   ? product.material
