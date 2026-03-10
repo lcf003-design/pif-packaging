@@ -189,7 +189,13 @@ export async function fetchProductById(
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       console.log(`[Service] Found product: ${docSnap.id}`);
-      return { id: docSnap.id, ...docSnap.data() } as Product;
+      const data = docSnap.data();
+      return {
+        id: docSnap.id,
+        ...data,
+        createdAt: data.createdAt?.toDate?.().toISOString() || data.createdAt,
+        updatedAt: data.updatedAt?.toDate?.().toISOString() || data.updatedAt,
+      } as unknown as Product;
     }
     console.log(`[Service] Product ${id} does not exist in Firestore.`);
     return undefined;
@@ -214,7 +220,13 @@ export async function fetchProductBySlug(
 
     if (!querySnapshot.empty) {
       const docSnap = querySnapshot.docs[0];
-      return { id: docSnap.id, ...docSnap.data() } as Product;
+      const data = docSnap.data();
+      return {
+        id: docSnap.id,
+        ...data,
+        createdAt: data.createdAt?.toDate?.().toISOString() || data.createdAt,
+        updatedAt: data.updatedAt?.toDate?.().toISOString() || data.updatedAt,
+      } as unknown as Product;
     }
 
     console.log(`[Service] Slug ${slug} not found.`);

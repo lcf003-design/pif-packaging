@@ -343,17 +343,19 @@ export default function AdminProductsPage() {
                           ))}
                         </div>
                         <div className="mt-2 flex flex-wrap gap-1">
-                          {product.industry.slice(0, 2).map((ind, i) => (
-                            <span
-                              key={i}
-                              className="text-[10px] uppercase tracking-wide text-gray-500 border border-gray-200 px-1.5 rounded"
-                            >
-                              {ind}
-                            </span>
-                          ))}
-                          {product.industry.length > 2 && (
+                          {(product.industry || [])
+                            .slice(0, 2)
+                            .map((ind, i) => (
+                              <span
+                                key={i}
+                                className="text-[10px] uppercase tracking-wide text-gray-500 border border-gray-200 px-1.5 rounded"
+                              >
+                                {ind}
+                              </span>
+                            ))}
+                          {(product.industry || []).length > 2 && (
                             <span className="text-[10px] text-gray-400 ml-1">
-                              +{product.industry.length - 2}
+                              +{(product.industry || []).length - 2}
                             </span>
                           )}
                         </div>
