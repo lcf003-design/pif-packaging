@@ -10,10 +10,16 @@ export const metadata = {
 };
 
 export default function ShopAllPage() {
-  // Filter out "market" and "function" to show only product categories
-  const categories = SHOP_NAVIGATION.filter(
-    (cat) => cat.id !== "market" && cat.id !== "function"
-  );
+  // Sort the categories exactly as the marketing reference grid
+  const desiredOrder = [
+    "bottles", "jars", "jugs", "vials", "cans", "tubs", 
+    "tins", "buckets", "tubes", "drums", "caps", "bottling-tools", 
+    "hazmat", "sustainable", "leakproof", "tamper-evident"
+  ];
+
+  const categories = SHOP_NAVIGATION
+    .filter((cat) => desiredOrder.includes(cat.id))
+    .sort((a, b) => desiredOrder.indexOf(a.id) - desiredOrder.indexOf(b.id));
 
   return (
     <div className="bg-white min-h-screen text-neutral-900 selection:bg-berlin-red selection:text-white pt-0 pb-20">

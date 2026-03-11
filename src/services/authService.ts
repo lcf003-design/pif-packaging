@@ -29,6 +29,7 @@ export interface AuthError {
 export const signInWithGoogle = async () => {
   try {
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: "select_account" });
     const result = await signInWithPopup(auth, provider);
 
     // Create or check user profile

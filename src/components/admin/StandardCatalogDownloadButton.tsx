@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import StandardCatalogPDF from "./StandardCatalogPDF";
 import { Product } from "@/types";
@@ -10,7 +11,7 @@ export interface StandardCatalogDownloadButtonProps {
   disabled?: boolean;
 }
 
-export default function StandardCatalogDownloadButton({
+export default React.memo(function StandardCatalogDownloadButton({
   products,
   disabled,
 }: StandardCatalogDownloadButtonProps) {
@@ -53,4 +54,4 @@ export default function StandardCatalogDownloadButton({
       }
     </PDFDownloadLink>
   );
-}
+});

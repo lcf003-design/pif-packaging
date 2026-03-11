@@ -21,7 +21,8 @@ export type Category =
   | "Tubes"
   | "Closures"
   | "Eyeshadow Containers"
-  | "Lip Balm & Lip Gloss Containers";
+  | "Lip Balm & Lip Gloss Containers"
+  | "Nail Care Products Packaging";
 
 export type Material =
   | "Glass"

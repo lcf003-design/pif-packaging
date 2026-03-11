@@ -502,7 +502,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   },
   {
     id: "cans",
-    label: "Cans & Tins",
+    label: "Cans",
     image: "/images/shop-all/cat_cans.png",
     subSections: [
       {
@@ -532,12 +532,19 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
           },
         ],
       },
+    ],
+  },
+  {
+    id: "tins",
+    label: "Tins",
+    image: "/images/shop-all/cat_tins.png",
+    subSections: [
       {
         label: "Novelty Tins",
         items: [
           {
             label: "Popcorn Tins",
-            href: "/products/cans?search=Popcorn Tins",
+            href: "/products/tins?search=Popcorn Tins",
           },
         ],
       },
@@ -546,16 +553,16 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
         items: [
           {
             label: "Clear Top Tins",
-            href: "/products/cans?search=Clear Top Tins",
+            href: "/products/tins?search=Clear Top Tins",
           },
-          { label: "Hinged Tins", href: "/products/cans?search=Hinged Tins" },
+          { label: "Hinged Tins", href: "/products/tins?search=Hinged Tins" },
           {
             label: "Screw Top Tins",
-            href: "/products/cans?search=Screw Top Tins",
+            href: "/products/tins?search=Screw Top Tins",
           },
           {
             label: "Slip Cover Tins",
-            href: "/products/cans?search=Slip Cover Tins",
+            href: "/products/tins?search=Slip Cover Tins",
           },
         ],
       },
@@ -593,7 +600,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   },
   {
     id: "buckets",
-    label: "Buckets & Drums",
+    label: "Buckets",
     image: "/images/shop-all/cat_buckets.png",
     subSections: [
       {
@@ -623,65 +630,6 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
           {
             label: "Bucket & Pail Accessories",
             href: "/products/buckets?search=Bucket & Pail Accessories",
-          },
-        ],
-      },
-      {
-        label: "Material",
-        items: [
-          {
-            label: "Fiber Drums",
-            href: "/products/buckets?material=Fiber Drums",
-          },
-          {
-            label: "Plastic Drums",
-            href: "/products/buckets?material=Plastic Drums",
-          },
-          {
-            label: "Stainless Steel Drums",
-            href: "/products/buckets?material=Stainless Steel Drums",
-          },
-          {
-            label: "Steel Barrels",
-            href: "/products/buckets?material=Steel Barrels",
-          },
-        ],
-      },
-      {
-        label: "Popular Drums",
-        items: [
-          {
-            label: "55 Gallon Drums",
-            href: "/products/buckets?search=55 Gallon Drums",
-          },
-          {
-            label: "Overpack Drums",
-            href: "/products/buckets?search=Overpack Drums",
-          },
-        ],
-      },
-      {
-        label: "Drum & Barrel Accessories",
-        items: [
-          {
-            label: "Drum Faucets & Spouts",
-            href: "/products/buckets?search=Drum Faucets & Spouts",
-          },
-          {
-            label: "Drum Funnels",
-            href: "/products/buckets?search=Drum Funnels",
-          },
-          {
-            label: "Drum Liners",
-            href: "/products/buckets?search=Drum Liners",
-          },
-          {
-            label: "Drum Plugs & Closures",
-            href: "/products/buckets?search=Drum Plugs & Closures",
-          },
-          {
-            label: "Drum Pumps",
-            href: "/products/buckets?search=Drum Pumps",
           },
         ],
       },
@@ -834,7 +782,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
   },
   {
     id: "boxes",
-    label: "Boxes, Bags & Supplies",
+    label: "Boxes & Mailers",
     image: "/images/shop-all/cat_boxes.png",
     subSections: [
       {
@@ -896,5 +844,71 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
         ],
       },
     ],
+  },
+  {
+    id: "drums",
+    label: "Drums",
+    image: "/images/markets/ind_drums.png",
+    subSections: [
+      {
+        label: "Materials",
+        items: [
+          { label: "Steel Drums", href: "/products/drums?material=Steel" },
+          { label: "Plastic Drums", href: "/products/drums?material=Plastic" },
+          { label: "Fiber Drums", href: "/products/drums?material=Fiber" },
+        ],
+      },
+      {
+        label: "Popular Drums",
+        items: [
+          { label: "55 Gallon Drums", href: "/products/drums?search=55 Gallon Drums" },
+          { label: "Overpack Drums", href: "/products/drums?search=Overpack Drums" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "bags",
+    label: "Bags",
+    image: "/division_flexible_pouches.png",
+    subSections: [
+      {
+        label: "Bags & Pouches",
+        items: [
+          { label: "Stand-Up Pouches", href: "/products/bags?search=Stand-Up Pouches" },
+          { label: "Poly Bags", href: "/products/bags?search=Poly Bags" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "custom-labels",
+    label: "Custom Label Creator",
+    image: "/services_decorating_labeling.png",
+    subSections: [{ label: "Custom Labels", items: [{ label: "Design Online", href: "/products/custom-labels" }] }],
+  },
+  {
+    id: "sustainable",
+    label: "Sustainable Packaging",
+    image: "/sustainability_minimalist.png",
+    subSections: [{ label: "Eco-Friendly", items: [{ label: "PCR Plastics", href: "/products/sustainable" }] }],
+  },
+  {
+    id: "ecommerce",
+    label: "E-commerce Ready",
+    image: "/images/shop-all/cat_bottles.png",
+    subSections: [{ label: "Shipping Optimized", items: [{ label: "ISTA-6 Testing", href: "/products/ecommerce" }] }],
+  },
+  {
+    id: "leakproof",
+    label: "Leakproof Packaging",
+    image: "/images/markets/ind_leakproof.png",
+    subSections: [{ label: "Leak Resistance", items: [{ label: "Induction Seals", href: "/products/leakproof" }] }],
+  },
+  {
+    id: "tamper-evident",
+    label: "Tamper-Evident",
+    image: "/images/markets/spirits_grid_tamper_caps.png",
+    subSections: [{ label: "Security", items: [{ label: "Shrink Bands", href: "/products/tamper-evident" }] }],
   },
 ];
