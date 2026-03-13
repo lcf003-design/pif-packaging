@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Product, Category, Industry, Material } from "@/types";
 import { addProduct, updateProduct } from "@/services/productService";
-import { generateProductMetadata } from "@/lib/productUtils";
+import { generateProductMetadata, generateSmartSKU } from "@/lib/productUtils";
 import ImageUpload from "@/components/admin/ImageUpload";
 import FileUpload from "@/components/admin/FileUpload";
 import {
@@ -17,6 +17,8 @@ import {
   ListPlus,
   FileText,
   Sparkles,
+  ChevronDown,
+  ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
 import {
@@ -312,12 +314,15 @@ function SortableImage({
 export default function ProductForm({ initialData }: ProductFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [showAdvancedSpecs, setShowAdvancedSpecs] = useState(false);
+
+  // Initialize form data when initialData changes
   const [formData, setFormData] = useState<Partial<Product>>(
     initialData || {
       name: "",
       sku: "",
       brand: "",
-      category: "Bottles",
+      categories: ["Bottles"],
       industry: [],
       material: "Glass",
       shape: "",
@@ -373,19 +378,12 @@ export default function ProductForm({ initialData }: ProductFormProps) {
       let finalData = { ...formData };
       if (!finalData.slug && finalData.name) {
         // Fallback generation if they didn't click Auto-Name
-        const specs = {
-          capacity_value: formData.capacity?.value,
-          capacity_unit: formData.capacity?.unit,
-          material_type: formData.material,
-          shape: formData.shape,
-          color: formData.color,
-          neck_finish: formData.neckFinish,
-        };
-        const { slug } = generateProductMetadata(
-          specs,
-          formData.category || "Container",
-        );
-        finalData.slug = slug;
+        finalData.slug = finalData.name
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[^\w-]+/g, "")
+          .replace(/--+/g, "-")
+          .replace(/^-+|-+$/g, "");
       }
 
       if (initialData?.id) {
@@ -426,7 +424,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
     let { title, slug } = generateProductMetadata(
       specs,
-      formData.category || "Container",
+      formData.categories?.[0] || "Container",
     );
 
     // Append Closure if present (User Request)
@@ -587,168 +585,10 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     });
   };
 
-  const generateSmartSKU = () => {
-    const parts: string[] = [];
-
-    // 1. Material (3-Letter Code)
-    const matMap: Record<string, string> = {
-      Aluminum: "AL",
-      Glass: "GLS",
-      "Glass (Type III)": "GLS3",
-      Plastic: "PLA",
-      PET: "PET",
-      HDPE: "HDPE",
-      PP: "PP",
-      LDPE: "LDPE",
-      PVC: "PVC",
-      Tinplate: "TIN",
-      "PCR PET": "PET",
-      "PCR HDPE": "HDPE",
-      "BPA-Free Plastic": "PLA",
-    };
-    if (formData.material) {
-      parts.push(
-        matMap[formData.material] ||
-          formData.material.substring(0, 3).toUpperCase(),
-      );
-    }
-
-    // 2. Capacity & Unit
-    if (formData.capacity?.value) {
-      const val = formData.capacity.value.toString().replace(".", "-");
-      const unit = formData.capacity.unit
-        ? formData.capacity.unit.toUpperCase()
-        : "";
-      parts.push(val);
-      if (unit) parts.push(unit);
-    }
-
-    // 3. Shape (The Missing Link - 3 Letter Codes)
-    const shapeMap: Record<string, string> = {
-      Round: "RND",
-      Square: "SQR",
-      Oval: "OVL",
-      Oblong: "OBL",
-      "Straight Sided": "STR",
-      Bullet: "BLT",
-      "Boston Round": "BOS",
-      "Cosmo Round": "CSM",
-      Packer: "PKR",
-      "Wide Mouth": "WID",
-      Cylinder: "CYL",
-      "F-Style": "FST",
-      Woozy: "WZY",
-      Sauce: "SCE",
-      // Wine Shapes
-      Claret: "CLT",
-      Burgundy: "BRG",
-      Hock: "HCK",
-      Champagne: "CHM",
-      Sparkling: "SPK",
-      "Ice Wine": "ICE",
-      Bellissima: "BEL",
-    };
-    if (formData.shape) {
-      parts.push(
-        shapeMap[formData.shape] ||
-          formData.shape.substring(0, 3).toUpperCase(),
-      );
-    }
-
-    // 4. Neck Finish (Smart Codes)
-    const neckMap: Record<string, string> = {
-      "Continuous Thread": "CT",
-      "Lug (Twist-Off)": "LUG",
-      Cork: "CRK",
-      ROPP: "ROP",
-      ROPE: "RPE",
-      BVS: "BVS",
-      "Snap-On": "SNP",
-      Crimp: "CRM",
-      Dropper: "DRP",
-      Pump: "PMP",
-      Sprayer: "SPR",
-      "Spec / Custom": "SPC",
-    };
-
-    // Check Cap Size (Numeric) or Neck Finish (Type)
-    let neckCode = "";
-    if (formData.capSize) {
-      neckCode = formData.capSize.replace(/[^0-9-]/g, ""); // e.g. 28-410
-    } else if (formData.neckFinish) {
-      // Check map first
-      if (neckMap[formData.neckFinish]) {
-        neckCode = neckMap[formData.neckFinish];
-      } else {
-        // Fallback: Strip non-numeric for things like "GPI 400" -> "400"
-        const numeric = formData.neckFinish.replace(/[^0-9]/g, "");
-        neckCode = numeric || formData.neckFinish.substring(0, 3).toUpperCase();
-      }
-    }
-    if (neckCode) parts.push(neckCode);
-
-    // 5. Color
-    const colMap: Record<string, string> = {
-      Silver: "SLV",
-      Amber: "AMB",
-      Clear: "CLR",
-      Flint: "FLT",
-      White: "WHT",
-      Black: "BLK",
-      Cobalt: "CBL",
-      Green: "GRN",
-      Natural: "NAT",
-      Frosted: "FRS",
-      Gold: "GLD",
-    };
-    if (formData.color) {
-      let colCode = colMap[formData.color];
-      if (!colCode) {
-        colCode = formData.color.substring(0, 3).toUpperCase();
-      }
-      parts.push(colCode);
-    }
-
-    // 6. Included Closure Context
-    if (formData.closure?.type || formData.closure?.color) {
-      // Closure Type
-      const closureMap: Record<string, string> = {
-        "Standard Cap": "CAP",
-        "Lotion Pump": "PMP",
-        "Fine Mist Sprayer": "SPR",
-        "Trigger Sprayer": "TRG",
-        "Disc Top Cap": "DSC",
-        "Flip Top Cap": "FLP",
-        Dropper: "DRP",
-        Pump: "PMP",
-        Sprayer: "SPR",
-        Cap: "CAP",
-      };
-
-      // Closure Color
-      if (formData.closure.color) {
-        let capCode = colMap[formData.closure.color];
-        if (!capCode) {
-          capCode = formData.closure.color.substring(0, 3).toUpperCase();
-        }
-        parts.push(capCode);
-      }
-
-      if (formData.closure.type) {
-        let typeCode = closureMap[formData.closure.type];
-        if (!typeCode) {
-          // Fallback: First 3 letters upper
-          typeCode = formData.closure.type
-            .replace(/[^a-zA-Z]/g, "")
-            .substring(0, 3)
-            .toUpperCase();
-        }
-        parts.push(typeCode);
-      }
-    }
-
-    if (parts.length > 0) {
-      setFormData({ ...formData, sku: parts.join("-") });
+  const generateStandardSKU = () => {
+    const newSku = generateSmartSKU(formData);
+    if (newSku) {
+      setFormData({ ...formData, sku: newSku });
     } else {
       alert("Please fill in Material, Capacity, Shape, and Neck Finish first.");
     }
@@ -778,7 +618,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     const name = (formData.name || "").toLowerCase();
     const desc = (formData.description || "").toLowerCase();
     const mat = (formData.material || "").toLowerCase();
-    const cat = (formData.category || "").toLowerCase();
+    const cat = (formData.categories?.[0] || "").toLowerCase();
     const shape = (formData.shape || "").toLowerCase();
     const neck = (formData.neckFinish || "").toLowerCase();
     const closureType = (formData.closure?.type || "").toLowerCase();
@@ -1382,7 +1222,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                   />
                   <button
                     type="button"
-                    onClick={generateSmartSKU}
+                    onClick={generateStandardSKU}
                     className="bg-industrial-100 hover:bg-industrial-200 text-industrial-700 px-3 py-2 rounded-md text-xs font-bold uppercase tracking-wider transition-colors whitespace-nowrap"
                     title="Auto-Generate SKU from Attributes"
                   >
@@ -1458,12 +1298,42 @@ export default function ProductForm({ initialData }: ProductFormProps) {
               )}
             </div>
           </div>
+        </div>
 
-          {/* Specs */}
-          <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
-            <h3 className="font-bold text-lg text-slate-800 pb-2 border-b border-gray-100">
-              Technical Specifications
-            </h3>
+        {/* Advanced Configuration Accordion */}
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden mt-6">
+            <button
+              type="button"
+              onClick={() => setShowAdvancedSpecs(!showAdvancedSpecs)}
+              className="w-full flex items-center justify-between p-6 bg-slate-50 hover:bg-slate-100 transition-colors border-b border-gray-100"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                  <Sparkles className="w-4 h-4" />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-bold text-lg text-slate-800 leading-tight">
+                    Advanced Configuration
+                  </h3>
+                  <p className="text-xs text-gray-500 font-medium mt-0.5">
+                    Technical Specifications, Engineering Dimensions, Logistics, & Custom Closures
+                  </p>
+                </div>
+              </div>
+              {showAdvancedSpecs ? (
+                <ChevronDown className="w-5 h-5 text-gray-400" />
+              ) : (
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              )}
+            </button>
+
+            {showAdvancedSpecs && (
+              <div className="p-6 space-y-8 bg-white border-t border-gray-50">
+                {/* Specs */}
+                <div className="space-y-6">
+                  <h3 className="font-bold text-lg text-slate-800 pb-2 border-b border-gray-100">
+                    Technical Specifications
+                  </h3>
 
             {/* 1. Physical Attributes Group */}
             <div className="space-y-4">
@@ -1628,22 +1498,17 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                         type="number"
                         step="0.01"
                         className="flex-1 block w-full rounded-l-md border-gray-300 border-y border-l p-2 focus:ring-2 focus:ring-berlin-blue outline-none min-w-0"
-                        value={
-                          (formData.dimensions?.height || "").split(" ")[0] ||
-                          ""
-                        }
+                        value={formData.dimensions?.height ?? ""}
                         onChange={(e) =>
                           setFormData({
                             ...formData,
                             dimensions: {
-                              ...formData.dimensions!,
-                              height: e.target.value
-                                ? `${e.target.value} in`
-                                : "",
+                              ...((formData.dimensions as any) || {}),
+                              height: e.target.value,
                             },
                           })
                         }
-                        placeholder="0.00"
+                        placeholder="H"
                       />
                       <span className="bg-gray-100 border-y border-r border-gray-300 rounded-r-md px-3 flex items-center text-xs text-gray-500 font-bold">
                         in
@@ -1659,23 +1524,18 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                       <input
                         type="number"
                         step="0.01"
-                        className="flex-1 block w-full rounded-l-md border-gray-300 border-y border-l p-2 focus:ring-2 focus:ring-berlin-blue outline-none min-w-0"
-                        value={
-                          (formData.dimensions?.diameter || "").split(" ")[0] ||
-                          ""
-                        }
+                        className="flex-1 block w-full rounded-l-md border-gray-300 border-y border-l p-2 focus:ring-2 focus:ring-berlin-blue outline-none min-w-0 bg-gray-50/50"
+                        value={formData.dimensions?.diameter ?? ""}
                         onChange={(e) =>
                           setFormData({
                             ...formData,
                             dimensions: {
-                              ...formData.dimensions!,
-                              diameter: e.target.value
-                                ? `${e.target.value} in`
-                                : "",
+                              ...((formData.dimensions as any) || {}),
+                              diameter: e.target.value,
                             },
                           })
                         }
-                        placeholder="0.00"
+                        placeholder="Dia"
                       />
                       <span className="bg-gray-100 border-y border-r border-gray-300 rounded-r-md px-3 flex items-center text-xs text-gray-500 font-bold">
                         in
@@ -2018,7 +1878,8 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+
           {/* Documentation Section */}
           <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
             <h3 className="font-bold text-lg text-slate-800 border-b border-gray-100 pb-4 mb-4 flex items-center gap-2">
@@ -2123,6 +1984,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             </div>
           </div>
         </div>
+        )}
 
         {/* Sidebar / Meta */}
         <div className="space-y-6">
@@ -2134,24 +1996,37 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
             <div className="mb-6">
               <label className="block text-sm font-bold text-gray-700 mb-2">
-                Category
+                Categories
               </label>
-              <select
-                className="w-full rounded-md border-gray-300 border p-2.5 bg-gray-50 focus:bg-white transition-colors"
-                value={formData.category}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    category: e.target.value as Category,
-                  })
-                }
-              >
+              <div className="space-y-2 max-h-48 overflow-y-auto p-2 border border-gray-200 rounded-md bg-gray-50">
                 {CATEGORIES.map((c) => (
-                  <option key={c} value={c}>
+                  <label
+                    key={c}
+                    className="flex items-center gap-2 text-sm text-gray-600 hover:text-berlin-blue cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formData.categories?.includes(c) || false}
+                      onChange={(e) => {
+                        const current = formData.categories || [];
+                        if (e.target.checked) {
+                          setFormData({
+                            ...formData,
+                            categories: [...current, c],
+                          });
+                        } else {
+                          setFormData({
+                            ...formData,
+                            categories: current.filter((cat) => cat !== c),
+                          });
+                        }
+                      }}
+                      className="rounded text-berlin-blue focus:ring-berlin-blue w-4 h-4 border-gray-300"
+                    />
                     {c}
-                  </option>
+                  </label>
                 ))}
-              </select>
+              </div>
             </div>
 
             <div className="mb-4">
@@ -2204,6 +2079,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </form>
   );

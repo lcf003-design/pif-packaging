@@ -10,6 +10,7 @@ import {
   FlaskConical,
   Scale,
 } from "lucide-react";
+import MarketCategoryGrid from "@/components/markets/MarketCategoryGrid";
 
 export default function AutomotiveMarketPage() {
   const market = MARKETS_DATA.find((m) => m.slug === "automotive");
@@ -73,6 +74,53 @@ export default function AutomotiveMarketPage() {
           </div>
         </div>
       </section>
+
+      {/* 1.5 PRODUCT CATEGORY GRID (Review: Berlin Style) */}
+      <MarketCategoryGrid
+        items={[
+          {
+            title: "Industrial & Chemical Bottles",
+            image: "/industrial_utility_jug_white_1770827111463.png",
+            href: "/products?category=Bottles&market=Automotive",
+          },
+          {
+            title: "Cleaner & Solvent Jugs",
+            image: "/automotive_quart_white_1770827086058.png",
+            href: "/products?category=Jugs&style=F-Style",
+          },
+          {
+            title: "F-Style Jugs",
+            image: "/industrial_f_style_bottle_white_1770827606014.png",
+            href: "/products?category=Jugs&style=F-Style",
+          },
+          {
+            title: "Carboys & Jerricans",
+            image: "/industrial_jerrican_blue_white_1770827652694.png",
+            href: "/products?category=Jerricans",
+          },
+          {
+            title: "Industrial Cans",
+            image:
+              "/industrial_metal_f_style_can_pure_white_final_1770828589541.png",
+            href: "/products?category=Cans",
+          },
+          {
+            title: "Paint Cans",
+            image: "/industrial_paint_can_white_1770827413718.png",
+            href: "/products?category=Cans&style=Paint",
+          },
+          {
+            title: "Buckets",
+            image: "/industrial_plastic_bucket_white_1770827825270.png",
+            href: "/products?category=Pails",
+          },
+          {
+            title: "UN Rated Packaging",
+            image: "/industrial_drum_steel_white_1770827578146.png",
+            href: "/products?certification=UN-Rated",
+          },
+        ]}
+      />
 
       {/* 2. THE CHALLENGE: PANELING PHYSICS (Interactive-ish Visualization) */}
       <section className="py-24 bg-neutral-900 border-b border-white/5 relative overflow-hidden">

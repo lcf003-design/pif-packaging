@@ -231,7 +231,8 @@ const CatalogPDF = ({ products }: CatalogPDFProps) => {
               <View style={styles.productTextInfo}>
                 <Text style={styles.productName}>{product.name}</Text>
                 <Text style={styles.productMeta}>
-                  {product.brand} • {product.category} • {product.material}
+                  {product.brand} • {product.category} •{" "}
+                  {product.material}
                 </Text>
                 <Text style={{ ...styles.productMeta, marginTop: 4 }}>
                   Master SKU: {product.sku}

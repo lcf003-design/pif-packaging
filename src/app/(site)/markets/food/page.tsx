@@ -11,9 +11,10 @@ import {
   Flame,
   ShieldCheck,
   ThermometerSun,
-  Utensils,
   Scale,
+  Utensils,
 } from "lucide-react";
+import MarketCategoryGrid from "@/components/markets/MarketCategoryGrid";
 
 export default function FoodMarketPage() {
   const market = MARKETS_DATA.find((m) => m.slug === "food");
@@ -101,6 +102,53 @@ export default function FoodMarketPage() {
           </div>
         </div>
       </section>
+
+      {/* 1.5 PRODUCT CATEGORY GRID */}
+      <MarketCategoryGrid
+        title="Food Packaging"
+        items={[
+          {
+            title: "Food Bottles",
+            image: "/food_bottle_bbq_white_1770829025073.png",
+            href: "/products?category=Bottles&market=Food",
+          },
+          {
+            title: "Food Jars",
+            image: "/food_jar_hexagon_white_1770829038814.png",
+            href: "/products?category=Jars&market=Food",
+          },
+          {
+            title: "Food Cans",
+            image: "/food_can_metal_white_1770829051466.png",
+            href: "/products?category=Cans&market=Food",
+          },
+          {
+            title: "Food Tubs",
+            image: "/food_tub_plastic_white_1770829065063.png",
+            href: "/products?category=Tubs&market=Food",
+          },
+          {
+            title: "Oil & Vinegar Bottles",
+            image: "/food_bottle_oil_vinegar_white_1770829078159.png",
+            href: "/products?category=Bottles&style=Oil-Vinegar",
+          },
+          {
+            title: "Sauce Bottles",
+            image: "/food_bottle_sauce_white_1770829101274.png",
+            href: "/products?category=Bottles&style=Sauce",
+          },
+          {
+            title: "Jelly & Jam Jars",
+            image: "/food_jar_jam_white_1770829124825.png",
+            href: "/products?category=Jars&style=Jam",
+          },
+          {
+            title: "Spice Jars",
+            image: "/food_jar_spice_white_1770829136866.png",
+            href: "/products?category=Jars&style=Spice",
+          },
+        ]}
+      />
 
       {/* 2. THE CHALLENGE: THERMAL SHOCK & OXIDATION */}
       <section className="py-32 bg-white relative">

@@ -61,7 +61,7 @@ export default function ProductDetailClient({
     uniqueImages.length > 0 ? uniqueImages : [product.imageUrl].filter(Boolean);
 
   const [selectedImage, setSelectedImage] = useState(
-    allImages[0] || product.imageUrl
+    allImages[0] || product.imageUrl,
   );
 
   const handleAddToInquiry = () => {
@@ -362,10 +362,12 @@ export default function ProductDetailClient({
           </Link>
           <span className="text-industrial-300">/</span>
           <Link
-            href={`/products/${product.category.toLowerCase()}`}
+            href={`/products/${(
+              product.categories?.[0] || "products"
+            ).toLowerCase()}`}
             className="hover:text-berlin-blue"
           >
-            {product.category}
+            {product.categories?.[0] || "Products"}
           </Link>
           <span className="text-industrial-300">/</span>
           <span className="text-industrial-900">{product.name}</span>
@@ -518,7 +520,7 @@ export default function ProductDetailClient({
                                   </strong>
                                 ) : (
                                   <span key={i}>{part}</span>
-                                )
+                                ),
                               )}
                               {idx <
                                 product.description!.split("\n").length - 1 && (
@@ -568,8 +570,9 @@ export default function ProductDetailClient({
                               label: "Capacity",
                               value: capacityDisplay,
                               help: "Fill volume",
+                              hide: capacityDisplay === "N/A" || !!product.specifications?.Capacity || !!product.specifications?.capacity,
                             },
-                            { label: "Material", value: product.material },
+                            { label: "Material", value: product.material, hide: !product.material },
                             {
                               label: "Color",
                               value: product.color,
@@ -597,8 +600,16 @@ export default function ProductDetailClient({
                             {
                               label: "Dimensions",
                               value: product.dimensions
-                                ? `${product.dimensions.height}H x ${product.dimensions.diameter}D`
+                                ? `${product.dimensions.diameter}"D x ${product.dimensions.height}"H`
                                 : "-",
+                              hide: !product.dimensions,
+                            },
+                            {
+                              label: "Label Panel",
+                              value: product.labelPanel
+                                ? `${product.labelPanel.dimensions}" (${product.labelPanel.shape})`
+                                : "-",
+                              hide: !product.labelPanel,
                             },
                             {
                               label: "Case Qty",
@@ -606,11 +617,12 @@ export default function ProductDetailClient({
                             },
                             {
                               label: "Pallet Qty",
-                              value: product.palletQty || "Contact for details",
+                              value: product.palletQty || "Contact",
+                              hide: !product.palletQty,
                             },
                             ...(product.specifications
                               ? Object.entries(product.specifications).map(
-                                  ([key, val]) => ({ label: key, value: val })
+                                  ([key, val]) => ({ label: key, value: val }),
                                 )
                               : []),
                             {
@@ -620,35 +632,23 @@ export default function ProductDetailClient({
                                 : "N/A",
                               hide: !product.closure?.type,
                             },
-                            {
-                              label: "Liner",
-                              value: product.closure?.liner || "N/A",
-                              hide: !product.closure?.liner,
-                            },
-                            {
-                              label: "Label Panel",
-                              value: product.labelPanel
-                                ? `${product.labelPanel.dimensions} (${product.labelPanel.shape})`
-                                : "N/A",
-                              hide: !product.labelPanel?.dimensions,
-                            },
                           ].map((row, i) =>
                             row.hide ? null : (
                               <tr
                                 key={i}
                                 className="group hover:bg-gray-50 transition-colors"
                               >
-                                <td className="py-4 px-6 text-gray-500 font-medium w-1/3 flex items-center gap-2">
+                                <td className="py-2.5 px-4 text-gray-500 font-medium w-1/3 flex items-center gap-2 border-r border-gray-100 bg-gray-50/30">
                                   {row.label}
                                   {row.help && (
                                     <Info className="w-3 h-3 text-gray-300" />
                                   )}
                                 </td>
-                                <td className="py-4 px-6 text-gray-900 font-bold text-right sm:text-left">
+                                <td className="py-2.5 px-4 text-slate-800 font-bold text-left">
                                   {row.value}
                                 </td>
                               </tr>
-                            )
+                            ),
                           )}
                         </tbody>
                       </table>

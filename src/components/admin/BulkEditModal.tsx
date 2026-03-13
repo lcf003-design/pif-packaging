@@ -10,7 +10,7 @@ interface BulkEditModalProps {
   onSuccess: () => void;
 }
 
-type FieldType = "category" | "material" | "color" | "industry" | "";
+type FieldType = "categories" | "material" | "color" | "industry" | "";
 
 export default function BulkEditModal({
   selectedIds,
@@ -43,8 +43,8 @@ export default function BulkEditModal({
         // If it's an array field, we need to be careful.
         // Let's coerce to array.
         updates[field] = [value as any];
-      } else if (field === "category") {
-        updates[field] = value as any;
+      } else if (field === "categories") {
+        updates["categories"] = [value as any];
       } else {
         updates[field] = value;
       }
@@ -95,7 +95,7 @@ export default function BulkEditModal({
               <option value="" disabled>
                 Select a field...
               </option>
-              <option value="category">Category</option>
+              <option value="categories">Category</option>
               <option value="material">Material</option>
               <option value="color">Color</option>
               <option value="industry">Industry (Set Primary)</option>
@@ -109,7 +109,7 @@ export default function BulkEditModal({
                 New Value for {field.charAt(0).toUpperCase() + field.slice(1)}
               </label>
 
-              {field === "category" ? (
+              {field === "categories" ? (
                 <select
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-berlin-blue"
                   value={value}

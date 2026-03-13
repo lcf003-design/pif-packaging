@@ -19,7 +19,10 @@ export type Category =
   | "Jugs"
   | "Vials"
   | "Tubes"
-  | "Closures";
+  | "Closures"
+  | "Eyeshadow Containers"
+  | "Lip Balm & Lip Gloss Containers"
+  | "Nail Care Products Packaging";
 
 export type Material =
   | "Glass"
@@ -43,7 +46,7 @@ export interface Product {
   sku: string;
   name: string;
   brand: string;
-  category: Category;
+  categories: Category[]; // Migrated from singular 'category'
   industry: Industry[];
   material: string | Material;
   materialGroup?: MaterialGroup;
@@ -81,6 +84,7 @@ export interface Product {
   features?: string[];
   palletQty?: number;
   capSize?: string;
+  price?: number;
   downloads?: { label: string; url: string }[];
   specifications?: Record<string, string>;
   createdAt?: string;
@@ -113,4 +117,62 @@ export interface ContactMessage {
   company?: string;
   message: string;
   submittedAt?: any; // Firestore serverTimestamp
+}
+
+export interface QuoteRequest {
+  id?: string;
+  type: string; // e.g., "wine-bulk"
+  firstName: string;
+  lastName: string;
+  title: string;
+  phone: string;
+  email: string;
+  company: string;
+  website?: string;
+  address: string;
+  city: string;
+  country: string;
+  state: string;
+  zipCode: string;
+  submittedAt?: any;
+  status?: "new" | "reviewed" | "quoted" | "closed";
+}
+
+export interface UniversalInquiry {
+  id?: string;
+  sourceType:
+    | "general_contact"
+    | "wine_quote"
+    | "custom_closure"
+    | "product_inquiry"
+    | "truckload_quote";
+  status: "new" | "in_review" | "contacted" | "closed";
+  customer: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone?: string;
+    company?: string;
+  };
+  payload: any; // Dynamic payload retaining original form fields
+  submittedAt?: any; // Firestore serverTimestamp
+}
+
+export interface TruckloadQuoteRequest {
+  firstName: string;
+  lastName: string;
+  title: string;
+  phone: string;
+  email: string;
+  company: string;
+  website?: string;
+  address: string;
+  city: string;
+  country: string;
+  state: string;
+  zipCode: string;
+  projectTimeframe: string;
+  annualVolume: string;
+  details: string;
+  submittedAt?: any;
 }

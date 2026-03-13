@@ -112,7 +112,7 @@ export default function FilterBar({ facets }: { facets?: Facets }) {
 
   const getVisibleOptions = (
     allOptions: string[] | any[],
-    facetList?: string[]
+    facetList?: string[],
   ) => {
     if (!facetList || facetList.length === 0) return allOptions; // Show all if no facets yet (or show none? User wants 'advanced', likely show only real)
     // Actually, if we have facets, filtering is better.
@@ -131,7 +131,7 @@ export default function FilterBar({ facets }: { facets?: Facets }) {
   const visibleIndustries = getVisibleOptions(INDUSTRIES, facets?.industries);
   const visibleCapacities = getVisibleOptions(
     COMMON_CAPACITIES,
-    facets?.capacities
+    facets?.capacities,
   );
 
   return (
@@ -219,7 +219,7 @@ export default function FilterBar({ facets }: { facets?: Facets }) {
                 : "border-industrial-200 bg-white text-industrial-700 hover:border-industrial-400"
             }`}
           >
-            Material
+            Material Group
             <ChevronDown
               className={`w-4 h-4 transition-transform ${
                 openDropdown === "Material" ? "rotate-180" : ""

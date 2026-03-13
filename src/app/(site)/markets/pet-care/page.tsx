@@ -15,6 +15,7 @@ import {
   Recycle,
   Scale,
 } from "lucide-react";
+import MarketCategoryGrid from "@/components/markets/MarketCategoryGrid";
 
 export default function PetCareMarketPage() {
   const market = MARKETS_DATA.find((m) => m.slug === "pet-care");
@@ -124,47 +125,51 @@ export default function PetCareMarketPage() {
       </section>
 
       {/* 2. THE CARE SUITE (Grid) */}
-      <section className="py-24 relative z-10">
-        <div className="container mx-auto px-6 max-w-7xl">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl font-black text-stone-900 mb-6 tracking-tight uppercase">
-              The Care Suite
-            </h2>
-            <div className="h-1 w-20 bg-orange-400 mx-auto rounded-full" />
-            <p className="mt-6 text-stone-500 text-lg max-w-2xl mx-auto">
-              From the grooming salon to the vet clinic. A holistic range of
-              packaging engineered for biological safety and premium shelf
-              appeal.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-12">
-            {ASSETS.suite.map((item, i) => (
-              <div
-                key={i}
-                className="group bg-white rounded-3xl p-6 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-stone-100"
-              >
-                <div className="relative h-56 w-full mb-8 overflow-hidden rounded-2xl bg-stone-50">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-contain p-4 group-hover:scale-105 transition-transform duration-700"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-stone-900 mb-2 group-hover:text-orange-600 transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-stone-400 font-medium leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <MarketCategoryGrid
+        title="The Care Suite"
+        items={[
+          {
+            title: "Shampoo Bottles",
+            image: "/pet_bottle_shampoo_white_1771838551291.png",
+            href: "/products?category=Bottles&style=Shampoo",
+          },
+          {
+            title: "Tottle Bottles",
+            image: "/pet_bottle_tottle_white_1771838568538.png",
+            href: "/products?category=Bottles&style=Tottle",
+          },
+          {
+            title: "Plastic Jars",
+            image: "/pet_jar_plastic_white_1771838592090.png",
+            href: "/products?category=Jars",
+          },
+          {
+            title: "Seamless Tins",
+            image: "/pet_tin_seamless_white_1771838626207.png",
+            href: "/products?category=Tins",
+          },
+          {
+            title: "Pharmaceutical & Supplement Bottles",
+            image: "/pet_bottle_pharma_white_1771838650998.png",
+            href: "/products?category=Bottles&style=Packer",
+          },
+          {
+            title: "Spray Bottles",
+            image: "/pet_bottle_spray_white_1771838668841.png",
+            href: "/products?category=Bottles&style=Spray",
+          },
+          {
+            title: "Cleaning Jugs",
+            image: "/pet_jug_cleaning_white_1771838689875.png",
+            href: "/products?category=Jugs",
+          },
+          {
+            title: "Plastic Buckets",
+            image: "/pet_bucket_plastic_white_1771838711569.png",
+            href: "/products?category=Pails",
+          },
+        ]}
+      />
 
       {/* 3. HUMAN-GRADE NARRATIVE (Banner) */}
       <section className="relative py-32 overflow-hidden bg-white border-y border-stone-200">

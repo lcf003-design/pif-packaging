@@ -96,6 +96,7 @@ export default function Navbar() {
                 <div className="absolute top-full left-0 w-64 pt-2 z-50 animate-in fade-in zoom-in-95 duration-200">
                   <div className="bg-white border border-industrial-100 shadow-xl rounded-md p-4 grid gap-2">
                     {[
+                      "Cosmetics",
                       "Food",
                       "Beverage",
                       "Personal Care",
@@ -277,6 +278,7 @@ export default function Navbar() {
               {mobileMarketOpen && (
                 <div className="pl-4 mt-2 space-y-2">
                   {[
+                    "Cosmetics",
                     "Food",
                     "Beverage",
                     "Personal Care",

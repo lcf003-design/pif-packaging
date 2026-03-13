@@ -104,12 +104,12 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <a
-                href="mailto:support@pifpackaging.com"
+              <button
+                onClick={() => setContactModalOpen(true)}
                 className="mt-auto px-10 py-4 border-2 border-berlin-red text-berlin-red font-bold uppercase tracking-widest rounded-sm hover:bg-berlin-red hover:text-white transition-all w-full max-w-xs"
               >
                 Message Us
-              </a>
+              </button>
             </div>
           </div>
         </div>

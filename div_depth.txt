@@ -1,0 +1,1034 @@
+1061: 0   return (
+1062: 0     <form onSubmit={handleSubmit} className="max-w
+1063: 0       {/* Actions Bar */}
+1064: 1       <div className="flex items-center justify-be
+1065: 2         <div className="flex items-center gap-4">
+1066: 2           <Link
+1067: 2             href="/admin/products"
+1068: 2             className="p-2 -ml-2 text-gray-500 hov
+1069: 2             title="Cancel"
+1070: 2           >
+1071: 2             <ArrowLeft className="w-5 h-5" />
+1072: 2           </Link>
+1073: 2           <h1 className="text-xl font-bold text-sl
+1074: 2             {initialData ? "Edit Product" : "New P
+1075: 2           </h1>
+1076: 1         </div>
+1077: 1         <button
+1078: 1           type="submit"
+1079: 1           disabled={loading}
+1080: 1           className="bg-berlin-blue text-white px-
+1081: 1         >
+1082: 1           {loading ? (
+1083: 1             <Loader2 className="w-5 h-5 animate-sp
+1084: 1           ) : (
+1085: 1             <Save className="w-5 h-5" />
+1086: 1           )}
+1087: 1           Save Product
+1088: 1         </button>
+1089: 0       </div>
+1090: 0 
+1091: 1       <div className="grid grid-cols-1 lg:grid-col
+1092: 1         {/* Main Info */}
+1093: 2         <div className="lg:col-span-2 space-y-6">
+1094: 2           {/* Media Manager (Shopify Style) */}
+1095: 3           <div className="bg-white p-6 rounded-xl 
+1096: 3             <h3 className="font-bold text-lg text-
+1097: 3               Media
+1098: 3             </h3>
+1099: 3 
+1100: 4             <div className="space-y-4">
+1101: 4               {/* Grid */}
+1102: 4               {/* Grid with DnD */}
+1103: 4               <DndContext
+1104: 4                 sensors={sensors}
+1105: 4                 collisionDetection={closestCenter}
+1106: 4                 onDragStart={handleDragStart}
+1107: 4                 onDragEnd={handleDragEnd}
+1108: 4               >
+1109: 5                 <div className="grid grid-cols-2 m
+1110: 5                   {/* Upload Button */}
+1111: 6                   <div className="aspect-square">
+1112: 6                     <ImageUpload
+1113: 6                       onUploadComplete={handleImag
+1114: 6                       className="h-full"
+1115: 6                       fileNamePrefix={formData.sku
+1116: 6                       key={`upload-${formData.imag
+1117: 6                     />
+1118: 5                   </div>
+1119: 5 
+1120: 5                   <SortableContext
+1121: 5                     items={formData.images || []}
+1122: 5                     strategy={rectSortingStrategy}
+1123: 5                   >
+1124: 5                     {formData.images?.map((img, id
+1125: 5                       <SortableImage
+1126: 5                         key={img}
+1127: 5                         url={img}
+1128: 5                         index={idx}
+1129: 5                         onRemove={removeGalleryIma
+1130: 5                         onSetMain={setPrimaryImage
+1131: 5                       />
+1132: 5                     ))}
+1133: 5                   </SortableContext>
+1134: 5 
+1135: 5                   <DragOverlay adjustScale={true}>
+1136: 5                     {activeId ? (
+1137: 5                       <SortableImage
+1138: 5                         url={activeId}
+1139: 5                         index={0} // Index doesn't
+1140: 5                         onRemove={() => {}}
+1141: 5                         onSetMain={() => {}}
+1142: 5                         isOverlay
+1143: 5                       />
+1144: 5                     ) : null}
+1145: 5                   </DragOverlay>
+1146: 4                 </div>
+1147: 4               </DndContext>
+1148: 4               <p className="text-xs text-gray-400"
+1149: 4                 The first image will be used as th
+1150: 4               </p>
+1151: 3             </div>
+1152: 2           </div>
+1153: 2 
+1154: 3           <div className="bg-white p-6 rounded-xl 
+1155: 3             <h3 className="font-bold text-lg text-
+1156: 3               Basic Identity
+1157: 3             </h3>
+1158: 3 
+1159: 4             <div className="grid grid-cols-1 md:gr
+1160: 5               <div className="md:col-span-2">
+1161: 5                 <label className="block text-sm fo
+1162: 5                   Product Name
+1163: 5                 </label>
+1164: 6                 <div className="flex gap-2">
+1165: 6                   <input
+1166: 6                     required
+1167: 6                     type="text"
+1168: 6                     className="block w-full rounde
+1169: 6                     value={formData.name}
+1170: 6                     onChange={(e) =>
+1171: 6                       setFormData({ ...formData, n
+1172: 6                     }
+1173: 6                     placeholder="e.g. 12oz Amber G
+1174: 6                   />
+1175: 6                   <button
+1176: 6                     type="button"
+1177: 6                     onClick={generateStandardName}
+1178: 6                     className="bg-industrial-100 h
+1179: 6                     title="Auto-Generate Standard 
+1180: 6                   >
+1181: 6                     Auto-Name
+1182: 6                   </button>
+1183: 5                 </div>
+1184: 4               </div>
+1185: 5               <div className="md:col-span-2">
+1186: 5                 <label className="block text-sm fo
+1187: 5                   <span>URL Slug (SEO)</span>
+1188: 5                   <span className="text-[10px] tex
+1189: 5                     Auto-generated, but you can ed
+1190: 5                   </span>
+1191: 5                 </label>
+1192: 5                 <input
+1193: 5                   type="text"
+1194: 5                   className="block w-full rounded-
+1195: 5                   value={formData.slug || ""}
+1196: 5                   onChange={(e) =>
+1197: 5                     setFormData({
+1198: 5                       ...formData,
+1199: 5                       slug: e.target.value
+1200: 5                         .toLowerCase()
+1201: 5                         .replace(/\s+/g, "-")
+1202: 5                         .replace(/[^\w-]+/g, ""),
+1203: 5                     })
+1204: 5                   }
+1205: 5                   placeholder="e.g. 12oz-amber-gla
+1206: 5                 />
+1207: 4               </div>
+1208: 5               <div>
+1209: 5                 <label className="block text-sm fo
+1210: 5                   SKU
+1211: 5                 </label>
+1212: 6                 <div className="flex gap-2">
+1213: 6                   <input
+1214: 6                     required
+1215: 6                     type="text"
+1216: 6                     className="block w-full rounde
+1217: 6                     value={formData.sku}
+1218: 6                     onChange={(e) =>
+1219: 6                       setFormData({ ...formData, s
+1220: 6                     }
+1221: 6                     placeholder="e.g. GLS-001"
+1222: 6                   />
+1223: 6                   <button
+1224: 6                     type="button"
+1225: 6                     onClick={generateStandardSKU}
+1226: 6                     className="bg-industrial-100 h
+1227: 6                     title="Auto-Generate SKU from 
+1228: 6                   >
+1229: 6                     Auto-Gen
+1230: 6                   </button>
+1231: 5                 </div>
+1232: 4               </div>
+1233: 5               <div>
+1234: 5                 <label className="block text-sm fo
+1235: 5                   Brand (Optional)
+1236: 5                 </label>
+1237: 5                 <input
+1238: 5                   type="text"
+1239: 5                   className="block w-full rounded-
+1240: 5                   value={formData.brand}
+1241: 5                   onChange={(e) =>
+1242: 5                     setFormData({ ...formData, bra
+1243: 5                   }
+1244: 5                 />
+1245: 4               </div>
+1246: 3             </div>
+1247: 3 
+1248: 4             <div>
+1249: 4               <label className="block text-sm font
+1250: 4                 About This Product
+1251: 4               </label>
+1252: 4               <textarea
+1253: 4                 rows={3}
+1254: 4                 className="block w-full rounded-md
+1255: 4                 value={formData.description}
+1256: 4                 onChange={(e) =>
+1257: 4                   setFormData({ ...formData, descr
+1258: 4                 }
+1259: 4               />
+1260: 3             </div>
+1261: 2           </div>
+1262: 2 
+1263: 2           {/* Key Features (New) */}
+1264: 3           <div className="bg-white p-6 rounded-xl 
+1265: 4             <div className="flex items-center just
+1266: 4               <h3 className="font-bold text-lg tex
+1267: 4               <button
+1268: 4                 type="button"
+1269: 4                 onClick={addFeature}
+1270: 4                 className="text-xs font-bold text-
+1271: 4               >
+1272: 4                 + Add Feature
+1273: 4               </button>
+1274: 3             </div>
+1275: 4             <div className="space-y-3">
+1276: 4               {(formData.features || []).map((feat
+1277: 5                 <div key={idx} className="flex gap
+1278: 5                   <input
+1279: 5                     type="text"
+1280: 5                     className="block w-full rounde
+1281: 5                     value={feature}
+1282: 5                     onChange={(e) => updateFeature
+1283: 5                     placeholder="e.g. 100% PCR Alu
+1284: 5                   />
+1285: 5                   <button
+1286: 5                     type="button"
+1287: 5                     onClick={() => removeFeature(i
+1288: 5                     className="text-gray-400 hover
+1289: 5                   >
+1290: 5                     <Trash2 className="w-4 h-4" />
+1291: 5                   </button>
+1292: 4                 </div>
+1293: 4               ))}
+1294: 4               {(!formData.features || formData.fea
+1295: 4                 <p className="text-sm text-gray-40
+1296: 4                   No features added.
+1297: 4                 </p>
+1298: 4               )}
+1299: 3             </div>
+1300: 2           </div>
+1301: 2 
+1302: 2           {/* Advanced Configuration Accordion */}
+1303: 3           <div className="bg-white rounded-xl bord
+1304: 3             <button
+1305: 3               type="button"
+1306: 3               onClick={() => setShowAdvancedSpecs(
+1307: 3               className="w-full flex items-center 
+1308: 3             >
+1309: 4               <div className="flex items-center ga
+1310: 5                 <div className="w-8 h-8 rounded-fu
+1311: 5                   <Sparkles className="w-4 h-4" />
+1312: 4                 </div>
+1313: 5                 <div className="text-left">
+1314: 5                   <h3 className="font-bold text-lg
+1315: 5                     Advanced Configuration
+1316: 5                   </h3>
+1317: 5                   <p className="text-xs text-gray-
+1318: 5                     Technical Specifications, Engi
+1319: 5                   </p>
+1320: 4                 </div>
+1321: 3               </div>
+1322: 3               {showAdvancedSpecs ? (
+1323: 3                 <ChevronDown className="w-5 h-5 te
+1324: 3               ) : (
+1325: 3                 <ChevronRight className="w-5 h-5 t
+1326: 3               )}
+1327: 3             </button>
+1328: 3 
+1329: 3             {showAdvancedSpecs && (
+1330: 4               <div className="p-6 space-y-8 bg-whi
+1331: 4                 {/* Specs */}
+1332: 5                 <div className="space-y-6">
+1333: 5                   <h3 className="font-bold text-lg
+1334: 5                     Technical Specifications
+1335: 5                   </h3>
+1336: 5 
+1337: 5             {/* 1. Physical Attributes Group */}
+1338: 6             <div className="space-y-4">
+1339: 6               <h4 className="text-xs font-bold tex
+1340: 6                 Physical Attributes
+1341: 6               </h4>
+1342: 7               <div className="grid grid-cols-1 md:
+1343: 8                 <div>
+1344: 8                   <label className="block text-sm 
+1345: 8                     Material
+1346: 8                   </label>
+1347: 8                   <select
+1348: 8                     className="block w-full rounde
+1349: 8                     value={formData.material}
+1350: 8                     onChange={(e) =>
+1351: 8                       setFormData({
+1352: 8                         ...formData,
+1353: 8                         material: e.target.value a
+1354: 8                       })
+1355: 8                     }
+1356: 8                   >
+1357: 8                     <option value="">Select Materi
+1358: 8                     {MATERIALS.map((m) => (
+1359: 8                       <option key={m} value={m}>
+1360: 8                         {m}
+1361: 8                       </option>
+1362: 8                     ))}
+1363: 8                   </select>
+1364: 7                 </div>
+1365: 8                 <div>
+1366: 8                   <label className="block text-sm 
+1367: 8                     Color
+1368: 8                   </label>
+1369: 8                   <select
+1370: 8                     className="block w-full rounde
+1371: 8                     value={formData.color}
+1372: 8                     onChange={(e) =>
+1373: 8                       setFormData({ ...formData, c
+1374: 8                     }
+1375: 8                   >
+1376: 8                     <option value="">Select Color.
+1377: 8                     {COLORS.map((c) => (
+1378: 8                       <option key={c} value={c}>
+1379: 8                         {c}
+1380: 8                       </option>
+1381: 8                     ))}
+1382: 8                   </select>
+1383: 7                 </div>
+1384: 8                 <div>
+1385: 8                   <label className="block text-sm 
+1386: 8                     Shape
+1387: 8                   </label>
+1388: 8                   <select
+1389: 8                     className="block w-full rounde
+1390: 8                     value={formData.shape}
+1391: 8                     onChange={(e) =>
+1392: 8                       setFormData({ ...formData, s
+1393: 8                     }
+1394: 8                   >
+1395: 8                     <option value="">Select Shape.
+1396: 8                     {SHAPES.map((s) => (
+1397: 8                       <option key={s} value={s}>
+1398: 8                         {s}
+1399: 8                       </option>
+1400: 8                     ))}
+1401: 8                   </select>
+1402: 7                 </div>
+1403: 8                 <div>
+1404: 8                   <label className="block text-sm 
+1405: 8                     Gram Weight
+1406: 8                   </label>
+1407: 8                   <input
+1408: 8                     type="text"
+1409: 8                     className="block w-full rounde
+1410: 8                     value={formData.weight}
+1411: 8                     onChange={(e) =>
+1412: 8                       setFormData({ ...formData, w
+1413: 8                     }
+1414: 8                     placeholder="e.g. 18g"
+1415: 8                   />
+1416: 7                 </div>
+1417: 6               </div>
+1418: 5             </div>
+1419: 5 
+1420: 5             {/* 2. Volume & Dimensions Group */}
+1421: 6             <div className="pt-4 space-y-4">
+1422: 6               <h4 className="text-xs font-bold tex
+1423: 6                 Volume & Dimensions
+1424: 6               </h4>
+1425: 7               <div className="grid grid-cols-1 md:
+1426: 7                 {/* Capacity Smart Input */}
+1427: 8                 <div className="bg-blue-50/50 p-4 
+1428: 9                   <div className="flex flex-col ga
+1429: 10                     <div className="flex items-cen
+1430: 10                       <label className="block text
+1431: 10                         Capacity (Vol)
+1432: 10                       </label>
+1433: 10                       <select
+1434: 10                         className="text-[10px] bg-
+1435: 10                         onChange={(e) => {
+1436: 10                           if (!e.target.value) ret
+1437: 10                           const idx = parseInt(e.t
+1438: 10                           const cap = COMMON_CAPAC
+1439: 10                           setFormData({
+1440: 10                             ...formData,
+1441: 10                             capacity: {
+1442: 10                               value: cap.value,
+1443: 10                               unit: cap.unit as an
+1444: 10                             },
+1445: 10                           });
+1446: 10                         }}
+1447: 10                         defaultValue=""
+1448: 10                       >
+1449: 10                         <option value="">⚡️ Quick 
+1450: 10                         {COMMON_CAPACITIES.map((ca
+1451: 10                           <option key={idx} value=
+1452: 10                             {cap.label}
+1453: 10                           </option>
+1454: 10                         ))}
+1455: 10                       </select>
+1456: 9                     </div>
+1457: 10                     <div className="flex gap-2">
+1458: 10                       <input
+1459: 10                         type="number"
+1460: 10                         step="0.01"
+1461: 10                         className="block w-full ro
+1462: 10                         value={formData.capacity?.
+1463: 10                         onChange={(e) => {
+1464: 10                           const val = parseFloat(e
+1465: 10                           setFormData({
+1466: 10                             ...formData,
+1467: 10                             capacity: {
+1468: 10                               ...formData.capacity
+1469: 10                               value: isNaN(val) ? 
+1470: 10                             },
+1471: 10                           });
+1472: 10                         }}
+1473: 10                         placeholder="0.00"
+1474: 10                       />
+1475: 10                       <select
+1476: 10                         className="block w-20 roun
+1477: 10                         value={formData.capacity?.
+1478: 10                         onChange={(e) => handleUni
+1479: 10                       >
+1480: 10                         <option value="oz">oz</opt
+1481: 10                         <option value="ml">ml</opt
+1482: 10                         <option value="gal">gal</o
+1483: 10                         <option value="l">L</optio
+1484: 10                       </select>
+1485: 9                     </div>
+1486: 8                   </div>
+1487: 7                 </div>
+1488: 7 
+1489: 7                 {/* Dimensions (H x D) */}
+1490: 8                 <div className="flex gap-4">
+1491: 9                   <div className="flex-1">
+1492: 9                     <label className="block text-s
+1493: 9                       Height
+1494: 9                     </label>
+1495: 10                     <div className="flex">
+1496: 10                       <input
+1497: 10                         type="number"
+1498: 10                         step="0.01"
+1499: 10                         className="flex-1 block w-
+1500: 10                         value={
+1501: 10                           (formData.dimensions?.he
+1502: 10                           ""
+1503: 10                         }
+1504: 10                         onChange={(e) =>
+1505: 10                           setFormData({
+1506: 10                             ...formData,
+1507: 10                             dimensions: {
+1508: 10                               ...formData.dimensio
+1509: 10                               height: e.target.val
+1510: 10                                 ? `${e.target.valu
+1511: 10                                 : "",
+1512: 10                             },
+1513: 10                           })
+1514: 10                         }
+1515: 10                         placeholder="0.00"
+1516: 10                       />
+1517: 10                       <span className="bg-gray-100
+1518: 10                         in
+1519: 10                       </span>
+1520: 9                     </div>
+1521: 8                   </div>
+1522: 9                   <div className="flex-1">
+1523: 9                     <label className="block text-s
+1524: 9                       Diameter{" "}
+1525: 9                       <span className="text-gray-4
+1526: 9                     </label>
+1527: 10                     <div className="flex">
+1528: 10                       <input
+1529: 10                         type="number"
+1530: 10                         step="0.01"
+1531: 10                         className="flex-1 block w-
+1532: 10                         value={
+1533: 10                           (formData.dimensions?.di
+1534: 10                           ""
+1535: 10                         }
+1536: 10                         onChange={(e) =>
+1537: 10                           setFormData({
+1538: 10                             ...formData,
+1539: 10                             dimensions: {
+1540: 10                               ...formData.dimensio
+1541: 10                               diameter: e.target.v
+1542: 10                                 ? `${e.target.valu
+1543: 10                                 : "",
+1544: 10                             },
+1545: 10                           })
+1546: 10                         }
+1547: 10                         placeholder="0.00"
+1548: 10                       />
+1549: 10                       <span className="bg-gray-100
+1550: 10                         in
+1551: 10                       </span>
+1552: 9                     </div>
+1553: 8                   </div>
+1554: 7                 </div>
+1555: 7 
+1556: 7                 {/* Extended Dimensions (Non-Round
+1557: 8                 <div className="flex flex-col md:f
+1558: 9                   <div className="flex-1">
+1559: 9                     <label className="block text-s
+1560: 9                       Length
+1561: 9                     </label>
+1562: 10                     <div className="flex">
+1563: 10                       <input
+1564: 10                         type="number"
+1565: 10                         step="0.01"
+1566: 10                         className="flex-1 block w-
+1567: 10                         value={
+1568: 10                           (formData.dimensions?.le
+1569: 10                           ""
+1570: 10                         }
+1571: 10                         onChange={(e) =>
+1572: 10                           setFormData({
+1573: 10                             ...formData,
+1574: 10                             dimensions: {
+1575: 10                               ...formData.dimensio
+1576: 10                               height: formData.dim
+1577: 10                               diameter: formData.d
+1578: 10                               length: e.target.val
+1579: 10                                 ? `${e.target.valu
+1580: 10                                 : "",
+1581: 10                             },
+1582: 10                           })
+1583: 10                         }
+1584: 10                         placeholder="0.00"
+1585: 10                       />
+1586: 10                       <span className="bg-gray-100
+1587: 10                         in
+1588: 10                       </span>
+1589: 9                     </div>
+1590: 8                   </div>
+1591: 9                   <div className="flex-1">
+1592: 9                     <label className="block text-s
+1593: 9                       Width
+1594: 9                     </label>
+1595: 10                     <div className="flex">
+1596: 10                       <input
+1597: 10                         type="number"
+1598: 10                         step="0.01"
+1599: 10                         className="flex-1 block w-
+1600: 10                         value={
+1601: 10                           (formData.dimensions?.wi
+1602: 10                         }
+1603: 10                         onChange={(e) =>
+1604: 10                           setFormData({
+1605: 10                             ...formData,
+1606: 10                             dimensions: {
+1607: 10                               ...formData.dimensio
+1608: 10                               height: formData.dim
+1609: 10                               diameter: formData.d
+1610: 10                               width: e.target.valu
+1611: 10                                 ? `${e.target.valu
+1612: 10                                 : "",
+1613: 10                             },
+1614: 10                           })
+1615: 10                         }
+1616: 10                         placeholder="0.00"
+1617: 10                       />
+1618: 10                       <span className="bg-gray-100
+1619: 10                         in
+1620: 10                       </span>
+1621: 9                     </div>
+1622: 8                   </div>
+1623: 9                   <div className="flex-1">
+1624: 9                     <label className="block text-s
+1625: 9                       Depth
+1626: 9                     </label>
+1627: 10                     <div className="flex">
+1628: 10                       <input
+1629: 10                         type="number"
+1630: 10                         step="0.01"
+1631: 10                         className="flex-1 block w-
+1632: 10                         value={
+1633: 10                           (formData.dimensions?.de
+1634: 10                         }
+1635: 10                         onChange={(e) =>
+1636: 10                           setFormData({
+1637: 10                             ...formData,
+1638: 10                             dimensions: {
+1639: 10                               ...formData.dimensio
+1640: 10                               height: formData.dim
+1641: 10                               diameter: formData.d
+1642: 10                               depth: e.target.valu
+1643: 10                                 ? `${e.target.valu
+1644: 10                                 : "",
+1645: 10                             },
+1646: 10                           })
+1647: 10                         }
+1648: 10                         placeholder="0.00"
+1649: 10                       />
+1650: 10                       <span className="bg-gray-100
+1651: 10                         in
+1652: 10                       </span>
+1653: 9                     </div>
+1654: 8                   </div>
+1655: 7                 </div>
+1656: 6               </div>
+1657: 5             </div>
+1658: 5 
+1659: 5             {/* 3. Neck & Compatibility Group */}
+1660: 6             <div className="pt-4 space-y-4">
+1661: 6               <h4 className="text-xs font-bold tex
+1662: 6                 Neck & Compatibility
+1663: 6               </h4>
+1664: 7               <div className="grid grid-cols-2 gap
+1665: 8                 <div>
+1666: 8                   <label className="block text-sm 
+1667: 8                     Neck Finish
+1668: 8                   </label>
+1669: 8                   <select
+1670: 8                     className="block w-full rounde
+1671: 8                     value={formData.neckFinish}
+1672: 8                     onChange={(e) =>
+1673: 8                       setFormData({ ...formData, n
+1674: 8                     }
+1675: 8                   >
+1676: 8                     <option value="">Finish Type..
+1677: 8                     {NECK_FINISH_TYPES.map((n) => 
+1678: 8                       <option key={n} value={n}>
+1679: 8                         {n}
+1680: 8                       </option>
+1681: 8                     ))}
+1682: 8                   </select>
+1683: 7                 </div>
+1684: 8                 <div>
+1685: 8                   <label className="block text-sm 
+1686: 8                     Cap Size
+1687: 8                   </label>
+1688: 8                   <select
+1689: 8                     className="block w-full rounde
+1690: 8                     value={formData.capSize}
+1691: 8                     onChange={(e) =>
+1692: 8                       setFormData({ ...formData, c
+1693: 8                     }
+1694: 8                   >
+1695: 8                     <option value="">Size...</opti
+1696: 8                     {CAP_SIZES.map((cs) => (
+1697: 8                       <option key={cs} value={cs}>
+1698: 8                         {cs}
+1699: 8                       </option>
+1700: 8                     ))}
+1701: 8                   </select>
+1702: 7                 </div>
+1703: 6               </div>
+1704: 5             </div>
+1705: 5 
+1706: 5             {/* Closure Section (Restored) */}
+1707: 6             <div className="pt-6 border-t border-g
+1708: 6               <h4 className="font-bold text-sm tex
+1709: 6                 <Sparkles className="w-4 h-4 text-
+1710: 6                 Included Closure (Optional)
+1711: 6               </h4>
+1712: 7               <div className="grid grid-cols-2 gap
+1713: 8                 <div>
+1714: 8                   <label className="block text-xs 
+1715: 8                     Color
+1716: 8                   </label>
+1717: 8                   <select
+1718: 8                     className="block w-full rounde
+1719: 8                     value={formData.closure?.color
+1720: 8                     onChange={(e) =>
+1721: 8                       setFormData({
+1722: 8                         ...formData,
+1723: 8                         closure: {
+1724: 8                           ...formData.closure!,
+1725: 8                           color: e.target.value,
+1726: 8                         },
+1727: 8                       })
+1728: 8                     }
+1729: 8                   >
+1730: 8                     <option value="">Select Color.
+1731: 8                     {COLORS.map((c) => (
+1732: 8                       <option key={c} value={c}>
+1733: 8                         {c}
+1734: 8                       </option>
+1735: 8                     ))}
+1736: 8                   </select>
+1737: 7                 </div>
+1738: 8                 <div>
+1739: 8                   <label className="block text-xs 
+1740: 8                     Style
+1741: 8                   </label>
+1742: 8                   <select
+1743: 8                     className="block w-full rounde
+1744: 8                     value={formData.closure?.type 
+1745: 8                     onChange={(e) =>
+1746: 8                       setFormData({
+1747: 8                         ...formData,
+1748: 8                         closure: {
+1749: 8                           ...formData.closure!,
+1750: 8                           type: e.target.value,
+1751: 8                         },
+1752: 8                       })
+1753: 8                     }
+1754: 8                   >
+1755: 8                     <option value="">None / Caples
+1756: 8                     <option value="Standard Cap">S
+1757: 8                     <option value="Screw Top Cap">
+1758: 8                     <option value="Dispensing">Dis
+1759: 8                     <option value="Lotion Pump">Lo
+1760: 8                     <option value="Trigger Sprayer
+1761: 8                     <option value="Fine Mist">Fine
+1762: 8                     <option value="Disc Top">Disc 
+1763: 8                     <option value="Dropper">Droppe
+1764: 8                   </select>
+1765: 7                 </div>
+1766: 8                 <div className="col-span-2">
+1767: 8                   <label className="block text-xs 
+1768: 8                     Liner
+1769: 8                   </label>
+1770: 8                   <select
+1771: 8                     className="block w-full rounde
+1772: 8                     value={formData.closure?.liner
+1773: 8                     onChange={(e) =>
+1774: 8                       setFormData({
+1775: 8                         ...formData,
+1776: 8                         closure: {
+1777: 8                           ...formData.closure!,
+1778: 8                           liner: e.target.value,
+1779: 8                         },
+1780: 8                       })
+1781: 8                     }
+1782: 8                   >
+1783: 8                     <option value="">Select Liner.
+1784: 8                     {LINER_TYPES.map((l) => (
+1785: 8                       <option key={l} value={l}>
+1786: 8                         {l}
+1787: 8                       </option>
+1788: 8                     ))}
+1789: 8                   </select>
+1790: 7                 </div>
+1791: 6               </div>
+1792: 5             </div>
+1793: 5 
+1794: 5             {/* Label Panel Section (Restored) */}
+1795: 6             <div className="pt-6 border-t border-g
+1796: 6               <h4 className="font-bold text-sm tex
+1797: 6                 <FileText className="w-4 h-4 text-
+1798: 6                 Label Panel (Metadata)
+1799: 6               </h4>
+1800: 7               <div className="grid grid-cols-2 gap
+1801: 8                 <div>
+1802: 8                   <label className="block text-xs 
+1803: 8                     Dimensions
+1804: 8                   </label>
+1805: 8                   <input
+1806: 8                     type="text"
+1807: 8                     className="block w-full rounde
+1808: 8                     value={formData.labelPanel?.di
+1809: 8                     onChange={(e) =>
+1810: 8                       setFormData({
+1811: 8                         ...formData,
+1812: 8                         labelPanel: {
+1813: 8                           ...formData.labelPanel!,
+1814: 8                           dimensions: e.target.val
+1815: 8                         },
+1816: 8                       })
+1817: 8                     }
+1818: 8                     placeholder="e.g. 3.5in H x 8i
+1819: 8                   />
+1820: 7                 </div>
+1821: 8                 <div>
+1822: 8                   <label className="block text-xs 
+1823: 8                     Shape
+1824: 8                   </label>
+1825: 8                   <select
+1826: 8                     className="block w-full rounde
+1827: 8                     value={formData.labelPanel?.sh
+1828: 8                     onChange={(e) =>
+1829: 8                       setFormData({
+1830: 8                         ...formData,
+1831: 8                         labelPanel: {
+1832: 8                           ...formData.labelPanel!,
+1833: 8                           shape: e.target.value,
+1834: 8                         },
+1835: 8                       })
+1836: 8                     }
+1837: 8                   >
+1838: 8                     <option value="">Select Shape.
+1839: 8                     {LABEL_PANEL_SHAPES.map((s) =>
+1840: 8                       <option key={s} value={s}>
+1841: 8                         {s}
+1842: 8                       </option>
+1843: 8                     ))}
+1844: 8                   </select>
+1845: 7                 </div>
+1846: 6               </div>
+1847: 5             </div>
+1848: 5 
+1849: 5             {/* Logistics Group (Restored/Wrapped)
+1850: 6             <div className="pt-4 space-y-4">
+1851: 6               <h4 className="text-xs font-bold tex
+1852: 6                 Logistics
+1853: 6               </h4>
+1854: 7               <div className="grid grid-cols-2 gap
+1855: 8                 <div>
+1856: 8                   <label className="block text-sm 
+1857: 8                     Case Qty
+1858: 8                   </label>
+1859: 8                   <input
+1860: 8                     type="number"
+1861: 8                     className="block w-full rounde
+1862: 8                     value={formData.caseQty}
+1863: 8                     onChange={(e) =>
+1864: 8                       setFormData({
+1865: 8                         ...formData,
+1866: 8                         caseQty: parseInt(e.target
+1867: 8                       })
+1868: 8                     }
+1869: 8                   />
+1870: 7                 </div>
+1871: 8                 <div className="bg-blue-50 p-2 rou
+1872: 8                   <label className="block text-sm 
+1873: 8                     Pallet Qty
+1874: 8                   </label>
+1875: 8                   <input
+1876: 8                     type="number"
+1877: 8                     className="block w-full rounde
+1878: 8                     value={formData.palletQty || "
+1879: 8                     onChange={(e) =>
+1880: 8                       setFormData({
+1881: 8                         ...formData,
+1882: 8                         palletQty: parseInt(e.targ
+1883: 8                       })
+1884: 8                     }
+1885: 8                     placeholder="e.g. 2400"
+1886: 8                   />
+1887: 7                 </div>
+1888: 6               </div>
+1889: 5             </div>
+1890: 5           )}
+1891: 5 
+1892: 5           {/* Documentation Section */}
+1893: 6           <div className="bg-white p-6 rounded-xl 
+1894: 6             <h3 className="font-bold text-lg text-
+1895: 6               <FileText className="w-5 h-5 text-in
+1896: 6               Documentation (PDFs)
+1897: 6             </h3>
+1898: 6 
+1899: 7             <div className="space-y-4">
+1900: 7               {formData.downloads?.map((doc, idx) 
+1901: 8                 <div
+1902: 8                   key={idx}
+1903: 8                   className="flex items-center jus
+1904: 8                 >
+1905: 9                   <div className="flex items-cente
+1906: 9                     <FileText className="w-4 h-4 t
+1907: 9                     <span className="text-sm font-
+1908: 9                       {doc.label}
+1909: 9                     </span>
+1910: 9                     <a
+1911: 9                       href={doc.url}
+1912: 9                       target="_blank"
+1913: 9                       className="text-xs text-blue
+1914: 9                     >
+1915: 9                       View
+1916: 9                     </a>
+1917: 8                   </div>
+1918: 8                   <button
+1919: 8                     type="button"
+1920: 8                     onClick={() => removeDownload(
+1921: 8                     className="text-gray-400 hover
+1922: 8                   >
+1923: 8                     <Trash2 className="w-4 h-4" />
+1924: 8                   </button>
+1925: 7                 </div>
+1926: 7               ))}
+1927: 7 
+1928: 8               <div className="mt-4">
+1929: 8                 <p className="text-xs font-bold te
+1930: 8                   Upload Spec Sheet / Line Drawing
+1931: 8                 </p>
+1932: 8                 <FileUpload onUploadComplete={addD
+1933: 7               </div>
+1934: 6             </div>
+1935: 5           </div>
+1936: 5 
+1937: 5           {/* Dynamic Specifications Section */}
+1938: 6           <div className="bg-white p-6 rounded-xl 
+1939: 7             <div className="flex items-center just
+1940: 7               <h3 className="font-bold text-lg tex
+1941: 7                 <ListPlus className="w-5 h-5 text-
+1942: 7                 Additional Specifications
+1943: 7               </h3>
+1944: 7               <button
+1945: 7                 type="button"
+1946: 7                 onClick={addEmptySpec}
+1947: 7                 className="flex items-center gap-1
+1948: 7               >
+1949: 7                 <Plus className="w-3 h-3" /> Add R
+1950: 7               </button>
+1951: 6             </div>
+1952: 6 
+1953: 7             <div className="space-y-3">
+1954: 7               {formData.specifications &&
+1955: 7                 Object.entries(formData.specificat
+1956: 7                   ([key, value], idx) => (
+1957: 8                     <div key={idx} className="flex
+1958: 9                       <div className="w-1/3">
+1959: 9                         <input
+1960: 9                           type="text"
+1961: 9                           value={key}
+1962: 9                           onChange={(e) =>
+1963: 9                             updateSpecKey(key, e.t
+1964: 9                           }
+1965: 9                           className="w-full text-x
+1966: 9                         />
+1967: 8                       </div>
+1968: 9                       <div className="flex-1">
+1969: 9                         <input
+1970: 9                           type="text"
+1971: 9                           value={value}
+1972: 9                           onChange={(e) => updateS
+1973: 9                           className="w-full text-s
+1974: 9                           placeholder="Value..."
+1975: 9                         />
+1976: 8                       </div>
+1977: 8                       <button
+1978: 8                         type="button"
+1979: 8                         onClick={() => removeSpec(
+1980: 8                         className="text-gray-300 h
+1981: 8                       >
+1982: 8                         <X className="w-4 h-4" />
+1983: 8                       </button>
+1984: 7                     </div>
+1985: 7                   ),
+1986: 7                 )}
+1987: 7               {(!formData.specifications ||
+1988: 7                 Object.keys(formData.specification
+1989: 7                 <p className="text-sm text-gray-40
+1990: 7                   No additional specs added.
+1991: 7                 </p>
+1992: 7               )}
+1993: 6             </div>
+1994: 5           </div>
+1995: 4         </div>
+1996: 4 
+1997: 4         {/* Sidebar / Meta */}
+1998: 5         <div className="space-y-6">
+1999: 5           {/* Organization */}
+2000: 6           <div className="bg-white p-6 rounded-xl 
+2001: 6             <h3 className="font-bold text-lg text-
+2002: 6               Organization
+2003: 6             </h3>
+2004: 6 
+2005: 7             <div className="mb-6">
+2006: 7               <label className="block text-sm font
+2007: 7                 Categories
+2008: 7               </label>
+2009: 8               <div className="space-y-2 max-h-48 o
+2010: 8                 {CATEGORIES.map((c) => (
+2011: 8                   <label
+2012: 8                     key={c}
+2013: 8                     className="flex items-center g
+2014: 8                   >
+2015: 8                     <input
+2016: 8                       type="checkbox"
+2017: 8                       checked={formData.categories
+2018: 8                       onChange={(e) => {
+2019: 8                         const current = formData.c
+2020: 8                         if (e.target.checked) {
+2021: 8                           setFormData({
+2022: 8                             ...formData,
+2023: 8                             categories: [...curren
+2024: 8                           });
+2025: 8                         } else {
+2026: 8                           setFormData({
+2027: 8                             ...formData,
+2028: 8                             categories: current.fi
+2029: 8                           });
+2030: 8                         }
+2031: 8                       }}
+2032: 8                       className="rounded text-berl
+2033: 8                     />
+2034: 8                     {c}
+2035: 8                   </label>
+2036: 8                 ))}
+2037: 7               </div>
+2038: 6             </div>
+2039: 6 
+2040: 7             <div className="mb-4">
+2041: 8               <div className="flex items-center ju
+2042: 8                 <label className="block text-sm fo
+2043: 8                   Industries
+2044: 8                 </label>
+2045: 8                 <button
+2046: 8                   type="button"
+2047: 8                   onClick={autoTagIndustries}
+2048: 8                   className="text-[10px] font-bold
+2049: 8                   title="Auto-Detect Industries ba
+2050: 8                 >
+2051: 8                   <Sparkles className="w-3 h-3" />
+2052: 8                   Smart Tag
+2053: 8                 </button>
+2054: 7               </div>
+2055: 8               <div className="space-y-2 max-h-60 o
+2056: 8                 {INDUSTRIES.map((ind) => (
+2057: 8                   <label
+2058: 8                     key={ind}
+2059: 8                     className="flex items-center g
+2060: 8                   >
+2061: 8                     <input
+2062: 8                       type="checkbox"
+2063: 8                       checked={formData.industry?.
+2064: 8                       onChange={() => handleIndust
+2065: 8                       className="rounded text-berl
+2066: 8                     />
+2067: 8                     {ind}
+2068: 8                   </label>
+2069: 8                 ))}
+2070: 7               </div>
+2071: 6             </div>
+2072: 6 
+2073: 7             <div className="pt-4 border-t border-g
+2074: 7               <label className="flex items-center 
+2075: 7                 <input
+2076: 7                   type="checkbox"
+2077: 7                   checked={formData.isClosure}
+2078: 7                   onChange={(e) =>
+2079: 7                     setFormData({ ...formData, isC
+2080: 7                   }
+2081: 7                   className="rounded text-berlin-b
+2082: 7                 />
+2083: 7                 <span className="text-sm font-medi
+2084: 7                   Is this a Closure?
+2085: 7                 </span>
+2086: 7               </label>
+2087: 6             </div>
+2088: 5           </div>
+2089: 4         </div>
+2090: 3       </div>
+2091: 3     </form>
+2092: 3   );
+2093: 3 }
+2094: 3 

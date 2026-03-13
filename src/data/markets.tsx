@@ -472,4 +472,34 @@ export const MARKETS_DATA: Market[] = [
     gallery: [],
     features: ["Wide Mouth Jars", "Freshness Seals", "Durable Materials"],
   },
+  {
+    slug: "cosmetics",
+    title: "Cosmetics",
+    tagline: "Quality aesthetics matter.",
+    desc: "Premium bottles, jars, and apothecary vials.",
+    icon: Sparkles,
+    image: "/images/markets/cosmetics_hero.png",
+    colSpan: "md:col-span-2",
+    fullDescription:
+      "Products that use organic ingredients packaged in clear cosmetic packaging appeal to consumers because containers showcase nature's colors. Whether it's heavy-walled plastic that mimics the weight of glass, or actual apothecary-style vials, we provide the packaging that elevates your brand.",
+    problem: {
+      title: "The Shelf Presence Problem",
+      desc: "In the cosmetics industry, generic packaging often blends in, failing to communicate the premium nature of the ingredients inside.",
+    },
+    solution: {
+      title: "Bespoke Decorating & Labeling",
+      desc: "From UV screen printing and spray coating to custom embossing, our in-house designers ensure your brand makes a statement before the product is even opened.",
+    },
+    stat: {
+      value: "100%",
+      label: "Premium Finish",
+    },
+    gallery: [],
+    features: [
+      "Heavy Wall PET",
+      "Apothecary Glass",
+      "Droppers & Pumps",
+      "UV Printing",
+    ],
+  },
 ];

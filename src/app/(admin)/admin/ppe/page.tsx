@@ -14,6 +14,7 @@ import Link from "next/link";
 import { deletePPEProduct, fetchPPEProducts } from "@/services/ppeService";
 import { PPEProduct } from "@/types/ppe";
 import Image from "next/image";
+import ActionModal from "@/components/admin/ActionModal";
 import dynamic from "next/dynamic";
 
 const CatalogDownloadButton = dynamic(
@@ -27,6 +28,21 @@ export default function PPEAdminPage() {
   const [search, setSearch] = useState(""); // Renamed searchTerm to search
   const [categoryFilter] = useState("All"); // Added categoryFilter state
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [modalConfig, setModalConfig] = useState<{
+    isOpen: boolean;
+    type: "danger" | "warning" | "magic";
+    title: string;
+    message: string;
+    confirmText: string;
+    action: () => Promise<void>;
+  }>({
+    isOpen: false,
+    type: "warning",
+    title: "",
+    message: "",
+    confirmText: "",
+    action: async () => {},
+  });
 
   async function loadProducts() {
     // Changed to async function syntax
@@ -41,9 +57,23 @@ export default function PPEAdminPage() {
   }, []);
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this product?")) return; // Changed confirmation message
-    await deletePPEProduct(id);
-    loadProducts(); // Reload products after deletion
+    setModalConfig({
+      isOpen: true,
+      type: "danger",
+      title: "Delete PPE Item",
+      message: "Are you sure you want to delete this product? This cannot be undone.",
+      confirmText: "Delete Item",
+      action: async () => {
+        try {
+          await deletePPEProduct(id);
+          await loadProducts();
+          setModalConfig((prev) => ({ ...prev, isOpen: false }));
+        } catch (error) {
+          console.error("Delete failed:", error);
+          alert("Failed to delete product");
+        }
+      },
+    });
   };
 
   const filteredProducts = products.filter((p) => {
@@ -74,32 +104,45 @@ export default function PPEAdminPage() {
   };
 
   const handleBulkDelete = async () => {
-    if (
-      !window.confirm(
-        `Are you sure you want to delete ${selectedIds.size} PPE Items? This cannot be undone.`,
-      )
-    )
-      return;
+    setModalConfig({
+      isOpen: true,
+      type: "danger",
+      title: "Bulk Delete PPE Items",
+      message: `Are you sure you want to delete ${selectedIds.size} PPE Items? This cannot be undone.`,
+      confirmText: "Delete Items",
+      action: async () => {
+        try {
+          setLoading(true);
+          await Promise.all(
+            Array.from(selectedIds).map((id) => deletePPEProduct(id)),
+          );
 
-    try {
-      setLoading(true);
-      await Promise.all(
-        Array.from(selectedIds).map((id) => deletePPEProduct(id)),
-      );
-
-      // Reload
-      await loadProducts();
-      setSelectedIds(new Set());
-      alert("PPE Items deleted successfully");
-    } catch (error) {
-      console.error("Bulk delete failed:", error);
-      alert("Failed to delete some items");
-      setLoading(false);
-    }
+          await loadProducts();
+          setSelectedIds(new Set());
+          setModalConfig((prev) => ({ ...prev, isOpen: false }));
+          alert("PPE Items deleted successfully");
+        } catch (error) {
+          console.error("Bulk delete failed:", error);
+          alert("Failed to delete some items");
+          setLoading(false);
+        }
+      },
+    });
   };
 
   return (
     <div className="p-8 max-w-[1600px] mx-auto">
+      <ActionModal
+        isOpen={modalConfig.isOpen}
+        onClose={() => setModalConfig({ ...modalConfig, isOpen: false })}
+        onConfirm={modalConfig.action}
+        title={modalConfig.title}
+        message={modalConfig.message}
+        confirmText={modalConfig.confirmText}
+        type={modalConfig.type}
+        isLoading={loading}
+      />
+
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <div>

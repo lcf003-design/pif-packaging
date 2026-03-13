@@ -76,7 +76,7 @@ export function InquirySidebar() {
                   <div className="flex-1 min-w-0 flex flex-col justify-between">
                     <div>
                       <p className="text-[10px] text-berlin-blue uppercase font-bold tracking-widest mb-1">
-                        {item.product.category}
+                        {item.product.categories?.join(', ') || 'Uncategorized'}
                       </p>
                       <h4 className="font-bold text-slate-900 text-base leading-tight">
                         {item.product.name}

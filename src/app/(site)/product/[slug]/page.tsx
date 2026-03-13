@@ -28,13 +28,15 @@ export async function generateMetadata({
     };
   }
 
+  const primaryCategory = product.categories?.[0] || "Product";
+
   return {
-    title: `${product.name} | ${product.material} ${product.category} | CatalogPrime`,
+    title: `${product.name} | ${product.material} ${primaryCategory} | CatalogPrime`,
     description:
       product.description ||
-      `Premium ${product.color || ""} ${product.material} ${
-        product.category
-      }. Bulk pricing and customization available.`,
+      `Premium ${
+        product.color || ""
+      } ${product.material} ${primaryCategory}. Bulk pricing and customization available.`,
   };
 }
 
