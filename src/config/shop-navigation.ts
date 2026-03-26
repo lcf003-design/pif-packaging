@@ -67,7 +67,6 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
         href: "/markets/spirits",
         image: "/images/markets/spirits.png",
       },
-
       {
         label: "Personal Health & Beauty",
         href: "/markets/personal-care",
@@ -204,101 +203,21 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
             href: "/products/bottles?search=Juice Bottles",
           },
           {
-            label: "Milk Bottles",
-            href: "/products/bottles?search=Milk Bottles",
-          },
-          {
             label: "Water Bottles",
             href: "/products/bottles?search=Water Bottles",
           },
         ],
       },
       {
-        label: "Wine, Beer & Spirit Bottles",
+        label: "Wine & Spirits Bottles",
         items: [
           {
             label: "Wine Bottles",
             href: "/products/bottles?search=Wine Bottles",
           },
           {
-            label: "Beer Bottles",
-            href: "/products/bottles?search=Beer Bottles",
-          },
-          {
             label: "Liquor Bottles",
             href: "/products/bottles?search=Liquor Bottles",
-          },
-        ],
-      },
-      {
-        label: "Food Bottles",
-        items: [
-          {
-            label: "Honey Bottles",
-            href: "/products/bottles?search=Honey Bottles",
-          },
-          {
-            label: "Sauce Bottles",
-            href: "/products/bottles?search=Sauce Bottles",
-          },
-          {
-            label: "Oil Bottles",
-            href: "/products/bottles?search=Oil Bottles",
-          },
-          {
-            label: "Plastic Food Bottles",
-            href: "/products/bottles?search=Plastic Food Bottles",
-          },
-        ],
-      },
-      {
-        label: "Health & Beauty Bottles",
-        items: [
-          {
-            label: "Essential Oils & Aromatherapy Bottles",
-            href: "/products/bottles?search=Essential Oils & Aromatherapy Bottles",
-          },
-          {
-            label: "Perfume Bottles",
-            href: "/products/bottles?search=Perfume Bottles",
-          },
-          {
-            label: "Liquid Soap & Lotion Bottles",
-            href: "/products/bottles?search=Liquid Soap & Lotion Bottles",
-          },
-        ],
-      },
-      {
-        label: "Pharmaceutical & Healthcare",
-        items: [
-          {
-            label: "Dropper Bottles",
-            href: "/products/bottles?search=Dropper Bottles",
-          },
-          {
-            label: "Pill & Vitamin Bottles",
-            href: "/products/bottles?search=Pill & Vitamin Bottles",
-          },
-          {
-            label: "Ointment Bottles",
-            href: "/products/bottles?search=Ointment Bottles",
-          },
-        ],
-      },
-      {
-        label: "Industrial & Chemical Bottles",
-        items: [
-          {
-            label: "Bettix Bottles",
-            href: "/products/bottles?search=Bettix Bottles",
-          },
-          {
-            label: "Oil & Lubricant Bottles",
-            href: "/products/bottles?search=Oil & Lubricant Bottles",
-          },
-          {
-            label: "Leak Proof Bottles",
-            href: "/products/bottles?search=Leak Proof Bottles",
           },
         ],
       },
@@ -330,64 +249,69 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
       },
       {
         label: "Popular Jar Shapes",
-        items: [{ label: "Round Jars", href: "/products/jars?shape=Round" }],
-      },
-      {
-        label: "Shop Popular Jars",
         items: [
-          { label: "Mason Jars", href: "/products/jars?search=Mason Jars" },
-          { label: "Kilner Jars", href: "/products/jars?search=Kilner Jars" },
+          { label: "Round Jars", href: "/products/jars?shape=Round" },
           { label: "Square Jars", href: "/products/jars?search=Square Jars" },
+          { label: "Mason Jars", href: "/products/jars?search=Mason Jars" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "caps",
+    label: "Caps & Closures",
+    image: "/images/shop-all/cat_caps.png",
+    subSections: [
+      {
+        label: "Types of Caps",
+        items: [
           {
-            label: "Gripper Jars",
-            href: "/products/jars?search=Gripper Jars",
+            label: "Continuous Thread Caps",
+            href: "/products/caps?search=Continuous Thread",
+          },
+          {
+            label: "Dropper Assemblies",
+            href: "/products/caps?search=Dropper",
+          },
+          {
+            label: "Fine Mist Sprayers",
+            href: "/products/caps?search=Sprayer",
+          },
+          {
+            label: "Treatment Pumps",
+            href: "/products/caps?search=Pump",
+          },
+          {
+            label: "Child-Resistant Caps",
+            href: "/products/caps?search=Child-Resistant",
+          },
+          {
+            label: "Dispensing Caps",
+            href: "/products/caps?search=Dispensing",
           },
         ],
       },
+    ],
+  },
+  {
+    id: "tubes",
+    label: "Tubes",
+    image: "/images/shop-all/cat_tubes.png",
+    subSections: [
       {
-        label: "Food",
+        label: "Popular Tube Types",
         items: [
           {
-            label: "Jelly & Jam Jars",
-            href: "/products/jars?search=Jelly & Jam Jars",
-          },
-          { label: "Spice Jars", href: "/products/jars?search=Spice Jars" },
-          { label: "Honey Jars", href: "/products/jars?search=Honey Jars" },
-          { label: "Pickle Jars", href: "/products/jars?search=Pickle Jars" },
-          { label: "Salsa Jars", href: "/products/jars?search=Salsa Jars" },
-          {
-            label: "Spaghetti Jars",
-            href: "/products/jars?search=Spaghetti Jars",
-          },
-        ],
-      },
-      {
-        label: "Health & Beauty Jars",
-        items: [
-          {
-            label: "Bath Salt & Body Scrub Jars",
-            href: "/products/jars?search=Bath Salt & Body Scrub Jars",
+            label: "Lip Balm Tubes",
+            href: "/products/tubes?search=Lip Balm Tubes",
           },
           {
-            label: "Cosmetic Jars",
-            href: "/products/jars?search=Cosmetic Jars",
-          },
-        ],
-      },
-      {
-        label: "More Jars",
-        items: [
-          {
-            label: "Lab & Science Jars",
-            href: "/products/jars?search=Lab & Science Jars",
+            label: "Mascara Tubes",
+            href: "/products/tubes?search=Mascara Tubes",
           },
           {
-            label: "Pharmacy Jars",
-            href: "/products/jars?search=Pharmacy Jars",
-          },
-          {
-            label: "Marijuana Jars",
-            href: "/products/jars?search=Marijuana Jars",
+            label: "Deodorant Tubes",
+            href: "/products/tubes?search=Deodorant Tubes",
           },
         ],
       },
@@ -415,7 +339,7 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
         ],
       },
       {
-        label: "Utility Jugs",
+        label: "Popular Jug Styles",
         items: [
           { label: "Jerry Cans", href: "/products/jugs?search=Jerry Cans" },
           {
@@ -423,25 +347,10 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
             href: "/products/jugs?search=Plastic Carboys",
           },
           {
-            label: "Cleaners & Solvent Jugs",
-            href: "/products/jugs?search=Cleaners & Solvent Jugs",
-          },
-          {
             label: "F-Style Jugs",
             href: "/products/jugs?search=F-Style Jugs",
           },
-          {
-            label: "Jugs with Caps",
-            href: "/products/jugs?search=Jugs with Caps",
-          },
-        ],
-      },
-      {
-        label: "Beverage Jugs",
-        items: [
           { label: "Growlers", href: "/products/jugs?search=Growlers" },
-          { label: "Juice Jugs", href: "/products/jugs?search=Juice Jugs" },
-          { label: "Milk Jugs", href: "/products/jugs?search=Milk Jugs" },
         ],
       },
     ],
@@ -501,104 +410,6 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
     ],
   },
   {
-    id: "cans",
-    label: "Cans",
-    image: "/images/shop-all/cat_cans.png",
-    subSections: [
-      {
-        label: "Popular Cans",
-        items: [
-          { label: "Paint Cans", href: "/products/cans?search=Paint Cans" },
-          {
-            label: "Industrial Cans",
-            href: "/products/cans?search=Industrial Cans",
-          },
-          {
-            label: "Open Top Cans",
-            href: "/products/cans?search=Open Top Cans",
-          },
-          {
-            label: "Coin Collection Cans",
-            href: "/products/cans?search=Coin Collection Cans",
-          },
-          { label: "Safety Cans", href: "/products/cans?search=Safety Cans" },
-          {
-            label: "Stock Aluminum Cans",
-            href: "/products/cans?search=Stock Aluminum Cans",
-          },
-          {
-            label: "Special Order Aluminum Cans",
-            href: "/products/cans?search=Special Order Aluminum Cans",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "tins",
-    label: "Tins",
-    image: "/images/shop-all/cat_tins.png",
-    subSections: [
-      {
-        label: "Novelty Tins",
-        items: [
-          {
-            label: "Popcorn Tins",
-            href: "/products/tins?search=Popcorn Tins",
-          },
-        ],
-      },
-      {
-        label: "Seamless Tins",
-        items: [
-          {
-            label: "Clear Top Tins",
-            href: "/products/tins?search=Clear Top Tins",
-          },
-          { label: "Hinged Tins", href: "/products/tins?search=Hinged Tins" },
-          {
-            label: "Screw Top Tins",
-            href: "/products/tins?search=Screw Top Tins",
-          },
-          {
-            label: "Slip Cover Tins",
-            href: "/products/tins?search=Slip Cover Tins",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "tubs",
-    label: "Tubs",
-    image: "/images/shop-all/cat_tubs.png",
-    subSections: [
-      {
-        label: "Popular Tubs",
-        items: [
-          {
-            label: "Ice Cream Tubs",
-            href: "/products/tubs?search=Ice Cream Tubs",
-          },
-          { label: "Butter Tubs", href: "/products/tubs?search=Butter Tubs" },
-          { label: "Yogurt Tubs", href: "/products/tubs?search=Yogurt Tubs" },
-          {
-            label: "Food Grade Tubs",
-            href: "/products/tubs?search=Food Grade Tubs",
-          },
-          {
-            label: "Takeout Containers",
-            href: "/products/tubs?search=Takeout Containers",
-          },
-          {
-            label: "Deli Containers",
-            href: "/products/tubs?search=Deli Containers",
-          },
-        ],
-      },
-    ],
-  },
-  {
     id: "buckets",
     label: "Buckets",
     image: "/images/shop-all/cat_buckets.png",
@@ -636,113 +447,134 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
     ],
   },
   {
-    id: "tubes",
-    label: "Tubes",
-    image: "/images/shop-all/cat_tubes.png",
+    id: "drums",
+    label: "Drums",
+    image: "/images/markets/ind_drums.png",
     subSections: [
       {
-        label: "Health & Beauty Tubes",
+        label: "Materials",
         items: [
-          {
-            label: "Lip Balm Tubes",
-            href: "/products/tubes?search=Lip Balm Tubes",
-          },
-          {
-            label: "Mascara Tubes",
-            href: "/products/tubes?search=Mascara Tubes",
-          },
-          {
-            label: "Sunscreen & Lotion Tubes",
-            href: "/products/tubes?search=Sunscreen & Lotion Tubes",
-          },
-          {
-            label: "Deodorant Tubes",
-            href: "/products/tubes?search=Deodorant Tubes",
-          },
+          { label: "Steel Drums", href: "/products/drums?material=Steel" },
+          { label: "Plastic Drums", href: "/products/drums?material=Plastic" },
+          { label: "Fiber Drums", href: "/products/drums?material=Fiber" },
         ],
       },
       {
-        label: "Popular",
+        label: "Popular Drums",
+        items: [
+          { label: "55 Gallon Drums", href: "/products/drums?search=55 Gallon Drums" },
+          { label: "Overpack Drums", href: "/products/drums?search=Overpack Drums" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "hazmat",
+    label: "Hazmat Packaging",
+    image: "/images/shop-all/cat_hazmat.png",
+    subSections: [
+      {
+        label: "Popular Hazmat Packaging",
         items: [
           {
-            label: "Grease Cartridges",
-            href: "/products/tubes?search=Grease Cartridges",
+            label: "UN Rated Bottles",
+            href: "/products/hazmat?search=UN Rated Bottles",
+          },
+          {
+            label: "UN Rated Buckets",
+            href: "/products/hazmat?search=UN Rated Buckets",
+          },
+          {
+            label: "UN Rated Drums",
+            href: "/products/hazmat?search=UN Rated Drums",
+          },
+          {
+            label: "UN Rated Jerrycans & Kegs",
+            href: "/products/hazmat?search=UN Rated Jerrycans & Kegs",
           },
         ],
       },
     ],
   },
   {
-    id: "caps",
-    label: "Caps & Closures",
-    image: "/images/shop-all/cat_caps.png",
+    id: "tins",
+    label: "Tins",
+    image: "/images/shop-all/cat_tins.png",
     subSections: [
       {
-        label: "Popular Caps & Closures",
+        label: "Popular Tin Styles",
         items: [
           {
-            label: "Beer Bottle Caps",
-            href: "/products/caps?search=Beer Bottle Caps",
+            label: "Clear Top Tins",
+            href: "/products/tins?search=Clear Top Tins",
+          },
+          { label: "Hinged Tins", href: "/products/tins?search=Hinged Tins" },
+          {
+            label: "Screw Top Tins",
+            href: "/products/tins?search=Screw Top Tins",
           },
           {
-            label: "Dropper Caps",
-            href: "/products/caps?search=Dropper Caps",
+            label: "Slip Cover Tins",
+            href: "/products/tins?search=Slip Cover Tins",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "cans",
+    label: "Cans",
+    image: "/images/shop-all/cat_cans.png",
+    subSections: [
+      {
+        label: "Popular Cans",
+        items: [
+          { label: "Paint Cans", href: "/products/cans?search=Paint Cans" },
+          {
+            label: "Industrial Cans",
+            href: "/products/cans?search=Industrial Cans",
           },
           {
-            label: "Dropper Fitments",
-            href: "/products/caps?search=Dropper Fitments",
+            label: "Open Top Cans",
+            href: "/products/cans?search=Open Top Cans",
           },
           {
-            label: "Spice & Sifter Caps",
-            href: "/products/caps?search=Spice & Sifter Caps",
+            label: "Coin Collection Cans",
+            href: "/products/cans?search=Coin Collection Cans",
+          },
+          { label: "Safety Cans", href: "/products/cans?search=Safety Cans" },
+          {
+            label: "Stock Aluminum Cans",
+            href: "/products/cans?search=Stock Aluminum Cans",
           },
           {
-            label: "Bottle Pourer Caps",
-            href: "/products/caps?search=Bottle Pourer Caps",
+            label: "Special Order Aluminum Cans",
+            href: "/products/cans?search=Special Order Aluminum Cans",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "tubs",
+    label: "Tubs",
+    image: "/images/shop-all/cat_tubs.png",
+    subSections: [
+      {
+        label: "Popular Tubs",
+        items: [
+          {
+            label: "Ice Cream Tubs",
+            href: "/products/tubs?search=Ice Cream Tubs",
+          },
+          { label: "Butter Tubs", href: "/products/tubs?search=Butter Tubs" },
+          {
+            label: "Food Grade Tubs",
+            href: "/products/tubs?search=Food Grade Tubs",
           },
           {
-            label: "Flip Top Caps",
-            href: "/products/caps?search=Flip Top Caps",
-          },
-          { label: "Spout Caps", href: "/products/caps?search=Spout Caps" },
-          {
-            label: "Brush & Dauber Caps",
-            href: "/products/caps?search=Brush & Dauber Caps",
-          },
-          { label: "Mister Caps", href: "/products/caps?search=Mister Caps" },
-          {
-            label: "Tamper-Evident Caps",
-            href: "/products/caps?search=Tamper-Evident Caps",
-          },
-          {
-            label: "Child-Resistant Capable Caps",
-            href: "/products/caps?search=Child-Resistant Capable Caps",
-          },
-          {
-            label: "Orifice Reducers",
-            href: "/products/caps?search=Orifice Reducers",
-          },
-          {
-            label: "Threaded & Lug Caps",
-            href: "/products/caps?search=Threaded & Lug Caps",
-          },
-          {
-            label: "Corks & Stoppers",
-            href: "/products/caps?search=Corks & Stoppers",
-          },
-          { label: "Pump Caps", href: "/products/caps?search=Pump Caps" },
-          {
-            label: "Trigger Sprayers",
-            href: "/products/caps?search=Trigger Sprayers",
-          },
-          { label: "Disc Caps", href: "/products/caps?search=Disc Caps" },
-          {
-            label: "Shrink Bands & Cap Liners",
-            href: "/products/caps?search=Shrink Bands & Cap Liners",
-          },
-          {
-            label: "Closures for Industrial Cans",
-            href: "/products/caps?search=Closures for Industrial Cans",
+            label: "Deli Containers",
+            href: "/products/tubs?search=Deli Containers",
           },
         ],
       },
@@ -780,135 +612,5 @@ export const SHOP_NAVIGATION: NavigationCategory[] = [
       },
     ],
   },
-  {
-    id: "boxes",
-    label: "Boxes & Mailers",
-    image: "/images/shop-all/cat_boxes.png",
-    subSections: [
-      {
-        label: "Popular Boxes",
-        items: [
-          {
-            label: "Shipping Boxes",
-            href: "/products/boxes?search=Shipping Boxes",
-          },
-          {
-            label: "Cardboard Storage Boxes",
-            href: "/products/boxes?search=Cardboard Storage Boxes",
-          },
-          { label: "Mailers", href: "/products/boxes?search=Mailers" },
-          {
-            label: "Shipping Supplies",
-            href: "/products/boxes?search=Shipping Supplies",
-          },
-          { label: "Labels", href: "/products/boxes?search=Labels" },
-        ],
-      },
-      {
-        label: "Popular Bags",
-        items: [
-          { label: "Poly Bags", href: "/products/boxes?search=Poly Bags" },
-          {
-            label: "Resealable Poly Bags",
-            href: "/products/boxes?search=Resealable Poly Bags",
-          },
-          { label: "Custom Bags", href: "/products/boxes?search=Custom Bags" },
-        ],
-      },
-    ],
-  },
-  {
-    id: "hazmat",
-    label: "Hazmat Packaging",
-    image: "/images/shop-all/cat_hazmat.png",
-    subSections: [
-      {
-        label: "Popular Hazmat Packaging",
-        items: [
-          {
-            label: "UN Rated Bottles",
-            href: "/products/hazmat?search=UN Rated Bottles",
-          },
-          {
-            label: "UN Rated Buckets",
-            href: "/products/hazmat?search=UN Rated Buckets",
-          },
-          {
-            label: "UN Rated Drums",
-            href: "/products/hazmat?search=UN Rated Drums",
-          },
-          {
-            label: "UN Rated Jerrycans & Kegs",
-            href: "/products/hazmat?search=UN Rated Jerrycans & Kegs",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "drums",
-    label: "Drums",
-    image: "/images/markets/ind_drums.png",
-    subSections: [
-      {
-        label: "Materials",
-        items: [
-          { label: "Steel Drums", href: "/products/drums?material=Steel" },
-          { label: "Plastic Drums", href: "/products/drums?material=Plastic" },
-          { label: "Fiber Drums", href: "/products/drums?material=Fiber" },
-        ],
-      },
-      {
-        label: "Popular Drums",
-        items: [
-          { label: "55 Gallon Drums", href: "/products/drums?search=55 Gallon Drums" },
-          { label: "Overpack Drums", href: "/products/drums?search=Overpack Drums" },
-        ],
-      },
-    ],
-  },
-  {
-    id: "bags",
-    label: "Bags",
-    image: "/division_flexible_pouches.png",
-    subSections: [
-      {
-        label: "Bags & Pouches",
-        items: [
-          { label: "Stand-Up Pouches", href: "/products/bags?search=Stand-Up Pouches" },
-          { label: "Poly Bags", href: "/products/bags?search=Poly Bags" },
-        ],
-      },
-    ],
-  },
-  {
-    id: "custom-labels",
-    label: "Custom Label Creator",
-    image: "/services_decorating_labeling.png",
-    subSections: [{ label: "Custom Labels", items: [{ label: "Design Online", href: "/products/custom-labels" }] }],
-  },
-  {
-    id: "sustainable",
-    label: "Sustainable Packaging",
-    image: "/sustainability_minimalist.png",
-    subSections: [{ label: "Eco-Friendly", items: [{ label: "PCR Plastics", href: "/products/sustainable" }] }],
-  },
-  {
-    id: "ecommerce",
-    label: "E-commerce Ready",
-    image: "/images/shop-all/cat_bottles.png",
-    subSections: [{ label: "Shipping Optimized", items: [{ label: "ISTA-6 Testing", href: "/products/ecommerce" }] }],
-  },
-  {
-    id: "leakproof",
-    label: "Leakproof Packaging",
-    image: "/images/markets/ind_leakproof.png",
-    subSections: [{ label: "Leak Resistance", items: [{ label: "Induction Seals", href: "/products/leakproof" }] }],
-  },
-  {
-    id: "tamper-evident",
-    label: "Tamper-Evident",
-    image: "/images/markets/spirits_grid_tamper_caps.png",
-    subSections: [{ label: "Security", items: [{ label: "Shrink Bands", href: "/products/tamper-evident" }] }],
-  },
 ];
+
