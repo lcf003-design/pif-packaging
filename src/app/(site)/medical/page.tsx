@@ -3,356 +3,404 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Shield,
-  Truck,
-  AlertOctagon,
-  CheckCircle2,
-  Globe,
-  Anchor,
-  Plane,
-  History as HistoryIcon,
-  Activity,
-  Syringe,
-  Microscope,
-  Stethoscope,
-} from "lucide-react";
-import PPESpecModal, { PPESpecData } from "@/components/ppe/PPESpecModal";
-
-// --- PRODUCT DATA 1: PPE ---
-const PPE_PRODUCTS: PPESpecData[] = [
-  {
-    id: "nitrile-gloves",
-    title: "Nitrile Examination Gloves",
-    category: "Hand Protection",
-    description:
-      "Medical-grade, powder-free nitrile examination gloves offering superior puncture resistance and tactical sensitivity. Optimized for high-risk environments and chemical handling.",
-    specs: [
-      { label: "Material", value: "100% Synthetic Nitrile" },
-      { label: "Thickness", value: "3.5mil (Palm) / 4.2mil (Finger)" },
-      { label: "Surface", value: "Textured Fingertips" },
-      { label: "Color", value: "Medical Blue" },
-    ],
-    compliance: ["ASTM D6319 Standard", "FDA 510(k) Cleared", "Chemo Rated"],
-    packaging: {
-      caseCount: "1,000 pcs (10/100)",
-      palletCount: "96 Cases",
-      moq: "1 Container",
-    },
-  },
-  {
-    id: "n95-respirator",
-    title: "N95 Particulate Respirator",
-    category: "Respiratory",
-    description:
-      "NIOSH-approved particulate respirator designed to provide at least 95% filtration efficiency against non-oil based particles. Features a collapse-resistant shell.",
-    specs: [
-      { label: "Filter Type", value: "Electrostatically Charged Meltblown" },
-      { label: "Style", value: "Foldable / Cup Shape" },
-      { label: "Fluid Resistance", value: "160 mmHg (ASTM F1862)" },
-    ],
-    compliance: ["NIOSH Approved (TC-84A)", "FDA Cleared Surgical Mask"],
-    packaging: {
-      caseCount: "240 pcs (12/20)",
-      palletCount: "40 Cases",
-      moq: "1 Pallet",
-    },
-  },
-  {
-    id: "isolation-gown",
-    title: "AAMI Level 2 Isolation Gown",
-    category: "Body Protection",
-    description:
-      "High-quality SMS material isolation gown providing reliable fluid resistance for low-to-moderate risk scenarios.",
-    specs: [
-      { label: "Material", value: "Multi-layer SMS" },
-      { label: "Weight", value: "40 GSM" },
-      { label: "Closure", value: "Neck & Waist Ties" },
-    ],
-    compliance: ["AAMI Level 2", "FDA Registered Class 1"],
-    packaging: {
-      caseCount: "100 pcs",
-      palletCount: "40 Cases",
-      moq: "1 Pallet",
-    },
-  },
-];
-
-// --- PRODUCT DATA 2: CLINICAL CONSUMABLES ---
-const CLINICAL_PRODUCTS: PPESpecData[] = [
-  {
-    id: "luer-lock-syringe",
-    title: "3mL Luer Lock Syringe",
-    category: "Syringes & Sharps",
-    description:
-      "High-clarity polypropylene barrel with precision-glide plunger. Standard Luer Lock mechanism ensures secure needle attachment.",
-    specs: [
-      { label: "Volume", value: "3mL / 3cc" },
-      { label: "Tip Type", value: "Luer Lock" },
-      { label: "Material", value: "Medical Grade PP" },
-    ],
-    compliance: ["ISO 7886-1", "Latex Free", "DEHP Free"],
-    packaging: {
-      caseCount: "2,000 pcs",
-      palletCount: "30 Cases",
-      moq: "1 Pallet",
-    },
-  },
-  {
-    id: "specimen-cup",
-    title: "Sterile Specimen Container",
-    category: "Specimen Collection",
-    description:
-      "4oz (120ml) sterile specimen cups with leak-proof screw cap and tamper-evident seal. Ideal for comprehensive diagnostic collection.",
-    specs: [
-      { label: "Capacity", value: "4oz / 120ml" },
-      { label: "Sterility", value: "Gamma Irradiated" },
-      { label: "Label", value: "Patient ID Area" },
-    ],
-    compliance: ["Leak-Proof Tested", "ISO 13485 Mfg"],
-    packaging: {
-      caseCount: "500 pcs",
-      palletCount: "20 Cases",
-      moq: "1 Pallet",
-    },
-  },
-  {
-    id: "biohazard-bag",
-    title: "Red Biohazard Bag",
-    category: "Waste Management",
-    description:
-      "Heavy-duty LDPE biohazard liners with high puncture resistance. Star-sealed bottom for maximum load capacity.",
-    specs: [
-      { label: "Size", value: "24x24 / 10 Gallon" },
-      { label: "Thickness", value: "1.5 Mil" },
-      { label: "Printing", value: "Biohazard Symbol (OSHA)" },
-    ],
-    compliance: ["ASTM D1709 (Impact)", "ASTM D1922 (Tear)"],
-    packaging: {
-      caseCount: "500 pcs",
-      palletCount: "48 Cases",
-      moq: "1 Pallet",
-    },
-  },
-];
 
 export default function MedicalPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<PPESpecData | null>(
-    null,
-  );
+  const [formState, setFormState] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    organization: "",
+  });
 
-  const handleOpenSpecs = (id: string, type: "ppe" | "clinical") => {
-    const list = type === "ppe" ? PPE_PRODUCTS : CLINICAL_PRODUCTS;
-    const product = list.find((p) => p.id === id);
-    if (product) {
-      setSelectedProduct(product);
-      setIsModalOpen(true);
-    }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert("Thank you for your inquiry.");
+  };
+
+  // Replicating colors exactly from reference
+  const primaryNavy = "#001e42"; // Deep navy blue from headers
+  const linkBlue = "#0055b8"; // Brighter blue from links/buttons
+  const lightBg = "#f4f7f9"; // the light gray background bands
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-200 selection:text-blue-900">
-      {/* HERO SECTION */}
-      <section className="relative h-[90vh] flex items-center justify-center overflow-hidden bg-white">
-        <div className="relative z-10 container mx-auto px-6 text-center max-w-5xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-sm font-bold mb-8 uppercase tracking-widest animate-fade-in-up">
-            <Activity className="w-4 h-4" />
-            <span>Medical & Clinical Division</span>
-          </div>
-
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-[0.9] text-slate-900">
-            Clinical Precision <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">
-              At Scale.
-            </span>
-          </h1>
-
-          <p className="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-12">
-            High-volume manufacturing of medical-grade PPE and clinical
-            consumables. FDA registered. ISO 13485 certified.
-          </p>
-
-          <div className="flex flex-col md:flex-row gap-4 justify-center">
-            <Link
-              href="/medical/products"
-              className="px-8 py-4 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20"
-            >
-              View Products
-            </Link>
-            <Link
-              href="/contact?subject=Medical%20Inquiry"
-              className="px-8 py-4 bg-white border border-slate-200 text-slate-700 font-bold rounded-full hover:bg-slate-50 transition-all shadow-sm"
-            >
-              Request Quote
-            </Link>
+    <div className="min-h-screen bg-white text-slate-900 font-sans">
+      
+      {/* 1. HERO SECTION */}
+      {/* Reference shows a diagonal cut on the right image. */}
+      <section className="relative bg-white pt-24 pb-16 lg:pt-32 lg:pb-32 overflow-hidden">
+        <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
+          <div className="flex flex-col lg:flex-row items-center">
+            
+            {/* Text Side */}
+            <div className="w-full lg:w-1/2 pr-0 lg:pr-16 z-10 space-y-6">
+              <h1 className="text-[2.75rem] md:text-[3.5rem] font-bold tracking-tight text-[#001e42] leading-[1.1]">
+                PPE supplies
+              </h1>
+              <p className="text-xl md:text-[1.35rem] text-slate-700 leading-relaxed font-normal max-w-lg">
+                Find reliable, high-quality PPE for every level of protection.
+              </p>
+            </div>
+            
+            {/* Image Side - Diagonal Cut mimicking reference */}
+            <div className="w-full lg:w-1/2 mt-12 lg:mt-0 relative h-[400px] lg:h-[450px]">
+              {/* White overlay creating the diagonal wedge from left */}
+              <div className="absolute top-0 bottom-0 -left-16 w-32 bg-white skew-x-[-15deg] z-10 hidden lg:block transform origin-bottom border-r-4 border-white"></div>
+              
+              <div className="relative w-full h-full overflow-hidden">
+                <img
+                  src="/ppe_hero_display.png"
+                  alt="Medical Professional in PPE"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* STRATEGIC INFRASTRUCTURE */}
-      <section className="py-24 bg-slate-900 text-white">
-        <div className="container mx-auto px-6 text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Strategic Healthcare Infrastructure
+      {/* 2. VALUE PROP TEXT (Light Gray Band) */}
+      <section className="py-20" style={{ backgroundColor: lightBg }}>
+        <div className="container mx-auto px-6 lg:px-12 max-w-7xl text-center md:text-left">
+          <h2 className="text-2xl md:text-[1.75rem] font-bold text-[#001e42] leading-tight mb-4 tracking-tight">
+            Count on us to meet all PPE needs across your entire organization
           </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto">
-            Beyond standard manufacturing. We provide a fortified supply chain
-            for critical healthcare systems, ensuring readiness and redundancy.
+          <p className="text-slate-600 text-base md:text-[1.05rem] leading-relaxed max-w-5xl">
+            From emergency responders to clinical professionals, our comprehensive range of high-quality PPE ensures the safety and well-being of your teams. We provide reliable sourcing, robust supply chain management, and dedicated support to help you navigate periods of high demand seamlessly.
           </p>
         </div>
-
-        <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <FeatureCard
-            icon={<Plane className="w-8 h-8 text-blue-400" />}
-            title="Rapid Deployment"
-            description="Air charter capabilities for urgent medical supply drops bypassing commercial bottlenecks."
-          />
-          <FeatureCard
-            icon={<Shield className="w-8 h-8 text-blue-400" />}
-            title="Stockpile Management"
-            description="Vendor-managed inventory programs for hospital systems and government entities."
-          />
-          <FeatureCard
-            icon={<Globe className="w-8 h-8 text-blue-400" />}
-            title="Global Compliance"
-            description="Manufacturing redundancy across FDA-registered facilities to mitigate risk."
-          />
-        </div>
       </section>
 
-      {/* CATALOG SECTION 1: PPE */}
-      <section id="catalog" className="py-24 bg-slate-50">
-        <div className="container mx-auto px-6">
-          <div className="flex items-end justify-between mb-12 border-b border-slate-200 pb-8">
-            <div>
-              <div className="flex items-center gap-2 text-blue-600 font-bold uppercase tracking-widest mb-2">
-                <Shield className="w-5 h-5" />
-                <span>Frontline Defense</span>
-              </div>
-              <h2 className="text-4xl text-slate-900 font-bold">
-                Protective Equipment
-              </h2>
-            </div>
+      {/* 3. SUPPLY CHAIN RESILIENCE (4-Column) */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
+          <div className="mb-10 text-center md:text-left">
+            <h2 className="text-[0.65rem] font-bold text-slate-500 uppercase tracking-widest mb-3">
+              SUPPLY CHAIN RESILIENCE
+            </h2>
+            <h3 className="text-3xl md:text-[2.1rem] font-bold tracking-tight text-[#001e42] leading-tight">
+              Get the PPE supplies you need—safeguarded by supply chain resilience
+            </h3>
+            <p className="text-slate-600 text-sm mt-3 max-w-4xl">
+              Offering inventory optimization, dedicated account management, and logistics expertise designed to support high volume facilities.
+            </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {PPE_PRODUCTS.map((p) => (
-              <ProductCard
-                key={p.id}
-                {...p}
-                gradient="from-slate-100 to-white"
-                onOpenSpecs={() => handleOpenSpecs(p.id, "ppe")}
-              />
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
+            {[
+              {
+                title: "End-to-end supply chain control and diversification",
+                description: "Our domestic facility network enables rapid response times and reduces risk associated with global shipping bottlenecks or international supply interruptions.",
+                img: "/ppe_supply_chain.png",
+              },
+              {
+                title: "Distribution and delivery",
+                description: "We navigate complex logistics through our robust domestic network of over 30 facilities, ensuring precise and reliable deliveries.",
+                img: "/ppe_global_distribution.png"
+              },
+              {
+                title: "Data-driven demand planning",
+                description: "Predictive analytics help forecasting future demands, allowing proactive procurement and planning for unexpected surges.",
+                img: "/ppe_demand_planning.png"
+              },
+              {
+                title: "Backup inventory",
+                description: "We maintain dedicated backup stockpile programs to assure priority access when routine supply networks face extreme constraints or disruption.",
+                img: "/ppe_backup_inventory.png"
+              },
+            ].map((item, i) => (
+              <div key={i} className="flex flex-col group text-left">
+                {/* Reference exactly shows sharp corners, no rounded edges here */}
+                <div className="relative h-40 w-full mb-4 bg-slate-100 overflow-hidden">
+                   <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
+                </div>
+                <h4 className="text-[1.1rem] font-bold text-[#001e42] mb-3 leading-tight">{item.title}</h4>
+                <p className="text-slate-600 text-[0.85rem] leading-relaxed">{item.description}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CATALOG SECTION 2: CLINICAL */}
-      <section className="py-24 bg-white border-t border-slate-100">
-        <div className="container mx-auto px-6">
-          <div className="flex items-end justify-between mb-12 border-b border-slate-100 pb-8">
-            <div>
-              <div className="flex items-center gap-2 text-emerald-600 font-bold uppercase tracking-widest mb-2">
-                <Syringe className="w-5 h-5" />
-                <span>Clinical Precision</span>
-              </div>
-              <h2 className="text-4xl text-slate-900 font-bold">
-                Designated Consumables
-              </h2>
+      {/* 4. COMPREHENSIVE PORTFOLIO (Split Layout, Light Gray) */}
+      {/* Replicating the distinct image collage layout from the reference */}
+      <section className="py-24" style={{ backgroundColor: lightBg }}>
+        <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
+          <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
+            
+            {/* Left Image Collage (matching reference grids) */}
+            <div className="w-full lg:w-[45%]">
+               <div className="grid grid-cols-2 gap-2 h-[450px]">
+                 {/* Top Left */}
+                 <div className="bg-slate-200 w-full h-full">
+                    <img src="/ppe_hero_display.png" alt="PPE" className="w-full h-full object-cover grayscale opacity-80" />
+                 </div>
+                 {/* Top Right */}
+                 <div className="bg-slate-300 w-full h-full">
+                    <img src="/ppe_portfolio_team.png" alt="PPE" className="w-full h-full object-cover" />
+                 </div>
+                 {/* Bottom Left */}
+                 <div className="bg-slate-300 w-full h-full">
+                    <img src="/ppe_training.png" alt="PPE" className="w-full h-full object-cover" />
+                 </div>
+                 {/* Bottom Right */}
+                 <div className="bg-slate-200 w-full h-full">
+                    <img src="/ppe_supply_chain.png" alt="PPE" className="w-full h-full object-cover" />
+                 </div>
+               </div>
+            </div>
+
+            {/* Right Text Side */}
+            <div className="w-full lg:w-[55%] space-y-5">
+              <span className="inline-block text-[0.65rem] font-bold text-slate-500 uppercase tracking-widest">
+                COMPREHENSIVE DESKTOP PORTFOLIO
+              </span>
+              <h3 className="text-3xl md:text-[2.2rem] font-bold text-[#001e42] leading-[1.15]">
+                Equip your teams with the best PPE protection possible
+              </h3>
+              <p className="text-slate-600 leading-relaxed text-[0.95rem]">
+                Our comprehensive range covers N95 respirators, surgical masks, isolation gowns, primary facility protection, and specialized hand hygiene essentials for extensive operational support.
+              </p>
+              <p className="text-slate-600 leading-relaxed text-[0.95rem]">
+                Our network facilitates sourcing strategies directly with FDA registered and certified manufacturing plants, ensuring quality products that perform when needed.
+              </p>
+              <p className="text-slate-600 leading-relaxed text-[0.95rem] pb-4">
+                Assure compliance across all regulatory and quality metrics within healthcare infrastructure.
+              </p>
+              
+              {/* PILL BUTTON matching reference exactly (Rounded Full, Outline Style) */}
+              <button
+                className="inline-flex items-center justify-center px-8 py-2.5 border-[1.5px] border-[#0055b8] text-[#0055b8] font-bold rounded-full hover:bg-blue-50 transition-colors text-sm"
+              >
+                View all products
+              </button>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {CLINICAL_PRODUCTS.map((p) => (
-              <ProductCard
-                key={p.id}
-                {...p}
-                gradient="from-blue-50/50 to-white"
-                onOpenSpecs={() => handleOpenSpecs(p.id, "clinical")}
-              />
+      {/* 5. EFFICIENCY & PROFICIENCY (3-Column Grid) */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
+          <div className="mb-12 text-left">
+            <h2 className="text-[0.65rem] font-bold text-slate-500 uppercase tracking-widest mb-3">
+              EDUCATION AND STAFF TRAINING
+            </h2>
+            <h3 className="text-3xl md:text-[2.1rem] font-bold text-[#001e42] leading-tight">
+              Partner with us to improve efficiency and staff PPE proficiency
+            </h3>
+            <p className="text-slate-600 text-sm mt-3 max-w-4xl">
+              Our PPE trainings empower facility directors to manage inventory tracking methods and optimize employee protection standards throughout your organization.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-10">
+            {[
+              {
+                title: "PPE evaluations and recommendations",
+                description: "Formal assessments of facility protocols to standardize supply usage and consolidate redundancy via deep data analysis.",
+                img: "/ppe_evaluations.png",
+                link: "Request an evaluation >"
+              },
+              {
+                title: "PPE education and training",
+                description: "On-site and digital modules covering proper donning and doffing techniques to satisfy vital compliance requirements.",
+                img: "/ppe_training.png",
+                link: "Explore digital sessions >"
+              },
+              {
+                title: "PPE SKU reduction",
+                description: "Streamlined inventory strategies designed to minimize your total active SKU count, driving cost savings and freeing up vital space.",
+                img: "/ppe_sku_reduction.png",
+                link: "Compare plans >"
+              },
+            ].map((service, i) => (
+              <div key={i} className="flex flex-col group text-left">
+                {/* Sharp corner images matching reference */}
+                <div className="relative h-48 w-full mb-5 bg-slate-100 overflow-hidden">
+                  <img src={service.img} alt={service.title} className="w-full h-full object-cover" />
+                </div>
+                <h4 className="text-[1.2rem] font-bold text-[#001e42] mb-3 leading-tight">{service.title}</h4>
+                <p className="text-slate-600 leading-relaxed text-[0.85rem] flex-grow mb-4">{service.description}</p>
+                <a href="#contact" className="text-[#0055b8] font-bold text-[0.8rem] hover:underline">
+                    {service.link}
+                </a>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Modal */}
-      <PPESpecModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        data={selectedProduct}
-      />
-    </div>
-  );
-}
-
-// --- SUBCOMPONENTS ---
-
-function FeatureCard({
-  icon,
-  title,
-  description,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}) {
-  return (
-    <div className="bg-slate-800 border border-slate-700 p-8 rounded-2xl hover:border-blue-500/50 transition-colors duration-300 text-left group">
-      <div className="mb-6 p-4 bg-slate-900 rounded-xl inline-block group-hover:scale-110 transition-transform duration-300 border border-slate-700">
-        {icon}
-      </div>
-      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
-        {title}
-      </h3>
-      <p className="text-slate-400 leading-relaxed text-sm">{description}</p>
-    </div>
-  );
-}
-
-function ProductCard(
-  props: PPESpecData & {
-    gradient: string;
-    onOpenSpecs: () => void;
-  },
-) {
-  const { category, title, specs, gradient, onOpenSpecs } = props;
-  return (
-    <button
-      onClick={onOpenSpecs}
-      className="group relative bg-white border border-slate-200 rounded-2xl p-8 hover:border-blue-300 transition-all duration-300 overflow-hidden block text-left hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-900/5 w-full"
-    >
-      <div
-        className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-50`}
-      />
-
-      <div className="relative z-10">
-        <div className="text-xs font-mono text-slate-500 mb-4 uppercase tracking-widest flex items-center justify-between">
-          <span>{category}</span>
-          <AlertOctagon className="w-4 h-4 text-slate-300 group-hover:text-blue-500 transition-colors" />
+      {/* 6. DARK BLUE COMMITMENT BANNER */}
+      {/* Background is Navy, Text is White. Full width. */}
+      <section className="bg-[#001e42] py-20 text-white">
+        <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
+            <h2 className="text-[0.65rem] font-bold text-blue-300 uppercase tracking-widest mb-3">
+              QUALITY ASSURANCE
+            </h2>
+            <h3 className="text-2xl md:text-[2.2rem] font-bold leading-tight mb-4 tracking-tight max-w-4xl">
+              We’re committed to quality and leadership in all supplies
+            </h3>
+            <p className="text-blue-100 max-w-4xl text-[0.95rem] leading-relaxed">
+              Brand integrity, product reliability, and regulatory compliance are built into all PPE supplies we source. We employ rigorous quality inspection standards across every node in our global supply chain to proactively mitigate vulnerabilities.
+            </p>
         </div>
-        <h3 className="text-2xl font-bold text-slate-900 mb-6 group-hover:text-blue-700 transition-colors">
-          {title}
-        </h3>
+      </section>
 
-        <ul className="space-y-3 mb-8">
-          {specs.map((spec, i) => (
-            <li
-              key={i}
-              className="flex items-center gap-2 text-slate-600 text-sm"
-            >
-              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-              <span className="font-semibold">{spec.label}:</span> {spec.value}
-            </li>
-          ))}
-        </ul>
+      {/* 7. LEAD GENERATION / CONTACT FORM (Light Gray Band) */}
+      <section id="contact" className="py-24" style={{ backgroundColor: lightBg }}>
+        <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
+            <div className="flex flex-col lg:flex-row gap-16 items-start">
+            
+            {/* Left Image + Text */}
+            <div className="w-full lg:w-1/3 space-y-6">
+                <h2 className="text-3xl md:text-[2.2rem] font-bold text-[#001e42] leading-tight tracking-tight">
+                    How can we help you keep everyone in your organization protected?
+                </h2>
+                <p className="text-slate-600 text-[0.9rem] leading-relaxed">
+                  We're committed to protecting professionals in the most demanding environments. Reach out to our PPE specialists today to secure an audit of your supplies.
+                </p>
+                {/* Reference has a single sharp-corner image here */}
+                <div className="relative w-full aspect-[4/3] bg-slate-200 mt-6 overflow-hidden">
+                    <img 
+                        src="/logistics_port.png" 
+                        alt="Hospital Hallway" 
+                        className="w-full h-full object-cover"
+                    />
+                </div>
+            </div>
+            
+            {/* Right Side Form */}
+            <div className="w-full lg:w-2/3">
+                <div className="bg-transparent">
+                    <p className="text-[0.7rem] text-slate-500 mb-6 font-medium uppercase">* Indicates a required field</p>
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-1.5">
+                                <label className="text-[0.8rem] font-bold text-[#001e42]">First name *</label>
+                                <input required name="firstName" type="text" className="w-full px-3 py-2 border border-slate-300 outline-none text-sm bg-white" />
+                            </div>
+                            <div className="space-y-1.5">
+                                <label className="text-[0.8rem] font-bold text-[#001e42]">Last name *</label>
+                                <input required name="lastName" type="text" className="w-full px-3 py-2 border border-slate-300 outline-none text-sm bg-white" />
+                            </div>
+                        </div>
 
-        <div className="flex items-center text-blue-600 font-bold text-sm gap-2 mt-auto">
-          <span>View Specs</span>
-          <Activity className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-1.5">
+                                <label className="text-[0.8rem] font-bold text-[#001e42]">Email address *</label>
+                                <input required name="email" type="email" className="w-full px-3 py-2 border border-slate-300 outline-none text-sm bg-white" />
+                            </div>
+                            <div className="space-y-1.5">
+                                <label className="text-[0.8rem] font-bold text-[#001e42]">Phone *</label>
+                                <input required name="phone" type="tel" className="w-full px-3 py-2 border border-slate-300 outline-none text-sm bg-white" />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                             <div className="space-y-1.5">
+                                <label className="text-[0.8rem] font-bold text-[#001e42]">Organization name *</label>
+                                <input required name="organization" type="text" className="w-full px-3 py-2 border border-slate-300 outline-none text-sm bg-white" />
+                            </div>
+                            <div className="space-y-1.5">
+                                <label className="text-[0.8rem] font-bold text-[#001e42]">Position *</label>
+                                <input required name="position" type="text" className="w-full px-3 py-2 border border-slate-300 outline-none text-sm bg-white" />
+                            </div>
+                        </div>
+
+                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                             <div className="space-y-1.5">
+                                <label className="text-[0.8rem] font-bold text-[#001e42]">Facility Count *</label>
+                                <input required name="facilities" type="number" className="w-full px-3 py-2 border border-slate-300 outline-none text-sm bg-white" />
+                            </div>
+                            <div className="space-y-1.5">
+                                <label className="text-[0.8rem] font-bold text-[#001e42]">Primary Interest *</label>
+                                <select required name="interest" className="w-full px-3 py-2 border border-slate-300 outline-none text-sm bg-white">
+                                    <option value="">Select...</option>
+                                    <option value="Masks">Masks</option>
+                                    <option value="Gloves">Gloves</option>
+                                    <option value="Gowns">Gowns</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="space-y-3 pt-4 border-t border-slate-200 mt-6">
+                            <div className="flex items-start gap-3">
+                                <input type="checkbox" className="mt-1" />
+                                <label className="text-[0.8rem] text-slate-700 leading-snug">
+                                    By supplying my personal information, I agree to receive communications regarding products aligned with my interests.
+                                </label>
+                            </div>
+                            <div className="flex items-start gap-3">
+                                <input type="checkbox" className="mt-1" />
+                                <label className="text-[0.8rem] text-slate-700 leading-snug">
+                                    I agree to the <a href="#" className="text-[#0055b8] underline">terms and conditions</a> and <a href="#" className="text-[#0055b8] underline">privacy policy</a>.
+                                </label>
+                            </div>
+                        </div>
+
+                        {/* Reference shows a solid blue pill button for Submit */}
+                        <div className="pt-4">
+                            <button className="px-10 py-2.5 bg-[#0055b8] text-white font-bold rounded-full hover:bg-blue-800 transition-colors text-sm">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
         </div>
-      </div>
-    </button>
+      </section>
+
+      {/* 8. VIRUS ICON FOOTER CTA (White) */}
+      <section className="py-24 bg-white relative overflow-hidden">
+        <div className="container mx-auto px-6 lg:px-12 max-w-7xl relative z-10">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+                <div className="w-full md:w-1/2">
+                    <h2 className="text-[0.65rem] font-bold text-slate-500 uppercase tracking-widest mb-3">
+                        INFECTION PREVENTION SOLUTIONS
+                    </h2>
+                    <h3 className="text-3xl md:text-[2.2rem] font-bold text-[#001e42] mb-6 leading-tight tracking-tight">
+                        Are your teams well protected from infection risk?
+                    </h3>
+                    <p className="text-slate-600 mb-8 max-w-lg text-[0.95rem]">
+                        We offer a comprehensive portfolio of diagnostic and preventative supplies to ensure environmental safety across your operation lines.
+                    </p>
+                    
+                    {/* Outline pill button */}
+                    <button
+                        className="inline-flex items-center justify-center px-8 py-2.5 bg-transparent border-[1.5px] border-[#0055b8] rounded-full text-[#0055b8] font-bold hover:bg-blue-50 transition-colors text-sm"
+                    >
+                        Explore solutions &gt;
+                    </button>
+                </div>
+
+                <div className="w-full md:w-1/2 relative h-[350px] flex justify-center items-center">
+                    {/* The Green Abstract Virus Shapes from reference - Circular Polka Dots */}
+                    <div className="absolute top-10 right-10 w-24 h-24 bg-[#00bd56] rounded-full opacity-80 z-0"></div>
+                    <div className="absolute bottom-10 right-20 w-16 h-16 bg-[#00bd56] rounded-full opacity-80 z-0"></div>
+                    <div className="absolute top-[40%] left-[20%] w-10 h-10 bg-[#00bd56] rounded-full opacity-80 z-0"></div>
+                    <div className="absolute bottom-0 left-[30%] w-32 h-32 bg-[#00bd56] rounded-full opacity-80 z-0"></div>
+
+                    {/* Masked doctor figure overlapping shapes */}
+                    <div className="relative w-64 h-full z-10 flex items-end justify-center">
+                      <img 
+                        src="/ppe_hero_display.png" 
+                        alt="Masked Professional" 
+                        className="w-full h-auto object-contain drop-shadow-2xl"
+                        style={{ clipPath: 'circle(50% at 50% 50%)' }}
+                      />
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+
+    </div>
   );
 }

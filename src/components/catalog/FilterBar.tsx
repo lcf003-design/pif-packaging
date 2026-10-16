@@ -137,7 +137,7 @@ export default function FilterBar({ facets }: { facets?: Facets }) {
   return (
     <div className="w-full mb-8 relative z-30" ref={dropdownRef}>
       {/* Top Row: Dropdown Buttons */}
-      <div className="flex flex-nowrap overflow-x-auto items-center gap-2 pb-4 border-b border-industrial-200 mask-fade-right px-4 -mx-4 no-scrollbar">
+      <div className="flex flex-wrap items-center gap-2 pb-4 border-b border-industrial-200 px-4 -mx-4">
         {/* Container Type (Category) - NOW ADDED */}
         <div className="relative">
           <button
